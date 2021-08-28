@@ -1,4 +1,5 @@
 import 'package:elder_eate/constant.dart';
+import 'package:elder_eate/screens/home/home.dart';
 import 'package:elder_eate/screens/init/initpage.dart';
 import 'package:flutter/material.dart';
 
@@ -6,10 +7,10 @@ void main() {
   runApp(
     MaterialApp(
       // home: Init(),
-      initialRoute: '/Init',
+      initialRoute: '/Home',
       routes: {
         '/Init': (context) => Init(),
-        // '/Home':(context)=>HomeScreen(),
+        '/Home': (context) => Home(),
       },
       theme: ThemeData(
         // primaryColor: Colors.red,

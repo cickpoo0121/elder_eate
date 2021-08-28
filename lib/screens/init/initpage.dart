@@ -57,7 +57,7 @@ class _InitState extends State<Init> {
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
