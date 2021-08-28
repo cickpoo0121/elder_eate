@@ -22,6 +22,7 @@ void main() {
         // primaryColor: Colors.red,
         scaffoldBackgroundColor: pBackgroundColor,
         // accentColor: Colors.red[900],
+        // canvasColor: Colors.green,
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
               primary: pButtonTxtColor,
