@@ -1,5 +1,14 @@
 import 'package:elder_eate/constant.dart';
+import 'package:elder_eate/screens/init/WeighHeight.dart';
+import 'package:elder_eate/screens/init/disease.dart';
+import 'package:elder_eate/screens/init/individual.dart';
 import 'package:elder_eate/screens/init/initpage.dart';
+import 'package:elder_eate/screens/init/progress.dart';
+import 'package:elder_eate/screens/init/username.dart';
+import 'package:elder_eate/screens/main/addMeal.dart';
+import 'package:elder_eate/screens/main/camera.dart';
+import 'package:elder_eate/screens/main/foodRecommend.dart';
+import 'package:elder_eate/screens/main/profile.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -8,7 +17,7 @@ void main() {
       // home: Init(),
       initialRoute: '/Init',
       routes: {
-        '/Init': (context) => Init(),
+        '/Init': (context) => Profile(),
         // '/Home':(context)=>HomeScreen(),
       },
       theme: ThemeData(
@@ -22,7 +31,7 @@ void main() {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12))),
         ),
-        // fontFamily: 'Lobster',
+        fontFamily: 'IBMPlexSansThai',
         textTheme: TextTheme(
           headline1: TextStyle(
             fontSize: 20.0,
