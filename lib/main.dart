@@ -1,7 +1,5 @@
 import 'package:elder_eate/constant.dart';
-import 'package:elder_eate/screens/init/WeighHeight.dart';
-import 'package:elder_eate/screens/init/disease.dart';
-import 'package:elder_eate/screens/init/individual.dart';
+import 'package:elder_eate/screens/home/home.dart';
 import 'package:elder_eate/screens/init/initpage.dart';
 import 'package:elder_eate/screens/init/progress.dart';
 import 'package:elder_eate/screens/init/username.dart';
@@ -15,10 +13,10 @@ void main() {
   runApp(
     MaterialApp(
       // home: Init(),
-      initialRoute: '/Init',
+      initialRoute: '/Home',
       routes: {
-        '/Init': (context) => Profile(),
-        // '/Home':(context)=>HomeScreen(),
+        '/Init': (context) => Init(),
+        '/Home': (context) => Home(),
       },
       theme: ThemeData(
         // primaryColor: Colors.red,
