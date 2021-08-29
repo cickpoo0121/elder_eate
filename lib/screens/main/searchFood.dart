@@ -1,14 +1,14 @@
 import 'package:elder_eate/constant.dart';
 import 'package:flutter/material.dart';
 
-class AddMeal extends StatefulWidget {
-  const AddMeal({Key? key}) : super(key: key);
+class SearchFood extends StatefulWidget {
+  const SearchFood({Key? key}) : super(key: key);
 
   @override
-  _AddMealState createState() => _AddMealState();
+  _SearchFoodState createState() => _SearchFoodState();
 }
 
-class _AddMealState extends State<AddMeal> {
+class _SearchFoodState extends State<SearchFood> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

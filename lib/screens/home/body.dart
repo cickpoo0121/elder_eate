@@ -1,22 +1,23 @@
+import 'package:elder_eate/component/nutritionPerDay.dart';
 import 'package:elder_eate/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:getwidget/components/progress_bar/gf_progress_bar.dart';
 
-class Home_body extends StatefulWidget {
-  const Home_body({Key? key}) : super(key: key);
+class HomeBody extends StatefulWidget {
+  const HomeBody({Key? key}) : super(key: key);
 
   @override
-  _Home_bodyState createState() => _Home_bodyState();
+  _HomeBodyState createState() => _HomeBodyState();
 }
 
-class _Home_bodyState extends State<Home_body> {
+class _HomeBodyState extends State<HomeBody> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: pPadding,
         child: Column(
           children: [
             Stack(
@@ -64,96 +65,105 @@ class _Home_bodyState extends State<Home_body> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                  child: ListTile(
-                    leading: Image.asset("assets/images/calories.png"),
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "แคลอรี",
-                          style: TextStyle(
-                              color: pDetailTxtColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: size.height * 0.01,
-                        ),
-                        Container(
-                          width: size.width * 0.45,
-                          child: GFProgressBar(
-                            percentage: 0.375,
-                            progressBarColor: pCaloriesColor,
-                          ),
-                        )
-                      ],
-                    ),
-                    trailing: Text("750/2000"),
-                  ),
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                  child: ListTile(
-                    leading: Image.asset("assets/images/sugar.png"),
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "น้ำตาล",
-                          style: TextStyle(
-                              color: pDetailTxtColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: size.height * 0.01,
-                        ),
-                        Container(
-                          width: size.width * 0.45,
-                          child: GFProgressBar(
-                            percentage: 0.1,
-                            progressBarColor: pSugarColor,
-                          ),
-                        )
-                      ],
-                    ),
-                    trailing: Text("50/500"),
-                  ),
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                  child: ListTile(
-                    leading: Image.asset("assets/images/sodium.png"),
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "โซเดียม",
-                          style: TextStyle(
-                              color: pDetailTxtColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: size.height * 0.01,
-                        ),
-                        Container(
-                          width: size.width * 0.45,
-                          child: GFProgressBar(
-                            percentage: 0.233,
-                            progressBarColor: pSodiumColor,
-                          ),
-                        )
-                      ],
-                    ),
-                    trailing: Text("70/300"),
-                  ),
-                ),
+                // SizedBox(
+                //   height: size.height * 0.02,
+                // ),
+                NutritionPerDay(
+                  nutritionValue: [750, 50, 70],
+                )
+                // Card(
+                //   shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(20)),
+                //   child: ListTile(
+                //     leading: Image.asset("assets/images/calories.png"),
+                //     title: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         Text(
+                //           "แคลอรี",
+                //           style: TextStyle(
+                //               color: pDetailTxtColor,
+                //               fontWeight: FontWeight.bold),
+                //         ),
+                //         SizedBox(
+                //           height: size.height * 0.01,
+                //         ),
+                //         Container(
+                //           width: size.width * 0.45,
+                //           child: GFProgressBar(
+                //             percentage: 0.375,
+                //             progressBarColor: pCaloriesColor,
+                //           ),
+                //         )
+                //       ],
+                //     ),
+                //     trailing: Text("750/2000"),
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: size.height * 0.02,
+                // ),
+                // Card(
+                //   shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(20)),
+                //   child: ListTile(
+                //     leading: Image.asset("assets/images/sugar.png"),
+                //     title: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         Text(
+                //           "น้ำตาล",
+                //           style: TextStyle(
+                //               color: pDetailTxtColor,
+                //               fontWeight: FontWeight.bold),
+                //         ),
+                //         SizedBox(
+                //           height: size.height * 0.01,
+                //         ),
+                //         Container(
+                //           width: size.width * 0.45,
+                //           child: GFProgressBar(
+                //             percentage: 0.1,
+                //             progressBarColor: pSugarColor,
+                //           ),
+                //         )
+                //       ],
+                //     ),
+                //     trailing: Text("50/500"),
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: size.height * 0.02,
+                // ),
+                // Card(
+                //   shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(20)),
+                //   child: ListTile(
+                //     leading: Image.asset("assets/images/sodium.png"),
+                //     title: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         Text(
+                //           "โซเดียม",
+                //           style: TextStyle(
+                //               color: pDetailTxtColor,
+                //               fontWeight: FontWeight.bold),
+                //         ),
+                //         SizedBox(
+                //           height: size.height * 0.01,
+                //         ),
+                //         Container(
+                //           width: size.width * 0.45,
+                //           child: GFProgressBar(
+                //             percentage: 0.233,
+                //             progressBarColor: pSodiumColor,
+                //           ),
+                //         )
+                //       ],
+                //     ),
+                //     trailing: Text("70/300"),
+                //   ),
+                // ),
               ],
             )
           ],

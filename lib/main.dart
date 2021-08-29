@@ -1,9 +1,11 @@
 import 'package:elder_eate/constant.dart';
+import 'package:elder_eate/screens/food/addMeal.dart';
+import 'package:elder_eate/screens/food/foodDetail.dart';
 import 'package:elder_eate/screens/home/home.dart';
 import 'package:elder_eate/screens/init/initpage.dart';
 import 'package:elder_eate/screens/init/progress.dart';
 import 'package:elder_eate/screens/init/username.dart';
-import 'package:elder_eate/screens/main/addMeal.dart';
+import 'package:elder_eate/screens/main/searchFood.dart';
 import 'package:elder_eate/screens/main/camera.dart';
 import 'package:elder_eate/screens/main/foodRecommend.dart';
 import 'package:elder_eate/screens/main/profile.dart';
@@ -13,10 +15,12 @@ void main() {
   runApp(
     MaterialApp(
       // home: Init(),
-      initialRoute: '/Home',
+      initialRoute: '/AddMeal',
       routes: {
         '/Init': (context) => Init(),
         '/Home': (context) => Home(),
+        '/Food': (context) => FoodDetail(),
+        '/AddMeal': (context) => AddMeal(),
       },
       theme: ThemeData(
         // primaryColor: Colors.red,
@@ -28,7 +32,13 @@ void main() {
               primary: pButtonTxtColor,
               backgroundColor: pButtonColor,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12))),
+                  borderRadius: BorderRadius.circular(20))),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: TextButton.styleFrom(
+              primary: pButtonTxtColor,
+              backgroundColor: pButtonColor,
+              shape: CircleBorder()),
         ),
         fontFamily: 'IBMPlexSansThai',
         textTheme: TextTheme(

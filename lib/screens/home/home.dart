@@ -40,9 +40,9 @@ class _HomeState extends State<Home> {
         ),
         bottomNavigationBar: menu(),
         body: TabBarView(children: [
-          Home_body(),
-          Home_body(),
-          Home_body(),
+          HomeBody(),
+          HomeBody(),
+          HomeBody(),
         ]),
       ),
     );

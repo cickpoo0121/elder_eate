@@ -47,11 +47,8 @@ class _InitState extends State<Init> {
               ),
               Container(
                 width: size.width * 0.45,
-                decoration: BoxDecoration(),
                 child: TextButton(
-                  onPressed: () {
-                    print("object");
-                  },
+                  onPressed: () {},
                   child: Text(
                     "เริ่มต้นใช้งาน",
                     style: TextStyle(fontSize: 20),
