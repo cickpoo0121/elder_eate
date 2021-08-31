@@ -16,7 +16,6 @@ class _IndividualState extends State<Individual> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        // backgroundColor: Colors.red,
         body: Center(
           child: Column(
             children: [
@@ -38,23 +37,31 @@ class _IndividualState extends State<Individual> {
               ),
               Container(
                   decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 0.5,
+                          blurRadius: 5,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
                       borderRadius: BorderRadius.circular(40.0),
                       color: sBackgroundColor),
                   height: size.height * 0.08,
                   width: size.width * 0.85,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
+                    padding: EdgeInsets.only(left: 20.0),
                     child: Row(
-                      children: const <Widget>[
+                      children: <Widget>[
                         Icon(
                           Icons.favorite,
                           color: Colors.pink,
                           size: 24.0,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Text("แคลอรี่ 2000 กิดลแคลอรี่"),
-                        ),
+                            padding: EdgeInsets.only(left: 10.0),
+                            child: Text("แคลอรี่ 2000 กิดลแคลอรี่",
+                                style: Theme.of(context).textTheme.headline2)),
                       ],
                     ),
                   )),
@@ -63,23 +70,31 @@ class _IndividualState extends State<Individual> {
               ),
               Container(
                   decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 0.5,
+                          blurRadius: 5,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
                       borderRadius: BorderRadius.circular(40.0),
                       color: sBackgroundColor),
                   height: size.height * 0.08,
                   width: size.width * 0.85,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
+                    padding: EdgeInsets.only(left: 20.0),
                     child: Row(
-                      children: const <Widget>[
+                      children: <Widget>[
                         Icon(
                           Icons.favorite,
                           color: Colors.pink,
                           size: 24.0,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Text("น้ำตาล 500 กรัม"),
-                        ),
+                            padding: EdgeInsets.only(left: 10.0),
+                            child: Text("น้ำตาล 500 กรัม",
+                                style: Theme.of(context).textTheme.headline2)),
                       ],
                     ),
                   )),
@@ -88,22 +103,31 @@ class _IndividualState extends State<Individual> {
               ),
               Container(
                   decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 0.5,
+                          blurRadius: 5,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
                       borderRadius: BorderRadius.circular(40.0),
                       color: sBackgroundColor),
                   height: size.height * 0.08,
                   width: size.width * 0.85,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
+                    padding: EdgeInsets.only(left: 20.0),
                     child: Row(
-                      children: const <Widget>[
+                      children: <Widget>[
                         Icon(
                           Icons.favorite,
                           color: Colors.pink,
                           size: 24.0,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Text("โซเดียม 300 กรัม"),
+                          padding: EdgeInsets.only(left: 10.0),
+                          child: Text("โซเดียม 300 กรัม",
+                              style: Theme.of(context).textTheme.headline2),
                         ),
                       ],
                     ),
@@ -112,7 +136,7 @@ class _IndividualState extends State<Individual> {
                 height: size.height * 0.07,
               ),
               Container(
-                width: size.width * 0.35,
+                width: size.width * 0.39,
                 decoration: BoxDecoration(),
                 child: TextButton(
                   onPressed: () {
@@ -120,7 +144,7 @@ class _IndividualState extends State<Individual> {
                   },
                   child: Text(
                     "เริ่มต้นใช้งาน",
-                    style: TextStyle(fontSize: 20),
+                   style: Theme.of(context).textTheme.headline5,
                   ),
                 ),
               )

@@ -2,9 +2,12 @@ import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/screens/food/addMeal.dart';
 import 'package:elder_eate/screens/food/foodDetail.dart';
 import 'package:elder_eate/screens/home/home.dart';
+import 'package:elder_eate/screens/init/disease.dart';
+import 'package:elder_eate/screens/init/individual.dart';
 import 'package:elder_eate/screens/init/initpage.dart';
 import 'package:elder_eate/screens/init/progress.dart';
 import 'package:elder_eate/screens/init/username.dart';
+import 'package:elder_eate/screens/init/weighHeight.dart';
 import 'package:elder_eate/screens/main/searchFood.dart';
 import 'package:elder_eate/screens/main/camera.dart';
 import 'package:elder_eate/screens/main/foodRecommend.dart';
@@ -20,7 +23,7 @@ void main() {
         '/Init': (context) => Init(),
         '/Home': (context) => Home(),
         '/Food': (context) => FoodDetail(),
-        '/AddMeal': (context) => AddMeal(),
+        '/AddMeal': (context) => WeighHeight(),
       },
       theme: ThemeData(
         // primaryColor: Colors.red,
@@ -42,26 +45,42 @@ void main() {
         ),
         fontFamily: 'IBMPlexSansThai',
         textTheme: TextTheme(
+
+          // Title page
           headline1: TextStyle(
-            fontSize: 20.0,
-            color: Color(0xff027bfe),
+            fontSize: 25.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
+
+        // Text Nomal purple
           headline2: TextStyle(
             fontSize: 20.0,
-            color: Color(0xFF4FAEDD),
+            fontWeight: FontWeight.bold,
+            color: pDetailTxtColor,
           ),
+
+        // Text Nomal black
           headline3: TextStyle(
             fontSize: 20.0,
-            color: Colors.grey[900],
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
+
+          // Text information user register/profile
           headline4: TextStyle(
-            fontSize: 20.0,
-            color: Colors.white,
+            fontSize: 19.0,
+            fontWeight: FontWeight.bold,
+            color: pRegisTxtColor,
           ),
+
+          // Text on button
           headline5: TextStyle(
-            fontSize: 20.0,
+            fontSize: 22.0,
+            fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
+
           headline6: TextStyle(
             fontSize: 20.0,
             color: Colors.white,

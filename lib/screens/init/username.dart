@@ -22,50 +22,51 @@ class _UsernameState extends State<Username> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(pic),
-                  Container(
-                    width: size.width * 0.85,
+              Container(
+                     height: size.height * 0.08,
+                     width: size.width * 0.85,
                     child: TextField(
-                      autocorrect: true,
-                      decoration: InputDecoration(
-                        hintText: 'ชื่อผู้ใช้',
-                        prefixIcon: Icon(Icons.email),
-                        hintStyle: TextStyle(color: pRegisTxtColor),
-                        filled: true,
-                        fillColor: Colors.white70,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                          borderSide: BorderSide(color: Colors.white, width: 2),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: Colors.white, width: 2),
-                        ),
+                    autocorrect: true,
+                    decoration: InputDecoration(
+                      hintText: 'ชื่อผู้ใช้',
+                      prefixIcon: Icon(Icons.account_box ),
+                      hintStyle: TextStyle(color: pRegisTxtColor),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                        borderSide: BorderSide(color: Colors.white, width: 2),
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                        borderSide: BorderSide(color: Colors.white, width: 2),
+                      ),
+                    ),
                     ),
                   ),
                   SizedBox(
                     height: size.height * 0.02,
                   ),
                   Container(
-                    width: size.width * 0.85,
+                     height: size.height * 0.08,
+                     width: size.width * 0.85,
                     child: TextField(
-                      keyboardType: TextInputType.number,
-                      autocorrect: true,
-                      decoration: InputDecoration(
-                        hintText: 'อายุ',
-                        prefixIcon: Icon(Icons.email),
-                        hintStyle: TextStyle(color: pRegisTxtColor),
-                        filled: true,
-                        fillColor: Colors.white70,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                          borderSide: BorderSide(color: Colors.white, width: 2),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: Colors.white, width: 2),
-                        ),
+                    autocorrect: true,
+                    decoration: InputDecoration(
+                      hintText: 'อายุ',
+                      prefixIcon: Icon(Icons.date_range_rounded ),
+                      hintStyle: TextStyle(color: pRegisTxtColor),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                        borderSide: BorderSide(color: Colors.white, width: 2),
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                        borderSide: BorderSide(color: Colors.white, width: 2),
+                      ),
+                    ),
                     ),
                   ),
                   SizedBox(
@@ -80,7 +81,7 @@ class _UsernameState extends State<Username> {
                       },
                       child: Text(
                         "ถัดไป",
-                        style: TextStyle(fontSize: 20),
+                        style: Theme.of(context).textTheme.headline5,
                       ),
                     ),
                   )

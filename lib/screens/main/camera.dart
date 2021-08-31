@@ -12,13 +12,18 @@ class _CameraState extends State<Camera> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return SafeArea(
-        child: Scaffold(
+    return ( Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: sBackgroundColor,
-        title: const Text(
+         leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor: pHeaderTabColor,
+        centerTitle: true,
+        title:Text(
           'ถ่ายรูปอาหาร',
+          style: Theme.of(context).textTheme.headline1,
         ),
       ),
       body: Container(
@@ -27,9 +32,6 @@ class _CameraState extends State<Camera> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              SizedBox(
-                height: size.height * 0.50,
-              ),
               CircleAvatar(
                 radius: size.width * 0.10,
                 backgroundColor: sBackgroundColor,

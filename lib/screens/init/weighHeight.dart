@@ -26,22 +26,22 @@ class _WeighHeightState extends State<WeighHeight> {
               height: size.height * 0.05,
             ),
             Container(
+              height: size.height * 0.08,
               width: size.width * 0.85,
               child: TextField(
-                keyboardType: TextInputType.number,
                 autocorrect: true,
                 decoration: InputDecoration(
                   hintText: 'น้ำหนัก',
-                  prefixIcon: Icon(Icons.email),
+                  prefixIcon: Icon(Icons.line_weight_rounded),
                   hintStyle: TextStyle(color: pRegisTxtColor),
                   filled: true,
-                  fillColor: Colors.white70,
+                  fillColor: Colors.white,
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
                     borderSide: BorderSide(color: Colors.white, width: 2),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
                     borderSide: BorderSide(color: Colors.white, width: 2),
                   ),
                 ),
@@ -51,22 +51,22 @@ class _WeighHeightState extends State<WeighHeight> {
               height: size.height * 0.02,
             ),
             Container(
+              height: size.height * 0.08,
               width: size.width * 0.85,
               child: TextField(
-                keyboardType: TextInputType.number,
                 autocorrect: true,
                 decoration: InputDecoration(
                   hintText: 'ส่วนสูง',
-                  prefixIcon: Icon(Icons.email),
+                  prefixIcon: Icon(Icons.accessibility_new_rounded),
                   hintStyle: TextStyle(color: pRegisTxtColor),
                   filled: true,
-                  fillColor: Colors.white70,
+                  fillColor: Colors.white,
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
                     borderSide: BorderSide(color: Colors.white, width: 2),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
                     borderSide: BorderSide(color: Colors.white, width: 2),
                   ),
                 ),
@@ -76,7 +76,7 @@ class _WeighHeightState extends State<WeighHeight> {
               height: size.height * 0.05,
             ),
             Container(
-              width: size.width * 0.30,
+              width: size.width * 0.28,
               decoration: BoxDecoration(),
               child: TextButton(
                 onPressed: () {
@@ -84,7 +84,7 @@ class _WeighHeightState extends State<WeighHeight> {
                 },
                 child: Text(
                   "ถัดไป",
-                  style: TextStyle(fontSize: 20),
+                  style: Theme.of(context).textTheme.headline5,
                 ),
               ),
             )
