@@ -1,5 +1,6 @@
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/component/nutrition.dart';
+import 'package:elder_eate/screens/home/home.dart';
 import 'package:flutter/material.dart';
 
 class AddMeal extends StatefulWidget {
@@ -156,7 +157,14 @@ class _AddMealState extends State<AddMeal> {
                       width: size.width * 0.45,
                       child: TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/Home');
+                          // Navigator.pushNamed(context, '/Home');
+
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) {
+                            return Home(
+                              currentPage: 2,
+                            );
+                          }));
                         },
                         child: Text("เพิ่มประวัติการกิน",
                             style: TextStyle(fontSize: 16)),

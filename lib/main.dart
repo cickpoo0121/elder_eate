@@ -2,6 +2,7 @@ import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/screens/dailyEat/dailyEat.dart';
 import 'package:elder_eate/screens/food/addMeal.dart';
 import 'package:elder_eate/screens/food/foodDetail.dart';
+import 'package:elder_eate/screens/home/body.dart';
 import 'package:elder_eate/screens/home/home.dart';
 import 'package:elder_eate/screens/init/disease.dart';
 import 'package:elder_eate/screens/init/individual.dart';
@@ -27,12 +28,16 @@ void main() {
         '/Disease': (context) => Disease(),
         '/Progress': (context) => Progress(),
         '/Individual': (context) => Individual(),
-        '/Home': (context) => Home(),
+        '/Home': (context) => Home(
+              currentPage: 0,
+            ),
+        '/HomeBody': (context) => HomeBody(),
         '/FoodDetail': (context) => FoodDetail(),
         '/AddMeal': (context) => AddMeal(),
         '/DailyEat': (context) => DailyEat(),
         '/Profile': (context) => Profile(),
         '/Camera': (context) => Camera(),
+        '/SearchFood': (context) => SearchFood(),
       },
       theme: ThemeData(
         // primaryColor: Colors.red,

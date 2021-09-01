@@ -25,7 +25,7 @@ class _NutritionPerDayState extends State<NutritionPerDay> {
   List<Color> _color = [pCaloriesColor, pSugarColor, pSodiumColor];
   List<int> _maxNutrition = [2000, 500, 300];
   double calNutrition(index) {
-    print(_nutritionValue[index] / _maxNutrition[index]);
+    // print(_nutritionValue[index] / _maxNutrition[index]);
     return _nutritionValue[index] / _maxNutrition[index];
     // return 0.2;
   }

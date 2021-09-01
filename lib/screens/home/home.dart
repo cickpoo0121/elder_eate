@@ -7,18 +7,35 @@ import 'package:elder_eate/screens/main/searchFood.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  final int currentPage;
+  const Home({Key? key, required this.currentPage}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  int currentPage = 0;
+  List<Tab> tabs = [
+    Tab(
+      text: "หน้าหลัก",
+      icon: Icon(Icons.home),
+    ),
+    Tab(
+      text: "ถ่ายอาหาร",
+      icon: Icon(Icons.photo_camera),
+    ),
+    Tab(
+      text: "ประวัติการกิน",
+      icon: Icon(Icons.restaurant),
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return DefaultTabController(
-      length: 3,
+      length: tabs.length,
+      initialIndex: widget.currentPage,
       child: Scaffold(
         bottomNavigationBar: menu(),
         body: TabBarView(children: [
@@ -33,20 +50,7 @@ class _HomeState extends State<Home> {
   Widget menu() {
     return Container(
       color: pHeaderTabColor,
-      child: TabBar(indicatorColor: Colors.white, tabs: [
-        Tab(
-          text: "หน้าหลัก",
-          icon: Icon(Icons.home),
-        ),
-        Tab(
-          text: "ถ่ายอาหาร",
-          icon: Icon(Icons.photo_camera),
-        ),
-        Tab(
-          text: "ประวัติการกิน",
-          icon: Icon(Icons.restaurant),
-        ),
-      ]),
+      child: TabBar(indicatorColor: Colors.white, tabs: tabs),
     );
   }
 }
