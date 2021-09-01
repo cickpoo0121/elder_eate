@@ -80,7 +80,7 @@ class _WeighHeightState extends State<WeighHeight> {
               decoration: BoxDecoration(),
               child: TextButton(
                 onPressed: () {
-                  print("object");
+                  Navigator.pushNamed(context, '/Disease');
                 },
                 child: Text(
                   "ถัดไป",

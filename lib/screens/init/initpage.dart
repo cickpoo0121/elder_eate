@@ -8,7 +8,7 @@ class Init extends StatefulWidget {
   _InitState createState() => _InitState();
 }
 
-String _text = "“ ควบคุมปริมาณ แคลอรี่ น้ำตาล และ โซเดียม ให้กับคนที่คุณรัก ” ";
+String _text = "ควบคุมปริมาณ แคลอรี่ น้ำตาล และ โซเดียม ให้กับคนที่คุณรัก";
 
 class _InitState extends State<Init> {
   @override
@@ -48,13 +48,15 @@ class _InitState extends State<Init> {
               Container(
                 width: size.width * 0.45,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/Username');
+                  },
                   child: Text(
-                    "เริ่มต้นใช้งาน",
+                    'เริ่มต้นใช้งาน',
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ),

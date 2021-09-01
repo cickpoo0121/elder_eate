@@ -155,7 +155,9 @@ class _AddMealState extends State<AddMeal> {
                     Container(
                       width: size.width * 0.45,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/Home');
+                        },
                         child: Text("เพิ่มประวัติการกิน",
                             style: TextStyle(fontSize: 16)),
                       ),

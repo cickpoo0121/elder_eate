@@ -30,10 +30,16 @@ class _HomeBodyState extends State<HomeBody> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15),
-            child: Icon(
-              Icons.account_circle,
-              color: Colors.black,
-              size: size.width * 0.08,
+            child: GestureDetector(
+              onTap: () {
+                // print('object');
+                Navigator.pushNamed(context, '/Profile');
+              },
+              child: Icon(
+                Icons.account_circle,
+                color: Colors.black,
+                size: size.width * 0.08,
+              ),
             ),
           ),
         ],

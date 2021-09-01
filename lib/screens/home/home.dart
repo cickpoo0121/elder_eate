@@ -2,6 +2,8 @@ import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/screens/dailyEat/body.dart';
 import 'package:elder_eate/screens/dailyEat/dailyEat.dart';
 import 'package:elder_eate/screens/home/body.dart';
+import 'package:elder_eate/screens/main/camera.dart';
+import 'package:elder_eate/screens/main/searchFood.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -21,7 +23,7 @@ class _HomeState extends State<Home> {
         bottomNavigationBar: menu(),
         body: TabBarView(children: [
           HomeBody(),
-          HomeBody(),
+          SearchFood(),
           DailyEat(),
         ]),
       ),

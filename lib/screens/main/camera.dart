@@ -12,16 +12,16 @@ class _CameraState extends State<Camera> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return ( Scaffold(
+    return (Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        //  leading: IconButton(
+        //   icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+        //   onPressed: () => Navigator.of(context).pop(),
+        // ),
         backgroundColor: pHeaderTabColor,
         centerTitle: true,
-        title:Text(
+        title: Text(
           'ถ่ายรูปอาหาร',
           style: Theme.of(context).textTheme.headline1,
         ),
@@ -40,7 +40,7 @@ class _CameraState extends State<Camera> {
                   color: pHeaderTabColor,
                   iconSize: 60,
                   onPressed: () {
-                    setState(() {});
+                    Navigator.pushNamed(context, '/FoodDetail', arguments: 0);
                   },
                 ),
               ),

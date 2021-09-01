@@ -12,6 +12,17 @@ String _text = "“ กำลังวิเคราะห์ข้อมูล
 
 class _ProgressState extends State<Progress> {
   @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.pushNamed(context, '/Individual');
+
+      // setState(() {
+      // });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SafeArea(

@@ -12,7 +12,7 @@ class FoodDetail extends StatefulWidget {
 }
 
 class _FoodDetailState extends State<FoodDetail> {
-  int _event = 0;
+  int _event = 0; // 1 คือ รายละเอียดอาหาร , 0 รายการอาหาร
   String foodMenu = "ข้าวต้มหมู";
 
   @override
@@ -82,7 +82,9 @@ class _FoodDetailState extends State<FoodDetail> {
                       ? Container(
                           width: size.width * 0.45,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/AddMeal');
+                            },
                             child: Text("เพิ่มประวัติการกิน",
                                 style: TextStyle(fontSize: 16)),
                           ),

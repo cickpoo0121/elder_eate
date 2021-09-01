@@ -17,10 +17,10 @@ class _SearchFoodState extends State<SearchFood> {
         backgroundColor: pHeaderTabColor,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
+            // leading: IconButton(
+            //   icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+            //   onPressed: () => Navigator.of(context).pop(),
+            // ),
             backgroundColor: pHeaderTabColor,
             centerTitle: true,
             title: Text(
@@ -46,14 +46,14 @@ class _SearchFoodState extends State<SearchFood> {
                   height: size.height * 0.05,
                 ),
                 Center(
-                  child: Container(
-                     height: size.height * 0.08,
-                      width: size.width * 0.85,
-                    child: TextField(
+                    child: Container(
+                  height: size.height * 0.08,
+                  width: size.width * 0.85,
+                  child: TextField(
                     autocorrect: true,
                     decoration: InputDecoration(
                       hintText: 'ค้นหารายการอาหาร',
-                      prefixIcon: Icon(Icons.search_rounded ),
+                      prefixIcon: Icon(Icons.search_rounded),
                       hintStyle: TextStyle(color: pRegisTxtColor),
                       filled: true,
                       fillColor: Colors.white,
@@ -66,23 +66,23 @@ class _SearchFoodState extends State<SearchFood> {
                         borderSide: BorderSide(color: Colors.white, width: 2),
                       ),
                     ),
-                    ),
-                  )
-                ),
+                  ),
+                )),
                 SizedBox(
                   height: size.height * 0.25,
                 ),
-                CircleAvatar(
-                  radius: size.width * 0.25,
-                  backgroundColor: sBackgroundColor,
-                  child: IconButton(
-                    icon: Icon(Icons.camera_alt),
-                    color: pHeaderTabColor,
-                    iconSize: 110,
-                    onPressed: () {
-                      setState(() {});
-                    },
-                  ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/Camera');
+                  },
+                  child: CircleAvatar(
+                      radius: size.width * 0.25,
+                      backgroundColor: sBackgroundColor,
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: pHeaderTabColor,
+                        size: 110,
+                      )),
                 ),
               ],
             ),

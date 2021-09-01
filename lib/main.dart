@@ -19,13 +19,20 @@ void main() {
   runApp(
     MaterialApp(
       // home: Init(),
-      initialRoute: '/Home',
+      initialRoute: '/Init',
       routes: {
         '/Init': (context) => Init(),
+        '/Username': (context) => Username(),
+        '/WeighHeight': (context) => WeighHeight(),
+        '/Disease': (context) => Disease(),
+        '/Progress': (context) => Progress(),
+        '/Individual': (context) => Individual(),
         '/Home': (context) => Home(),
         '/FoodDetail': (context) => FoodDetail(),
         '/AddMeal': (context) => AddMeal(),
         '/DailyEat': (context) => DailyEat(),
+        '/Profile': (context) => Profile(),
+        '/Camera': (context) => Camera(),
       },
       theme: ThemeData(
         // primaryColor: Colors.red,
