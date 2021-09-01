@@ -1,4 +1,5 @@
 import 'package:elder_eate/constant.dart';
+import 'package:elder_eate/screens/dailyEat/dailyEat.dart';
 import 'package:elder_eate/screens/food/addMeal.dart';
 import 'package:elder_eate/screens/food/foodDetail.dart';
 import 'package:elder_eate/screens/home/home.dart';
@@ -15,12 +16,13 @@ void main() {
   runApp(
     MaterialApp(
       // home: Init(),
-      initialRoute: '/AddMeal',
+      initialRoute: '/Home',
       routes: {
         '/Init': (context) => Init(),
         '/Home': (context) => Home(),
-        '/Food': (context) => FoodDetail(),
+        '/FoodDetail': (context) => FoodDetail(),
         '/AddMeal': (context) => AddMeal(),
+        '/DailyEat': (context) => DailyEat(),
       },
       theme: ThemeData(
         // primaryColor: Colors.red,

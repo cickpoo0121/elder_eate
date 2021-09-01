@@ -65,12 +65,12 @@ class _NutritionPerDayState extends State<NutritionPerDay> {
                       ),
                       SizedBox(
                         // height: 20,
-                        height: size.height * 0.01,
+                        height: size.height * 0.002,
                       ),
                       Container(
-                        // width: 20,
                         width: size.width * 0.45,
                         child: GFProgressBar(
+                          lineHeight: 10,
                           percentage: calNutrition(index),
                           progressBarColor: _color[index],
                         ),
