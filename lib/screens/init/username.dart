@@ -17,6 +17,14 @@ class _UsernameState extends State<Username> {
     var pic = 'assets/icons/userName.svg';
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+           backgroundColor: pBackgroundColor,
+           leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+             elevation: 0.0
+        ),
         backgroundColor: pBackgroundColor,
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
@@ -26,7 +34,7 @@ class _UsernameState extends State<Username> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: size.height * 0.15,
+                    height: size.height * 0.12,
                   ),
                   SvgPicture.asset(
                     pic,

@@ -17,13 +17,21 @@ class _IndividualState extends State<Individual> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
+         appBar: AppBar(
+           backgroundColor: pBackgroundColor,
+           leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+             elevation: 0.0
+        ),
         body: Center(
           child: Padding(
             padding: pPadding,
             child: Column(
               children: [
                 SizedBox(
-                  height: size.height * 0.10,
+                  height: size.height * 0.03,
                 ),
                 Container(
                   child: Text(
