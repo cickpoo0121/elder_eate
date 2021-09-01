@@ -1,4 +1,6 @@
 import 'package:elder_eate/constant.dart';
+import 'package:elder_eate/screens/dailyEat/body.dart';
+import 'package:elder_eate/screens/dailyEat/dailyEat.dart';
 import 'package:elder_eate/screens/home/body.dart';
 import 'package:flutter/material.dart';
 
@@ -16,33 +18,11 @@ class _HomeState extends State<Home> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          // backgroundColor: pBackgroundColor,
-          backgroundColor: Colors.transparent,
-          bottomOpacity: 0.0,
-          elevation: 0.0,
-          title: Text(
-            'เพิ่มมื้ออาหารของคุณ',
-            style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 15),
-              child: Icon(
-                Icons.account_circle,
-                color: Colors.black,
-                size: size.width * 0.08,
-              ),
-            ),
-          ],
-        ),
         bottomNavigationBar: menu(),
         body: TabBarView(children: [
           HomeBody(),
           HomeBody(),
-          HomeBody(),
+          DailyEat(),
         ]),
       ),
     );

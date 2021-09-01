@@ -1,19 +1,29 @@
 import 'package:elder_eate/constant.dart';
-import 'package:elder_eate/screens/food/nutrition.dart';
+import 'package:elder_eate/component/nutrition.dart';
 import 'package:flutter/material.dart';
 
 class FoodDetail extends StatefulWidget {
-  const FoodDetail({Key? key}) : super(key: key);
+  const FoodDetail({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _FoodDetailState createState() => _FoodDetailState();
 }
 
 class _FoodDetailState extends State<FoodDetail> {
+  int _event = 0;
+  String foodMenu = "ข้าวต้มหมู";
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    String foodMenu = "ข้าวต้มหมู";
+    _event = ModalRoute.of(context)!.settings.arguments as int;
 
     return Scaffold(
       backgroundColor: pHeaderTabColor,
@@ -21,7 +31,7 @@ class _FoodDetailState extends State<FoodDetail> {
         backgroundColor: pHeaderTabColor,
         centerTitle: true,
         title: Text(
-          'รายการอาหาร',
+          _event == 0 ? 'รายการอาหาร' : 'รายละเอียดอาหาร',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         elevation: 0.0,
@@ -68,14 +78,16 @@ class _FoodDetailState extends State<FoodDetail> {
                   SizedBox(
                     height: size.height * 0.02,
                   ),
-                  Container(
-                    width: size.width * 0.45,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text("เพิ่มประวัติการกิน",
-                          style: TextStyle(fontSize: 16)),
-                    ),
-                  )
+                  _event == 0
+                      ? Container(
+                          width: size.width * 0.45,
+                          child: TextButton(
+                            onPressed: () {},
+                            child: Text("เพิ่มประวัติการกิน",
+                                style: TextStyle(fontSize: 16)),
+                          ),
+                        )
+                      : Container(),
                 ],
               ),
             ),

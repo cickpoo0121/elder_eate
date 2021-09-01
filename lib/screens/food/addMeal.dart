@@ -1,5 +1,5 @@
 import 'package:elder_eate/constant.dart';
-import 'package:elder_eate/screens/food/nutrition.dart';
+import 'package:elder_eate/component/nutrition.dart';
 import 'package:flutter/material.dart';
 
 class AddMeal extends StatefulWidget {
@@ -124,7 +124,7 @@ class _AddMealState extends State<AddMeal> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(20)),
                             child: Text(
-                              "X1",
+                              "x1",
                               style: TextStyle(
                                 color: pDetailTxtColor,
                                 fontWeight: FontWeight.bold,

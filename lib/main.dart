@@ -1,4 +1,5 @@
 import 'package:elder_eate/constant.dart';
+import 'package:elder_eate/screens/dailyEat/dailyEat.dart';
 import 'package:elder_eate/screens/food/addMeal.dart';
 import 'package:elder_eate/screens/food/foodDetail.dart';
 import 'package:elder_eate/screens/home/home.dart';
@@ -18,12 +19,13 @@ void main() {
   runApp(
     MaterialApp(
       // home: Init(),
-      initialRoute: '/AddMeal',
+      initialRoute: '/Home',
       routes: {
         '/Init': (context) => Init(),
         '/Home': (context) => Home(),
-        '/Food': (context) => FoodDetail(),
-        '/AddMeal': (context) => WeighHeight(),
+        '/FoodDetail': (context) => FoodDetail(),
+        '/AddMeal': (context) => AddMeal(),
+        '/DailyEat': (context) => DailyEat(),
       },
       theme: ThemeData(
         // primaryColor: Colors.red,
@@ -45,7 +47,6 @@ void main() {
         ),
         fontFamily: 'IBMPlexSansThai',
         textTheme: TextTheme(
-
           // Title page
           headline1: TextStyle(
             fontSize: 25.0,
@@ -53,14 +54,14 @@ void main() {
             color: Colors.white,
           ),
 
-        // Text Nomal purple
+          // Text Nomal purple
           headline2: TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
             color: pDetailTxtColor,
           ),
 
-        // Text Nomal black
+          // Text Nomal black
           headline3: TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
