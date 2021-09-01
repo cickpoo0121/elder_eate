@@ -15,6 +15,14 @@ class _WeighHeightState extends State<WeighHeight> {
     var pic = 'assets/images/high.png';
     return SafeArea(
         child: Scaffold(
+           appBar: AppBar(
+           backgroundColor: pBackgroundColor,
+           leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+             elevation: 0.0
+        ),
       backgroundColor: pBackgroundColor,
       resizeToAvoidBottomInset: false,
       body: Center(
