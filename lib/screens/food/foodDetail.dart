@@ -14,6 +14,7 @@ class FoodDetail extends StatefulWidget {
 class _FoodDetailState extends State<FoodDetail> {
   int _event = 0; // 1 คือ รายละเอียดอาหาร , 0 รายการอาหาร
   String foodMenu = "ข้าวต้มหมู";
+  
 
   @override
   void initState() {

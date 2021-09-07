@@ -20,7 +20,7 @@ void main() {
   runApp(
     MaterialApp(
       // home: Init(),
-      initialRoute: '/Init',
+      initialRoute: '/Home',
       routes: {
         '/Init': (context) => Init(),
         '/Username': (context) => Username(),
@@ -44,6 +44,12 @@ void main() {
         scaffoldBackgroundColor: pBackgroundColor,
         // accentColor: Colors.red[900],
         // canvasColor: Colors.green,
+        appBarTheme: AppBarTheme(
+          backgroundColor: pHeaderTabColor,
+          iconTheme: IconThemeData(color: Colors.black),
+
+          // set backbutton color here which will reflect in all screens.
+        ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
               primary: pButtonTxtColor,
@@ -51,12 +57,12 @@ void main() {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20))),
         ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: TextButton.styleFrom(
-              primary: pButtonTxtColor,
-              backgroundColor: pButtonColor,
-              shape: CircleBorder()),
-        ),
+        // elevatedButtonTheme: ElevatedButtonThemeData(
+        //   style: TextButton.styleFrom(
+        //       primary: pButtonTxtColor,
+        //       backgroundColor: pButtonColor,
+        //       shape: CircleBorder()),
+        // ),
         fontFamily: 'IBMPlexSansThai',
         textTheme: TextTheme(
           // Title page

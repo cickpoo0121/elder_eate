@@ -6,16 +6,19 @@ class NutritionPerDay extends StatefulWidget {
   const NutritionPerDay({
     Key? key,
     required this.nutritionValue,
+    required this.maxNutrition,
   }) : super(key: key);
 
-  final List<int> nutritionValue;
+  final List<double> nutritionValue;
+  final List<double> maxNutrition;
 
   @override
   _NutritionPerDayState createState() => _NutritionPerDayState();
 }
 
 class _NutritionPerDayState extends State<NutritionPerDay> {
-  List<int> _nutritionValue = [];
+  List<double> _nutritionValue = [];
+  List<double> _maxNutrition = [];
   List<String> _icon = [
     "assets/images/calories.png",
     "assets/images/sugar.png",
@@ -23,9 +26,14 @@ class _NutritionPerDayState extends State<NutritionPerDay> {
   ];
   List<String> _nutritionName = ["แคลอรี", "น้ำตาล", "โซเดียม"];
   List<Color> _color = [pCaloriesColor, pSugarColor, pSodiumColor];
-  List<int> _maxNutrition = [2000, 500, 300];
+
   double calNutrition(index) {
     // print(_nutritionValue[index] / _maxNutrition[index]);
+    double result = _nutritionValue[index] / _maxNutrition[index];
+    if (result >= 1) {
+      _color[index] = Colors.red;
+      return 1;
+    }
     return _nutritionValue[index] / _maxNutrition[index];
     // return 0.2;
   }
@@ -34,6 +42,7 @@ class _NutritionPerDayState extends State<NutritionPerDay> {
   void initState() {
     super.initState();
     _nutritionValue = widget.nutritionValue;
+    _maxNutrition = widget.maxNutrition;
   }
 
   @override
@@ -77,8 +86,8 @@ class _NutritionPerDayState extends State<NutritionPerDay> {
                       )
                     ],
                   ),
-                  trailing:
-                      Text("${_nutritionValue[index]}/${_maxNutrition[index]}"),
+                  trailing: Text(
+                      "${_nutritionValue[index].toStringAsFixed(0)}/${_maxNutrition[index].toStringAsFixed(0)}"),
                 ),
               ),
             ],

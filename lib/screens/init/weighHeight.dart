@@ -1,5 +1,6 @@
 import 'package:elder_eate/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class WeighHeight extends StatefulWidget {
   const WeighHeight({Key? key}) : super(key: key);
@@ -12,45 +13,52 @@ class _WeighHeightState extends State<WeighHeight> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    var pic = 'assets/images/high.png';
+    var pic = 'assets/icons/weighHeight.svg';
     return SafeArea(
         child: Scaffold(
-           appBar: AppBar(
-           backgroundColor: pBackgroundColor,
-           leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-             elevation: 0.0
-        ),
+      appBar: AppBar(
+          backgroundColor: pBackgroundColor,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          elevation: 0.0),
       backgroundColor: pBackgroundColor,
-      resizeToAvoidBottomInset: false,
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(pic),
-            SizedBox(
-              height: size.height * 0.05,
-            ),
-            Container(
-              height: size.height * 0.08,
-              width: size.width * 0.85,
-              child: TextField(
-                autocorrect: true,
-                decoration: InputDecoration(
-                  hintText: 'น้ำหนัก',
-                  prefixIcon: Icon(Icons.line_weight_rounded),
-                  hintStyle: TextStyle(color: pRegisTxtColor),
-                  filled: true,
-                  fillColor: Colors.white,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                    borderSide: BorderSide(color: Colors.white, width: 2),
+            Stack(
+              children: [
+                Container(
+                  height: size.height * 0.4,
+                  width: size.width * 1,
+                ),
+                Positioned(
+                  child: SvgPicture.asset(
+                    pic,
+                    width: size.width * 0.7,
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                    borderSide: BorderSide(color: Colors.white, width: 2),
+                  top: 0,
+                  right: 0,
+                  left: 100,
+                )
+              ],
+            ),
+            SizedBox(
+              height: size.height * 0.02,
+            ),
+            Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: TextField(
+                  autocorrect: true,
+                  decoration: InputDecoration(
+                    hintText: 'น้ำหนัก',
+                    prefixIcon: Icon(Icons.line_weight_rounded),
+                    hintStyle: TextStyle(color: pRegisTxtColor),
+                    border: InputBorder.none,
                   ),
                 ),
               ),
@@ -58,30 +66,23 @@ class _WeighHeightState extends State<WeighHeight> {
             SizedBox(
               height: size.height * 0.02,
             ),
-            Container(
-              height: size.height * 0.08,
-              width: size.width * 0.85,
-              child: TextField(
-                autocorrect: true,
-                decoration: InputDecoration(
-                  hintText: 'ส่วนสูง',
-                  prefixIcon: Icon(Icons.accessibility_new_rounded),
-                  hintStyle: TextStyle(color: pRegisTxtColor),
-                  filled: true,
-                  fillColor: Colors.white,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                    borderSide: BorderSide(color: Colors.white, width: 2),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                    borderSide: BorderSide(color: Colors.white, width: 2),
-                  ),
+            Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: TextField(
+                  autocorrect: true,
+                  decoration: InputDecoration(
+                      hintText: 'ส่วนสูง',
+                      prefixIcon: Icon(Icons.accessibility_new_rounded),
+                      hintStyle: TextStyle(color: pRegisTxtColor),
+                      border: InputBorder.none),
                 ),
               ),
             ),
             SizedBox(
-              height: size.height * 0.05,
+              height: size.height * 0.065,
             ),
             Container(
               width: size.width * 0.28,

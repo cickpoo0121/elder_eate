@@ -12,9 +12,68 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
+  // double calories = 2500;
+  // double sugar = 1000;
+  // double sodium = 302;
+
+  // List<double> nutritionValue = [750, 70, 30];
+  // List<double> nutritionValue = [0, 0, 0];
+  List<double> nutritionValue = [2000, 530, 320];
+  List<double> maxNutrition = [2000, 500, 300];
+
+  String titleName = 'เพิ่มมื้ออาหารของคุณ';
+  String mainIconName = 'assets/icons/cook.svg';
+  String status = '';
+  late Widget mainIcon;
+
+  resultOfday() {
+    for (int i = 0; i < nutritionValue.length; i++) {
+      if (nutritionValue[i] == 0) {
+        titleName = "เพิ่มมื้ออาหารของคุณ";
+        status = 'add';
+
+        mainIcon = Positioned(
+          child: SvgPicture.asset("assets/icons/cook.svg"),
+          top: -50,
+          right: 0,
+          left: 0,
+        );
+      } else if (nutritionValue[i] >= maxNutrition[i]) {
+        titleName = "อาหารเกินเกณฑ์";
+        status = 'over';
+
+        mainIcon = Positioned(
+          child: SvgPicture.asset(
+            "assets/icons/overCase.svg",
+            height: 200,
+          ),
+          // top: -2,
+          right: 0,
+          left: 0,
+        );
+      } else {
+        titleName = "สารอาหารอยู่ตามเกณฑ์";
+        status = 'incase';
+        mainIcon = Positioned(
+          child: SvgPicture.asset("assets/icons/inCase.svg"),
+          // top: -10,
+          right: 0,
+          left: 0,
+        );
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    resultOfday();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -23,7 +82,7 @@ class _HomeBodyState extends State<HomeBody> {
         bottomOpacity: 0.0,
         elevation: 0.0,
         title: Text(
-          'เพิ่มมื้ออาหารของคุณ',
+          titleName,
           style: TextStyle(
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22),
         ),
@@ -56,12 +115,20 @@ class _HomeBodyState extends State<HomeBody> {
                     width: size.width * 1,
                     // color: Colors.red,
                   ),
-                  Positioned(
-                    child: SvgPicture.asset("assets/icons/cook.svg"),
-                    top: -50,
-                    right: 0,
-                    left: 0,
-                  )
+                  mainIcon,
+                  status == 'over'
+                      ? Positioned(
+                          child: Center(
+                              child: Text(
+                            "โปรดออกกำลังกายเพิ่มเติม",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          )),
+                          // top: -5,
+                          // right: 0.5,
+                          // left: 0,
+                        )
+                      : Container(),
                 ],
               ),
               Column(
@@ -95,7 +162,8 @@ class _HomeBodyState extends State<HomeBody> {
                     ),
                   ),
                   NutritionPerDay(
-                    nutritionValue: [750, 50, 70],
+                    nutritionValue: nutritionValue,
+                    maxNutrition: maxNutrition,
                   )
                 ],
               )

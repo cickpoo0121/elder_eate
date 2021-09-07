@@ -15,7 +15,8 @@ class _ProgressState extends State<Progress> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushNamed(context, '/Individual');
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/Individual', (route) => false);
 
       // setState(() {
       // });
@@ -27,14 +28,13 @@ class _ProgressState extends State<Progress> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-         appBar: AppBar(
-           backgroundColor: pBackgroundColor,
-           leading: IconButton(
+        appBar: AppBar(
+            backgroundColor: pBackgroundColor,
+            leading: IconButton(
               icon: Icon(Icons.arrow_back_ios, color: Colors.black),
               onPressed: () => Navigator.of(context).pop(),
             ),
-             elevation: 0.0
-        ),
+            elevation: 0.0),
         // backgroundColor: Colors.red,
         body: Center(
           child: Column(

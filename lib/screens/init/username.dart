@@ -18,96 +18,82 @@ class _UsernameState extends State<Username> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-           backgroundColor: pBackgroundColor,
-           leading: IconButton(
+            backgroundColor: pBackgroundColor,
+            leading: IconButton(
               icon: Icon(Icons.arrow_back_ios, color: Colors.black),
               onPressed: () => Navigator.of(context).pop(),
             ),
-             elevation: 0.0
-        ),
+            elevation: 0.0),
         backgroundColor: pBackgroundColor,
-        resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
+          // scrollDirection: Axis.vertical,
+          physics: ClampingScrollPhysics(),
           child: Padding(
             padding: pPadding,
-            child: Center(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: size.height * 0.12,
-                  ),
-                  SvgPicture.asset(
-                    pic,
-                    width: size.width * 0.45,
-                  ),
-                  SizedBox(
-                    height: size.height * 0.05,
-                  ),
-                  Container(
-                    height: size.height * 0.08,
-                    width: size.width * 0.85,
+            child: Column(
+              children: [
+                // SizedBox(
+                //   height: size.height * 0.12,
+                // ),
+                SvgPicture.asset(
+                  pic,
+                  width: size.width * 0.45,
+                ),
+                SizedBox(
+                  height: size.height * 0.05,
+                ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
                     child: TextField(
                       autocorrect: true,
                       decoration: InputDecoration(
                         hintText: 'ชื่อผู้ใช้',
                         prefixIcon: Icon(Icons.account_box),
                         hintStyle: TextStyle(color: pRegisTxtColor),
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                          borderSide: BorderSide(color: Colors.white, width: 2),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                          borderSide: BorderSide(color: Colors.white, width: 2),
-                        ),
+                        border: InputBorder.none,
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: size.height * 0.05,
-                  ),
-                  Container(
-                    height: size.height * 0.08,
-                    width: size.width * 0.85,
+                ),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
                     child: TextField(
                       autocorrect: true,
                       decoration: InputDecoration(
                         hintText: 'อายุ',
                         prefixIcon: Icon(Icons.date_range_rounded),
                         hintStyle: TextStyle(color: pRegisTxtColor),
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                          borderSide: BorderSide(color: Colors.white, width: 2),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                          borderSide: BorderSide(color: Colors.white, width: 2),
-                        ),
+                        border: InputBorder.none,
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: size.height * 0.1,
-                  ),
-                  Container(
-                    width: size.width * 0.30,
-                    decoration: BoxDecoration(),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/WeighHeight');
-                      },
-                      child: Text(
-                        "ถัดไป",
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
+                ),
+                SizedBox(
+                  height: size.height * 0.15,
+                ),
+                Container(
+                  width: size.width * 0.30,
+                  decoration: BoxDecoration(),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/WeighHeight');
+                    },
+                    child: Text(
+                      "ถัดไป",
+                      style: Theme.of(context).textTheme.headline5,
                     ),
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             ),
           ),
         ),

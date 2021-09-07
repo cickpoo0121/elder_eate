@@ -11,10 +11,73 @@ class AddMeal extends StatefulWidget {
 }
 
 class _AddMealState extends State<AddMeal> {
+  String foodMenu = "ข้าวต้มหมู";
+  // List<double> nutritionBalance = [800, 500, 70]; //case calories over
+  // List<double> nutritionBalance = [1000, 400, 70]; //case sugar over
+  List<double> nutritionBalance = [1000, 500, 30]; //case sodium over
+  List<double> foodNutrition = [1000, 500, 70];
+  late String overNutri;
+
+  checkDayNutri() {
+    overNutri = '';
+    for (int i = 0; i < nutritionBalance.length; i++) {
+      if (nutritionBalance[i] < foodNutrition[i]) {
+        overNutri += i == 0
+            ? 'แคลอรี'
+            : i == 1
+                ? 'น้ำตาล'
+                : 'โซเดียม';
+      }
+    }
+  }
+
+  alert() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Center(
+              child: Text(
+                'ปริมาณอาหารเกิน',
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.w900),
+              ),
+            ),
+            content: Text(
+              'ปริมาณ${overNutri}ในอาหารเกินกว่ากำหนดของวันนี้ ท่านต้องการยืนยันทานอาหารชนิดนี้หรือดูรายการอาหารเพิ่มเติม',
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: () {},
+                child: Text(
+                  'ยืนยัน',
+                ),
+                style: TextButton.styleFrom(
+                  backgroundColor: sButtonColor,
+                  primary: Colors.red,
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: Text(
+                  'อาหารทดแทน',
+                  // style: TextStyle(color: Colors.red),
+                ),
+                style: TextButton.styleFrom(
+                  backgroundColor: sButtonColor,
+                  primary: Color(0xFF0047FF),
+                ),
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    String foodMenu = "ข้าวต้มหมู";
 
     return Scaffold(
       backgroundColor: pHeaderTabColor,
@@ -114,6 +177,7 @@ class _AddMealState extends State<AddMeal> {
                             ),
                             style: TextButton.styleFrom(
                               backgroundColor: sButtonColor,
+                              shape: CircleBorder(),
                             ),
                           ),
                           Spacer(),
@@ -141,6 +205,7 @@ class _AddMealState extends State<AddMeal> {
                             ),
                             style: TextButton.styleFrom(
                               backgroundColor: sButtonColor,
+                              shape: CircleBorder(),
                             ),
                           )
                         ],
@@ -159,12 +224,14 @@ class _AddMealState extends State<AddMeal> {
                         onPressed: () {
                           // Navigator.pushNamed(context, '/Home');
 
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (BuildContext context) {
-                            return Home(
-                              currentPage: 2,
-                            );
-                          }));
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (BuildContext context) {
+                          //   return Home(
+                          //     currentPage: 2,
+                          //   );
+                          // }));
+                          checkDayNutri();
+                          overNutri != null ? alert() : '';
                         },
                         child: Text("เพิ่มประวัติการกิน",
                             style: TextStyle(fontSize: 16)),
