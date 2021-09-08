@@ -1,4 +1,4 @@
-import 'package:elder_eate/screens/home/nutritionPerDay.dart';
+import 'package:elder_eate/component/nutritionPerDay.dart';
 import 'package:elder_eate/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

@@ -31,6 +31,27 @@ class _AddMealState extends State<AddMeal> {
     }
   }
 
+// jump to daily eate page
+  goDailyEat() {
+    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+      builder: (BuildContext context) {
+        return Home(
+          currentPage: 2,
+        );
+      },
+    ), (route) => false);
+
+    // .push(
+    //   MaterialPageRoute(
+    //     builder: (BuildContext context) {
+    //       return Home(
+    //         currentPage: 2,
+    //       );
+    //     },
+    //   ),
+    // );
+  }
+
   alert() {
     showDialog(
         context: context,
@@ -50,7 +71,9 @@ class _AddMealState extends State<AddMeal> {
             ),
             actions: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  goDailyEat();
+                },
                 child: Text(
                   'ยืนยัน',
                 ),
@@ -60,7 +83,9 @@ class _AddMealState extends State<AddMeal> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/FoodRecommend');
+                },
                 child: Text(
                   'อาหารทดแทน',
                   // style: TextStyle(color: Colors.red),
@@ -224,14 +249,8 @@ class _AddMealState extends State<AddMeal> {
                         onPressed: () {
                           // Navigator.pushNamed(context, '/Home');
 
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (BuildContext context) {
-                          //   return Home(
-                          //     currentPage: 2,
-                          //   );
-                          // }));
                           checkDayNutri();
-                          overNutri != null ? alert() : '';
+                          overNutri != null ? alert() : goDailyEat();
                         },
                         child: Text("เพิ่มประวัติการกิน",
                             style: TextStyle(fontSize: 16)),
