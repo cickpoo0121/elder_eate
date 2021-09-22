@@ -36,8 +36,8 @@ class _FoodRecommendBodyState extends State<FoodRecommendBody> {
     {"menu": "แกงจีด", "datetime": DateTime.now()},
   ];
 
-  List<double> nutritionValue = [2000, 530, 320];
-  List<double> maxNutrition = [2000, 500, 300];
+  List<double> nutritionValue = testnutritionValue;
+  List<double> maxNutrition = testmaxNutrition;
 
   @override
   void initState() {
@@ -50,7 +50,7 @@ class _FoodRecommendBodyState extends State<FoodRecommendBody> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return noRecommend(size);
+    return haveRecommend(size);
   }
 
   Widget haveRecommend(size) {

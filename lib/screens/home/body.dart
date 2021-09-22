@@ -18,8 +18,8 @@ class _HomeBodyState extends State<HomeBody> {
 
   // List<double> nutritionValue = [750, 70, 30];
   // List<double> nutritionValue = [0, 0, 0];
-  List<double> nutritionValue = [2000, 530, 320];
-  List<double> maxNutrition = [2000, 500, 300];
+  List<double> nutritionValue = testnutritionValue;
+  List<double> maxNutrition = testmaxNutrition;
 
   String titleName = 'เพิ่มมื้ออาหารของคุณ';
   String mainIconName = 'assets/icons/cook.svg';

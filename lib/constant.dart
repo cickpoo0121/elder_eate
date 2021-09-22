@@ -30,3 +30,9 @@ const pSodiumColor = Color(0xFFD99F4E);
 
 // padding
 const pPadding = EdgeInsets.symmetric(horizontal: 20);
+
+// test nutrition
+// List<double> testnutritionValue = [2000, 530, 320]; // สารอาหารเกิน
+List<double> testnutritionValue = [100, 100, 20]; // อยู่ในเกณ
+// List<double> testnutritionValue = [0, 0, 0]; // เพื่มอาหาร
+List<double> testmaxNutrition = [2000, 500, 300];
