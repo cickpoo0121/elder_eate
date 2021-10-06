@@ -1,5 +1,7 @@
 import 'package:elder_eate/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -8,7 +10,151 @@ class Profile extends StatefulWidget {
   _ProfileState createState() => _ProfileState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
+  UserProfile? _userProfile;
+  String? _userEmail;
+  StoredAccessToken? _accessToken;
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+  }
+
+  void alert() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              _accessToken != null ? 'Line User Profile' : 'No data',
+              style: TextStyle(color: Colors.black),
+            ),
+            content: _accessToken != null
+                ? Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      (_userProfile?.pictureUrl ?? "").isNotEmpty
+                          ? Image.network(
+                              _userProfile!.pictureUrl.toString(),
+                              width: 200,
+                              height: 200,
+                            )
+                          : Icon(
+                              Icons.person,
+                              size: 30,
+                            ),
+                      Text(
+                        _userProfile!.displayName,
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                      if (_userEmail != null) Text(_userEmail!),
+                      Text(_userProfile!.statusMessage.toString()),
+                      Text(
+                        'userId: ${_userProfile!.userId}',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      // Container(
+                      //     child: ElevatedButton(
+                      //         child: Text('Sign Out'),
+                      //         onPressed: () {
+                      //           widget.signout();
+                      //         },
+                      //         style: ElevatedButton.styleFrom(
+                      //             primary: Colors.green, onPrimary: Colors.white))),
+                    ],
+                  )
+                : Container(
+                    child: Text('No data'),
+                  ),
+          );
+        });
+  }
+
+  Future<void> initPlatformState() async {
+    UserProfile? userProfile;
+    StoredAccessToken? accessToken;
+
+    try {
+      accessToken = await LineSDK.instance.currentAccessToken;
+      if (accessToken != null) {
+        userProfile = await LineSDK.instance.getProfile();
+        // print();
+      }
+    } on PlatformException catch (e) {
+      print(e.message);
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      _userProfile = userProfile;
+      _accessToken = accessToken;
+    });
+  }
+
+  void _loginLine() async {
+    try {
+      final result = await LineSDK.instance.login(
+          //   scopes: [
+          //   'profile',
+          //   'openid',
+          //   'email',
+          //   'customScope',
+          // ]
+          );
+      final accessToken = await LineSDK.instance.currentAccessToken;
+
+      // final idToken = result.accessToken.idToken;
+      // final userEmail = (idToken != null) ? idToken['email'] : null;
+      // print(result.toString());
+      // var accesstoken = await getAccessToken();
+      var displayname = result.userProfile?.displayName;
+      // var statusmessage = result.userProfile?.statusMessage;
+      // var imgUrl = result.userProfile?.pictureUrl;
+      var userId = result.userProfile?.userId;
+
+      // print("AccessToken> " + accesstoken);
+      print("DisplayName> " + displayname.toString());
+      // print("StatusMessage> " + statusmessage.toString());
+      // print("ProfileURL> " + imgUrl.toString());
+      print("userId> " + userId.toString());
+
+      setState(() {
+        _userProfile = result.userProfile;
+        // _userEmail = userEmail;
+        _accessToken = accessToken;
+      });
+    } on PlatformException catch (e) {
+      // Error handling.
+      print("Error=====> $e");
+    }
+  }
+
+  void _signOut() async {
+    try {
+      await LineSDK.instance.logout();
+      setState(() {
+        _userProfile = null;
+        _accessToken = null;
+      });
+    } on PlatformException catch (e) {
+      print(e.message);
+    }
+  }
+
+  Future getAccessToken() async {
+    try {
+      final result = await LineSDK.instance.currentAccessToken;
+      return result?.value;
+    } on PlatformException catch (e) {
+      print(e.message);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -32,7 +178,7 @@ class _ProfileState extends State<Profile> {
       body: SingleChildScrollView(
         child: (ConstrainedBox(
           constraints:
-          BoxConstraints(minHeight: size.height, minWidth: size.width),
+              BoxConstraints(minHeight: size.height, minWidth: size.width),
           child: Container(
             decoration: BoxDecoration(
               color: pBackgroundColor,
@@ -231,14 +377,53 @@ class _ProfileState extends State<Profile> {
                     height: size.height * 0.040,
                   ),
                   Container(
-                    width: size.width * 0.25,
+                    width: size.width * 0.85,
+                    decoration: BoxDecoration(),
+                    child: TextButton(
+                      style:
+                          TextButton.styleFrom(backgroundColor: Colors.green),
+                      onPressed: () {
+                        _accessToken == null ? _loginLine() : _signOut();
+                      },
+                      child: Text(
+                        _accessToken == null
+                            ? "เชื่อมต่อไลน์เพื่อรับการแจ้งเตือน"
+                            : "ยกเลิกการเชื่อมต่อ",
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                  // Container(
+                  //   width: size.width * 0.85,
+                  //   decoration: BoxDecoration(),
+                  //   child: TextButton(
+                  //     style:
+                  //         TextButton.styleFrom(backgroundColor: Colors.green),
+                  //     onPressed: () {
+                  //       _signOut();
+                  //     },
+                  //     child: Text(
+                  //       'ยกเลิก',
+                  //       style: Theme.of(context).textTheme.headline5,
+                  //     ),
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: size.height * 0.03,
+                  // ),
+                  Container(
+                    width: size.width * 0.85,
                     decoration: BoxDecoration(),
                     child: TextButton(
                       onPressed: () {
-                        print("object");
+                        // _signOut();
+                        alert();
                       },
                       child: Text(
-                        "แก้ไข",
+                        "เช็กข้อมูลผู้ใช้",
                         style: Theme.of(context).textTheme.headline5,
                       ),
                     ),

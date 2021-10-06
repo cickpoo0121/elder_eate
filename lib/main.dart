@@ -15,12 +15,17 @@ import 'package:elder_eate/screens/main/searchFood.dart';
 import 'package:elder_eate/screens/main/camera.dart';
 import 'package:elder_eate/screens/main/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  LineSDK.instance.setup('1655779489').then((_) {
+    print('LineSDK Prepared');
+  });
   runApp(
     MaterialApp(
       // home: Init(),
-      initialRoute: '/Home',
+      initialRoute: '/Init',
       routes: {
         '/Init': (context) => Init(),
         '/Username': (context) => Username(),
