@@ -44,7 +44,6 @@ class _DiseaseState extends State<Disease> {
                     ),
                     top: -100,
                     right: -20,
-                    // left: 1,
                   ),
                 ],
               ),
@@ -54,18 +53,6 @@ class _DiseaseState extends State<Disease> {
               Card(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
-                // width: size.width * 0.85,
-                // decoration: BoxDecoration(
-                //     boxShadow: [
-                //       BoxShadow(
-                //         color: Colors.grey.withOpacity(0.5),
-                //         spreadRadius: 0.5,
-                //         blurRadius: 5,
-                //         offset: Offset(0, 3), // changes position of shadow
-                //       ),
-                //     ],
-                //     borderRadius: BorderRadius.circular(40.0),
-                //     color: sBackgroundColor),
                 child: Padding(
                   padding: EdgeInsets.only(left: 20.0),
                   child: Row(
@@ -76,7 +63,6 @@ class _DiseaseState extends State<Disease> {
                       ),
                       DropdownButton<String>(
                         value: dropdownValue,
-                        // iconEnabledColor: pRegisTxtColor,
                         style: Theme.of(context).textTheme.headline4,
                         underline: Container(
                           color: sBackgroundColor,

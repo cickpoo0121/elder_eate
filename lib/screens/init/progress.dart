@@ -17,9 +17,6 @@ class _ProgressState extends State<Progress> {
     Future.delayed(Duration(seconds: 3), () {
       Navigator.pushNamedAndRemoveUntil(
           context, '/Individual', (route) => false);
-
-      // setState(() {
-      // });
     });
   }
 
@@ -35,7 +32,6 @@ class _ProgressState extends State<Progress> {
               onPressed: () => Navigator.of(context).pop(),
             ),
             elevation: 0.0),
-        // backgroundColor: Colors.red,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -54,7 +50,6 @@ class _ProgressState extends State<Progress> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Container(
-                  // color: Colors.red,
                   child: Text(
                     _text,
                     textAlign: TextAlign.center,
