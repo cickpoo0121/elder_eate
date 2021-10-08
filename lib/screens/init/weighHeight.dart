@@ -25,79 +25,82 @@ class _WeighHeightState extends State<WeighHeight> {
           elevation: 0.0),
       backgroundColor: pBackgroundColor,
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  height: size.height * 0.4,
-                  width: size.width * 1,
-                ),
-                Positioned(
-                  child: SvgPicture.asset(
-                    pic,
-                    width: size.width * 0.7,
+        child: Padding(
+         padding: pPadding,
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    height: size.height * 0.4,
+                    width: size.width * 1,
                   ),
-                  top: 0,
-                  right: 0,
-                  left: 100,
-                )
-              ],
-            ),
-            SizedBox(
-              height: size.height * 0.02,
-            ),
-            Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: TextField(
-                  autocorrect: true,
-                  decoration: InputDecoration(
-                    hintText: 'น้ำหนัก',
-                    prefixIcon: Icon(Icons.line_weight_rounded),
-                    hintStyle: TextStyle(color: pRegisTxtColor),
-                    border: InputBorder.none,
-                  ),
-                ),
+                  Positioned(
+                    child: SvgPicture.asset(
+                      pic,
+                      width: size.width * 0.7,
+                    ),
+                    top: 0,
+                    right: 0,
+                    left: 100,
+                  )
+                ],
               ),
-            ),
-            SizedBox(
-              height: size.height * 0.02,
-            ),
-            Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: TextField(
-                  autocorrect: true,
-                  decoration: InputDecoration(
-                      hintText: 'ส่วนสูง',
-                      prefixIcon: Icon(Icons.accessibility_new_rounded),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: TextField(
+                    autocorrect: true,
+                    decoration: InputDecoration(
+                      hintText: 'น้ำหนัก',
+                      prefixIcon: Icon(Icons.line_weight_rounded),
                       hintStyle: TextStyle(color: pRegisTxtColor),
-                      border: InputBorder.none),
+                      border: InputBorder.none,
+                    ),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: size.height * 0.065,
-            ),
-            Container(
-              width: size.width * 0.28,
-              decoration: BoxDecoration(),
-              child: TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/Disease');
-                },
-                child: Text(
-                  "ถัดไป",
-                  style: Theme.of(context).textTheme.headline5,
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: TextField(
+                    autocorrect: true,
+                    decoration: InputDecoration(
+                        hintText: 'ส่วนสูง',
+                        prefixIcon: Icon(Icons.accessibility_new_rounded),
+                        hintStyle: TextStyle(color: pRegisTxtColor),
+                        border: InputBorder.none),
+                  ),
                 ),
               ),
-            )
-          ],
+              SizedBox(
+                height: size.height * 0.035,
+              ),
+              Container(
+                width: size.width * 0.28,
+                decoration: BoxDecoration(),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/Disease');
+                  },
+                  child: Text(
+                    "ถัดไป",
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     ));

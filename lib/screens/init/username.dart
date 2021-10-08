@@ -74,7 +74,7 @@ class _UsernameState extends State<Username> {
                   ),
                 ),
                 SizedBox(
-                  height: size.height * 0.15,
+                  height: size.height * 0.10,
                 ),
                 Container(
                   width: size.width * 0.30,

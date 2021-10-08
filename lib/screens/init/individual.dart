@@ -1,6 +1,7 @@
 import 'package:elder_eate/component/nutrition.dart';
 import 'package:elder_eate/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class Individual extends StatefulWidget {
   const Individual({Key? key}) : super(key: key);
@@ -17,14 +18,13 @@ class _IndividualState extends State<Individual> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-         appBar: AppBar(
-           backgroundColor: pBackgroundColor,
-           leading: IconButton(
+        appBar: AppBar(
+            backgroundColor: pBackgroundColor,
+            leading: IconButton(
               icon: Icon(Icons.arrow_back_ios, color: Colors.black),
               onPressed: () => Navigator.of(context).pop(),
             ),
-             elevation: 0.0
-        ),
+            elevation: 0.0),
         body: Center(
           child: Padding(
             padding: pPadding,
@@ -34,11 +34,16 @@ class _IndividualState extends State<Individual> {
                   height: size.height * 0.03,
                 ),
                 Container(
-                  child: Text(
-                    _text,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                  child: AutoSizeText(
+                    'Hello Geeks!. We will break this line into 3 lines !!',
+                    style: TextStyle(fontSize: 30.0),
+                    maxLines: 3,
                   ),
+                  // child: Text(
+                  //   _text,
+                  //   textAlign: TextAlign.center,
+                  //   style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                  // ),
                 ),
                 SizedBox(
                   height: size.height * 0.05,
