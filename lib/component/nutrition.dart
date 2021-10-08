@@ -27,7 +27,7 @@ class _NutritionState extends State<Nutrition> {
     "assets/images/sugar.png",
     "assets/images/sodium.png"
   ];
-  List<String> _nutritionName = ["แคลอรี", "น้ำตาล", "โซเดียม"];
+  List<String> _nutritionName = ["แคลอรี่", "น้ำตาล", "โซเดียม"];
   List<Color> _color = [pCaloriesColor, pSugarColor, pSodiumColor];
 
   @override
@@ -56,14 +56,15 @@ class _NutritionState extends State<Nutrition> {
                 child: ListTile(
                   leading: Image.asset(_icon[index]),
                   title: Padding(
-                    padding: const EdgeInsets.only(left: 20),
+                    padding: const EdgeInsets.only(left: 0),
                     child: Text(
                       _nutritionName[index],
+
                       // textAlign: TextAlign.left,
                       style: TextStyle(
                           color: pDetailTxtColor,
                           fontWeight: FontWeight.bold,
-                          fontSize: 18),
+                          fontSize:  15),
                     ),
                   ),
                   trailing: index == 0
@@ -72,7 +73,7 @@ class _NutritionState extends State<Nutrition> {
                           style: TextStyle(
                               color: pDetailTxtColor,
                               fontWeight: FontWeight.bold,
-                              fontSize: 18),
+                              fontSize: 15),
                         )
                       : index == 1
                           ? Text(
@@ -80,14 +81,14 @@ class _NutritionState extends State<Nutrition> {
                               style: TextStyle(
                                   color: pDetailTxtColor,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 18),
+                                  fontSize: 15),
                             )
                           : Text(
                               "${_sodium} กรัม",
                               style: TextStyle(
                                   color: pDetailTxtColor,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 18),
+                                  fontSize: 15),
                             ),
                 ),
               ),

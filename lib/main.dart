@@ -25,7 +25,7 @@ void main() {
   runApp(
     MaterialApp(
       // home: Init(),
-      initialRoute: '/Init',
+      initialRoute: '/Individual',
       routes: {
         '/Init': (context) => Init(),
         '/Username': (context) => Username(),
