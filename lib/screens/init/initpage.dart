@@ -16,7 +16,6 @@ class _InitState extends State<Init> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        // backgroundColor: Colors.red,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -35,7 +34,6 @@ class _InitState extends State<Init> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Container(
-                  // color: Colors.red,
                   child: Text(
                     _text,
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),

@@ -26,15 +26,11 @@ class _UsernameState extends State<Username> {
             elevation: 0.0),
         backgroundColor: pBackgroundColor,
         body: SingleChildScrollView(
-          // scrollDirection: Axis.vertical,
           physics: ClampingScrollPhysics(),
           child: Padding(
             padding: pPadding,
             child: Column(
               children: [
-                // SizedBox(
-                //   height: size.height * 0.12,
-                // ),
                 SvgPicture.asset(
                   pic,
                   width: size.width * 0.45,
@@ -78,7 +74,7 @@ class _UsernameState extends State<Username> {
                   ),
                 ),
                 SizedBox(
-                  height: size.height * 0.15,
+                  height: size.height * 0.10,
                 ),
                 Container(
                   width: size.width * 0.30,
