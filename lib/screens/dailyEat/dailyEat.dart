@@ -2,6 +2,7 @@ import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/screens/dailyEat/body.dart';
 import 'package:elder_eate/component/nutrition.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class DailyEat extends StatefulWidget {
   const DailyEat({Key? key}) : super(key: key);

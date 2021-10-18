@@ -1,6 +1,7 @@
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/screens/foodRecommend/body.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class FoodRecommend extends StatefulWidget {
   const FoodRecommend({Key? key}) : super(key: key);

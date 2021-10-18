@@ -1,6 +1,7 @@
 import 'package:elder_eate/component/nutritionPerDay.dart';
 import 'package:elder_eate/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class FoodRecommendBody extends StatefulWidget {
   const FoodRecommendBody({

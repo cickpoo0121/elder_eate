@@ -1,5 +1,6 @@
 import 'package:elder_eate/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Init extends StatefulWidget {
   const Init({Key? key}) : super(key: key);
@@ -9,6 +10,7 @@ class Init extends StatefulWidget {
 }
 
 String _text = "ควบคุมปริมาณ แคลอรี่ น้ำตาล และ โซเดียม ให้กับคนที่คุณรัก";
+var pic = 'assets/images/logo.png';
 
 class _InitState extends State<Init> {
   @override
@@ -20,14 +22,15 @@ class _InitState extends State<Init> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircleAvatar(
-                radius: size.width * 0.2,
-                backgroundColor: pButtonColor,
-                child: Text(
-                  "LOGO",
-                  style: TextStyle(fontSize: 30, color: Colors.white),
-                ),
-              ),
+              // CircleAvatar(
+              //   radius: size.width * 0.2,
+              //   backgroundColor: pButtonColor,
+              //   child: Text(
+              //     "LOGO",
+              //     style: TextStyle(fontSize: 30, color: Colors.white),
+              //   ),
+              // ),
+              Positioned(child: Image.asset(pic,width: size.width * 1),),
               SizedBox(
                 height: size.height * 0.03,
               ),
@@ -36,7 +39,7 @@ class _InitState extends State<Init> {
                 child: Container(
                   child: Text(
                     _text,
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 25.sp, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -51,7 +54,7 @@ class _InitState extends State<Init> {
                   },
                   child: Text(
                     'เริ่มต้นใช้งาน',
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20.sp),
                   ),
                 ),
               )

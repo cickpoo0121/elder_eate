@@ -1,5 +1,6 @@
 import 'package:elder_eate/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class SearchFood extends StatefulWidget {
   const SearchFood({Key? key}) : super(key: key);
@@ -71,14 +72,18 @@ class _SearchFoodState extends State<SearchFood> {
                   onTap: () {
                     Navigator.pushNamed(context, '/Camera');
                   },
-                  child: CircleAvatar(
-                      radius: size.width * 0.25,
-                      backgroundColor: sBackgroundColor,
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: pHeaderTabColor,
-                        size: 110,
-                      )),
+                  child: Container(
+                    width: Adaptive.w(20),
+                    height: 40.5.h,
+                    child: CircleAvatar(
+                        radius: size.width * 0.35,
+                        backgroundColor: sBackgroundColor,
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: pHeaderTabColor,
+                          size: 50,
+                        )),
+                  ),
                 ),
               ],
             ),

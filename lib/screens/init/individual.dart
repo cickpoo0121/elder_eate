@@ -1,7 +1,7 @@
 import 'package:elder_eate/component/nutrition.dart';
 import 'package:elder_eate/constant.dart';
 import 'package:flutter/material.dart';
-// import 'package:auto_size_text/auto_size_text.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Individual extends StatefulWidget {
   const Individual({Key? key}) : super(key: key);
@@ -43,7 +43,7 @@ class _IndividualState extends State<Individual> {
                     child:Text(
                     _text,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 50.sp, fontWeight: FontWeight.bold),
                   ), 
                   )
                   

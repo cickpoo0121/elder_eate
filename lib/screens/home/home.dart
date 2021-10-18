@@ -5,6 +5,8 @@ import 'package:elder_eate/screens/home/body.dart';
 import 'package:elder_eate/screens/main/camera.dart';
 import 'package:elder_eate/screens/main/searchFood.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
+
 
 class Home extends StatefulWidget {
   final int currentPage;
@@ -30,6 +32,7 @@ class _HomeState extends State<Home> {
       icon: Icon(Icons.restaurant),
     ),
   ];
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

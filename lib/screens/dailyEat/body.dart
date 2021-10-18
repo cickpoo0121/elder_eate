@@ -1,5 +1,6 @@
 import 'package:elder_eate/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class DailyEateBody extends StatefulWidget {
   const DailyEateBody({
@@ -21,7 +22,7 @@ class _DailyEateBodyState extends State<DailyEateBody> {
   // int _calories = 0;
   // int _sugar = 0;
   // int _sodium = 0;
-  int event = 1; // 1 คือ รายละเอียดอาหาร , 0 รายการอาหาร 
+  int event = 1; // 1 คือ รายละเอียดอาหาร , 0 รายการอาหาร
   List<String> _icon = [
     "assets/images/food.png",
     "assets/images/drink.png",
@@ -60,8 +61,8 @@ class _DailyEateBodyState extends State<DailyEateBody> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
                 child: ListTile(
-                  onTap: () =>
-                      Navigator.pushNamed(context, '/FoodDetail', arguments: event),
+                  onTap: () => Navigator.pushNamed(context, '/FoodDetail',
+                      arguments: event),
                   leading: Image.asset(
                     _icon[index],
                     height: size.height * 0.07,
@@ -74,7 +75,7 @@ class _DailyEateBodyState extends State<DailyEateBody> {
                       style: TextStyle(
                           color: pDetailTxtColor,
                           fontWeight: FontWeight.bold,
-                          fontSize: 18),
+                          fontSize: 18.sp),
                     ),
                   ),
                   trailing: Text(
@@ -85,7 +86,7 @@ class _DailyEateBodyState extends State<DailyEateBody> {
                     style: TextStyle(
                         color: pDetailTxtColor,
                         fontWeight: FontWeight.bold,
-                        fontSize: 18),
+                        fontSize: 18.sp),
                   ),
                 ),
               ),

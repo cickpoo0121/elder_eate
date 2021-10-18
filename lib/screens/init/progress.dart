@@ -1,5 +1,6 @@
 import 'package:elder_eate/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Progress extends StatefulWidget {
   const Progress({Key? key}) : super(key: key);
@@ -41,7 +42,7 @@ class _ProgressState extends State<Progress> {
                 backgroundColor: pButtonColor,
                 child: Text(
                   "80%",
-                  style: TextStyle(fontSize: 30, color: Colors.white),
+                  style: TextStyle(fontSize: 30.sp, color: Colors.white),
                 ),
               ),
               SizedBox(
@@ -53,7 +54,7 @@ class _ProgressState extends State<Progress> {
                   child: Text(
                     _text,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 25.sp, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),

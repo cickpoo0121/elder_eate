@@ -2,6 +2,7 @@ import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/component/nutrition.dart';
 import 'package:elder_eate/screens/home/home.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class AddMeal extends StatefulWidget {
   const AddMeal({Key? key}) : super(key: key);
