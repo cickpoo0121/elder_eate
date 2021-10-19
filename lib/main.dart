@@ -14,15 +14,26 @@ import 'package:elder_eate/screens/init/weighHeight.dart';
 import 'package:elder_eate/screens/main/searchFood.dart';
 import 'package:elder_eate/screens/main/camera.dart';
 import 'package:elder_eate/screens/main/profile.dart';
+import 'package:elder_eate/service/service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   LineSDK.instance.setup('1655779489').then((_) {
     print('LineSDK Prepared');
   });
+
+  final result, home;
+  result = await ElderEatDatabase.instance.loadUser();
+  print(result);
+  if (result.length == 0) {
+    home = '/Init';
+  } else {
+    home = '/Home';
+  }
+
   runApp(
     ResponsiveSizer(
       builder: (context, orientation, screenType) {
