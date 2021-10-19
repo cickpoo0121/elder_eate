@@ -17,6 +17,7 @@ import 'package:elder_eate/screens/main/profile.dart';
 import 'package:elder_eate/service/service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
+import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 void main() async {
@@ -28,37 +29,57 @@ void main() async {
   final result, home;
   result = await ElderEatDatabase.instance.loadUser();
   print(result);
-  if (result.length == 0) {
-    home = '/Init';
-  } else {
-    home = '/Home';
-  }
+  // if (result.length == 0) {
+  //   home = '/Init';
+  // } else {
+  //   home = '/Home';
+  // }
 
   runApp(
     ResponsiveSizer(
       builder: (context, orientation, screenType) {
-        return MaterialApp(
-          // home: Init(),
+        return GetMaterialApp(
           initialRoute: '/Init',
-          routes: {
-            '/Init': (context) => Init(),
-            '/Username': (context) => Username(),
-            '/WeighHeight': (context) => WeighHeight(),
-            '/Disease': (context) => Disease(),
-            '/Progress': (context) => Progress(),
-            '/Individual': (context) => Individual(),
-            '/Home': (context) => Home(
-                  currentPage: 0,
-                ),
-            '/HomeBody': (context) => HomeBody(),
-            '/FoodDetail': (context) => FoodDetail(),
-            '/AddMeal': (context) => AddMeal(),
-            '/DailyEat': (context) => DailyEat(),
-            '/Profile': (context) => Profile(),
-            '/Camera': (context) => Camera(),
-            '/SearchFood': (context) => SearchFood(),
-            '/FoodRecommend': (context) => FoodRecommend(),
-          },
+          getPages: [
+            GetPage(name: '/Init', page: () => Init()),
+            GetPage(name: '/Username', page: () => Username()),
+            GetPage(name: '/WeighHeight', page: () => WeighHeight()),
+            GetPage(name: '/Disease', page: () => Disease()),
+            GetPage(name: '/Progress', page: () => ProgressPage()),
+            GetPage(name: '/Individual', page: () => Individual()),
+            GetPage(
+                name: '/Home',
+                page: () => Home(
+                      currentPage: 0,
+                    )),
+            GetPage(name: '/HomeBody', page: () => HomeBody()),
+            GetPage(name: '/FoodDetail', page: () => FoodDetail()),
+            GetPage(name: '/AddMeal', page: () => AddMeal()),
+            GetPage(name: '/DailyEat', page: () => DailyEat()),
+            GetPage(name: '/Profile', page: () => Profile()),
+            GetPage(name: '/Camera', page: () => Camera()),
+            GetPage(name: '/SearchFood', page: () => SearchFood()),
+            GetPage(name: '/FoodRecommend', page: () => FoodRecommend()),
+          ],
+          // routes: {
+          //   '/Init': (context) => Init(),
+          //   '/Username': (context) => Username(),
+          //   '/WeighHeight': (context) => WeighHeight(),
+          //   '/Disease': (context) => Disease(),
+          //   '/Progress': (context) => Progress(),
+          //   '/Individual': (context) => Individual(),
+          //   '/Home': (context) => Home(
+          //         currentPage: 0,
+          //       ),
+          //   '/HomeBody': (context) => HomeBody(),
+          //   '/FoodDetail': (context) => FoodDetail(),
+          //   '/AddMeal': (context) => AddMeal(),
+          //   '/DailyEat': (context) => DailyEat(),
+          //   '/Profile': (context) => Profile(),
+          //   '/Camera': (context) => Camera(),
+          //   '/SearchFood': (context) => SearchFood(),
+          //   '/FoodRecommend': (context) => FoodRecommend(),
+          // },
           theme: ThemeData(
             // primaryColor: Colors.red,
             scaffoldBackgroundColor: pBackgroundColor,

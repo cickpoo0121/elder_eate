@@ -1,7 +1,13 @@
+import 'dart:developer';
+
 import 'package:elder_eate/constant.dart';
+import 'package:elder_eate/controller/user_controller.dart';
+import 'package:elder_eate/model/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/parser.dart';
+import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Username extends StatefulWidget {
@@ -12,6 +18,11 @@ class Username extends StatefulWidget {
 }
 
 class _UsernameState extends State<Username> {
+  UserController _userController = Get.put(UserController());
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController usernameTxt = TextEditingController();
+  TextEditingController ageTxt = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -39,41 +50,60 @@ class _UsernameState extends State<Username> {
                 SizedBox(
                   height: size.height * 0.05,
                 ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: TextField(
-                      autocorrect: true,
-                      decoration: InputDecoration(
-                        hintText: 'ชื่อผู้ใช้',
-                        prefixIcon: Icon(Icons.account_box),
-                        hintStyle: TextStyle(color: pRegisTxtColor),
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: TextField(
-                      autocorrect: true,
-                      decoration: InputDecoration(
-                        hintText: 'อายุ',
-                        prefixIcon: Icon(Icons.date_range_rounded),
-                        hintStyle: TextStyle(color: pRegisTxtColor),
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ),
+                Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: TextFormField(
+                                controller: usernameTxt,
+                                decoration: InputDecoration(
+                                  hintText: 'ชื่อผู้ใช้',
+                                  prefixIcon: Icon(Icons.account_box),
+                                  hintStyle: TextStyle(color: pRegisTxtColor),
+                                  border: InputBorder.none,
+                                ),
+                                validator: (value) {
+                                  if (value == null ||
+                                      value.trim().length == 0) {
+                                    return 'กรุณากรอกข้อมูล';
+                                  }
+                                  return null;
+                                },
+                              )),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.02,
+                        ),
+                        Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: TextFormField(
+                                controller: ageTxt,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  hintText: 'อายุ',
+                                  prefixIcon: Icon(Icons.date_range_rounded),
+                                  hintStyle: TextStyle(color: pRegisTxtColor),
+                                  border: InputBorder.none,
+                                ),
+                                validator: (value) {
+                                  if (value == null ||
+                                      value.trim().length == 0) {
+                                    return 'กรุณากรอกข้อมูล';
+                                  }
+                                  return null;
+                                },
+                              )),
+                        ),
+                      ],
+                    )),
                 SizedBox(
                   height: size.height * 0.10,
                 ),
@@ -82,7 +112,23 @@ class _UsernameState extends State<Username> {
                   decoration: BoxDecoration(),
                   child: TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/WeighHeight');
+                      final isValid = _formKey.currentState!.validate();
+
+                      print(isValid);
+                      if (isValid) {
+                        _userController.user.add(User(
+                          username: usernameTxt.text,
+                          age: int.parse(ageTxt.text),
+                        ));
+                        // User(
+                        //   username: usernameTxt.text,
+                        //   age: int.parse(ageTxt.text),
+                        // );
+                        Get.toNamed('/WeighHeight');
+                        print(_userController.user);
+                        inspect(_userController.user);
+                        // inspect(User());
+                      }
                     },
                     child: Text(
                       "ถัดไป",

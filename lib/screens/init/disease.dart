@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:elder_eate/constant.dart';
+import 'package:elder_eate/controller/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Disease extends StatefulWidget {
@@ -11,7 +15,9 @@ class Disease extends StatefulWidget {
 }
 
 class _DiseaseState extends State<Disease> {
-  String dropdownValue = 'โรคเบาหวาน';
+  UserController _userController = Get.find();
+
+  String? dropdownValue;
 
   @override
   Widget build(BuildContext context) {
@@ -51,45 +57,53 @@ class _DiseaseState extends State<Disease> {
               SizedBox(
                 height: size.height * 0.05,
               ),
-              Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                child: Padding(
-                  padding: EdgeInsets.only(left: 20.0),
-                  child: Row(
-                    children: [
-                      Icon(Icons.health_and_safety),
-                      SizedBox(
-                        width: size.width * 0.1,
-                      ),
-                      DropdownButton<String>(
-                        value: dropdownValue,
-                        style: Theme.of(context).textTheme.headline4,
-                        underline: Container(
-                          color: sBackgroundColor,
+              Form(
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 20.0),
+                    child: Row(
+                      children: [
+                        Icon(Icons.health_and_safety),
+                        SizedBox(
+                          width: size.width * 0.05,
                         ),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownValue = newValue!;
-                          });
-                        },
-                        items: <String>[
-                          "โรคประจำตัว",
-                          'โรคเบาหวาน',
-                          'โรคความดันโลหิตสูง',
-                          'ไม่มีโรคประจำตัว',
-                        ].map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        hint: Text(
-                          "โรคประจำตัว",
-                          style: Theme.of(context).textTheme.headline4,
+                        Expanded(
+                          child: DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                              ),
+                            ),
+                            value: dropdownValue,
+                            style: Theme.of(context).textTheme.headline4,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                dropdownValue = newValue;
+                              });
+                            },
+                            items: [
+                              'โรคเบาหวาน',
+                              'โรคความดันโลหิตสูง',
+                              'ไม่มีโรคประจำตัว',
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            hint: Text(
+                              "โรคประจำตัว",
+                              style: Theme.of(context).textTheme.headline4,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          width: size.width * 0.05,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -101,6 +115,10 @@ class _DiseaseState extends State<Disease> {
                 decoration: BoxDecoration(),
                 child: TextButton(
                   onPressed: () {
+                    if (dropdownValue == null) {}
+                    print(dropdownValue);
+                    _userController.user.last.disease = dropdownValue;
+                    inspect(_userController.user);
                     Navigator.pushNamed(context, '/Progress');
                   },
                   child: Text(

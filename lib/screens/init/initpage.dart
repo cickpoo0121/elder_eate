@@ -1,4 +1,3 @@
-import 'package:elder_eate/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -30,7 +29,9 @@ class _InitState extends State<Init> {
               //     style: TextStyle(fontSize: 30, color: Colors.white),
               //   ),
               // ),
-              Positioned(child: Image.asset(pic,width: size.width * 1),),
+              Positioned(
+                child: Image.asset(pic, width: size.width * 1),
+              ),
               SizedBox(
                 height: size.height * 0.03,
               ),
@@ -39,7 +40,8 @@ class _InitState extends State<Init> {
                 child: Container(
                   child: Text(
                     _text,
-                    style: TextStyle(fontSize: 25.sp, fontWeight: FontWeight.w700),
+                    style:
+                        TextStyle(fontSize: 25.sp, fontWeight: FontWeight.w700),
                   ),
                 ),
               ),

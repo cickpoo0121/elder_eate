@@ -48,4 +48,9 @@ class ElderEatDatabase {
 
     return list;
   }
+
+  // Future register() async {
+  //   final db = await instance.database;
+  //   List = await db.insert(table, values)
+  // }
 }

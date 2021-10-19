@@ -2,16 +2,16 @@ import 'package:elder_eate/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class Progress extends StatefulWidget {
-  const Progress({Key? key}) : super(key: key);
+class ProgressPage extends StatefulWidget {
+  const ProgressPage({Key? key}) : super(key: key);
 
   @override
-  _ProgressState createState() => _ProgressState();
+  _ProgressPageState createState() => _ProgressPageState();
 }
 
 String _text = "“ กำลังวิเคราะห์ข้อมูลเพื่อหาค่าพลังงานที่เหมาะสมกับคุณ ” ";
 
-class _ProgressState extends State<Progress> {
+class _ProgressPageState extends State<ProgressPage> {
   @override
   void initState() {
     super.initState();
