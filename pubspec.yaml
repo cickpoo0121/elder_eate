@@ -32,7 +32,10 @@ dependencies:
   flutter_svg: ^0.22.0
   getwidget: ^2.0.3
   flutter_line_sdk: ^2.0.0
-  # auto_size_text: ^2.1.0
+  get: ^4.3.8
+  shared_preferences: ^2.0.8
+  sqflite: ^2.0.0+4
+  path: ^1.8.0
 
 dev_dependencies:
   flutter_test:
@@ -54,6 +57,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/db/elderEat.db
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -70,7 +74,7 @@ flutter:
   fonts:
     - family: IBMPlexSansThai
       fonts:
-        - asset: asset\font\IBMPlexSansThai-Light.ttf
+        - asset: assets/fonts/IBMPlexSansThai-Light.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

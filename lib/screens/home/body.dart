@@ -1,8 +1,8 @@
 import 'package:elder_eate/component/nutritionPerDay.dart';
 import 'package:elder_eate/constant.dart';
+import 'package:elder_eate/service/service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:getwidget/components/progress_bar/gf_progress_bar.dart';
 
 class HomeBody extends StatefulWidget {
   const HomeBody({Key? key}) : super(key: key);
@@ -64,10 +64,27 @@ class _HomeBodyState extends State<HomeBody> {
     }
   }
 
+  Future refreshNotes() async {
+    // setState(() => isLoading = true);
+    var result;
+    result = await ElderEatDatabase.instance.loadUser();
+
+    print(result);
+
+    // setState(() => isLoading = false);
+  }
+
   @override
   void initState() {
     super.initState();
     resultOfday();
+    refreshNotes();
+  }
+
+  @override
+  void dispose() {
+    ElderEatDatabase.instance.close();
+    super.dispose();
   }
 
   @override
@@ -84,7 +101,7 @@ class _HomeBodyState extends State<HomeBody> {
         title: Text(
           titleName,
           style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22),
+              color: Colors.black, fontWeight: FontWeight.w700, fontSize: 22),
         ),
         actions: [
           Padding(
@@ -92,6 +109,8 @@ class _HomeBodyState extends State<HomeBody> {
             child: GestureDetector(
               onTap: () {
                 // print('object');
+                // _sqlHelper.testdb();
+
                 Navigator.pushNamed(context, '/Profile');
               },
               child: Icon(
@@ -122,7 +141,7 @@ class _HomeBodyState extends State<HomeBody> {
                               child: Text(
                             "โปรดออกกำลังกายเพิ่มเติม",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
+                                fontWeight: FontWeight.w700, fontSize: 18),
                           )),
                           // top: -5,
                           // right: 0.5,
@@ -153,7 +172,7 @@ class _HomeBodyState extends State<HomeBody> {
                           Text(
                             "29/28/2564",
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                                fontSize: 18, fontWeight: FontWeight.w700),
                           ),
                           Spacer(),
                           Icon(Icons.arrow_forward_ios),

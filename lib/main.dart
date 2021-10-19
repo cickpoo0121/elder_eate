@@ -14,18 +14,29 @@ import 'package:elder_eate/screens/init/weighHeight.dart';
 import 'package:elder_eate/screens/main/searchFood.dart';
 import 'package:elder_eate/screens/main/camera.dart';
 import 'package:elder_eate/screens/main/profile.dart';
+import 'package:elder_eate/service/service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   LineSDK.instance.setup('1655779489').then((_) {
     print('LineSDK Prepared');
   });
+
+  final result, home;
+  result = await ElderEatDatabase.instance.loadUser();
+  print(result);
+  if (result.length == 0) {
+    home = '/Init';
+  } else {
+    home = '/Home';
+  }
+
   runApp(
     MaterialApp(
       // home: Init(),
-      initialRoute: '/Individual',
+      initialRoute: '/Init',
       routes: {
         '/Init': (context) => Init(),
         '/Username': (context) => Username(),
@@ -74,35 +85,35 @@ void main() {
           // Title page
           headline1: TextStyle(
             fontSize: 25.0,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w700,
             color: Colors.white,
           ),
 
           // Text Nomal purple
           headline2: TextStyle(
             fontSize: 20.0,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w700,
             color: pDetailTxtColor,
           ),
 
           // Text Nomal black
           headline3: TextStyle(
             fontSize: 20.0,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w700,
             color: Colors.black,
           ),
 
           // Text information user register/profile
           headline4: TextStyle(
             fontSize: 19.0,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w700,
             color: pRegisTxtColor,
           ),
 
           // Text on button
           headline5: TextStyle(
             fontSize: 22.0,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w700,
             color: Colors.white,
           ),
 
