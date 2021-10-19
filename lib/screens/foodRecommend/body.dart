@@ -81,7 +81,7 @@ class _FoodRecommendBodyState extends State<FoodRecommendBody> {
                     // textAlign: TextAlign.left,
                     style: TextStyle(
                         color: pDetailTxtColor,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w700,
                         fontSize: 18),
                   ),
                 ),
@@ -92,7 +92,7 @@ class _FoodRecommendBodyState extends State<FoodRecommendBody> {
                 //     // textAlign: TextAlign.left,
                 //     style: TextStyle(
                 //         color: pDetailTxtColor,
-                //         fontWeight: FontWeight.bold,
+                //         fontWeight: FontWeight.w700,
                 //         fontSize: 18),
                 //   ),
                 // ),
@@ -128,7 +128,7 @@ class _FoodRecommendBodyState extends State<FoodRecommendBody> {
             ),
             Text(
               'ไม่พบรายการอาหารแนะนำ',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             )
           ],
         ),
@@ -137,7 +137,7 @@ class _FoodRecommendBodyState extends State<FoodRecommendBody> {
         ),
         Text(
           'เนื่องจากปริมาณ แคลอรี่, น้ำตาล, และโซเดียมของคุณใกล้ครบปริมาณที่แนะนำต่อวัน',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
         ),
         NutritionPerDay(
             nutritionValue: nutritionValue, maxNutrition: maxNutrition)

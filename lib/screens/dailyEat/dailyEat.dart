@@ -23,7 +23,7 @@ class _DailyEatState extends State<DailyEat> {
         centerTitle: true,
         title: Text(
           'ประวัติการกิน',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.w700),
         ),
         elevation: 0.0,
       ),

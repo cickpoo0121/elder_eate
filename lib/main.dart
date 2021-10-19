@@ -88,35 +88,35 @@ void main() async {
               // Title page
               headline1: TextStyle(
                 fontSize: 25.0.sp,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w700,
                 color: Colors.white,
               ),
 
               // Text Nomal purple
               headline2: TextStyle(
                 fontSize: 20.0.sp,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w700,
                 color: pDetailTxtColor,
               ),
 
               // Text Nomal black
               headline3: TextStyle(
                 fontSize: 20.0.sp,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w700,
                 color: Colors.black,
               ),
 
               // Text information user register/profile
               headline4: TextStyle(
                 fontSize: 19.0.sp,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w700,
                 color: pRegisTxtColor,
               ),
 
               // Text on button
               headline5: TextStyle(
                 fontSize: 22.0.sp,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w700,
                 color: Colors.white,
               ),
 

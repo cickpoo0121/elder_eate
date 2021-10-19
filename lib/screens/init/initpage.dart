@@ -39,7 +39,7 @@ class _InitState extends State<Init> {
                 child: Container(
                   child: Text(
                     _text,
-                    style: TextStyle(fontSize: 25.sp, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 25.sp, fontWeight: FontWeight.w700),
                   ),
                 ),
               ),

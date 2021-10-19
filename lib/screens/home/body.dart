@@ -113,7 +113,7 @@ class _HomeBodyState extends State<HomeBody> {
         title: Text(
           titleName,
           style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22.sp),
+              color: Colors.black, fontWeight: FontWeight.w700, fontSize: 22.sp),
         ),
         actions: [
           Padding(
@@ -184,7 +184,7 @@ class _HomeBodyState extends State<HomeBody> {
                           Text(
                             "29/28/2564",
                             style: TextStyle(
-                                fontSize: 18.sp, fontWeight: FontWeight.bold),
+                                fontSize: 18.sp, fontWeight: FontWeight.w700),
                           ),
                           Spacer(),
                           Icon(Icons.arrow_forward_ios),

@@ -71,7 +71,7 @@ class _NutritionPerDayState extends State<NutritionPerDay> {
                         _nutritionName[index],
                         style: TextStyle(
                             color: pDetailTxtColor,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.w700),
                       ),
                       SizedBox(
                         // height: 20,

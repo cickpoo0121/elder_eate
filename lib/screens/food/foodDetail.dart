@@ -34,7 +34,7 @@ class _FoodDetailState extends State<FoodDetail> {
         centerTitle: true,
         title: Text(
           _event == 0 ? 'รายการอาหาร' : 'รายละเอียดอาหาร',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.w700),
         ),
         elevation: 0.0,
         // shape: RoundedRectangleBorder(
@@ -71,7 +71,7 @@ class _FoodDetailState extends State<FoodDetail> {
                   ),
                   Text(
                     foodMenu,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30),
                   ),
                   Padding(
                     padding: pPadding,

@@ -43,7 +43,7 @@ class _IndividualState extends State<Individual> {
                     child:Text(
                     _text,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 50.sp, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 50.sp, fontWeight: FontWeight.w700),
                   ), 
                   )
                   

@@ -54,7 +54,7 @@ class _ProgressState extends State<Progress> {
                   child: Text(
                     _text,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 25.sp, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 25.sp, fontWeight: FontWeight.w700),
                   ),
                 ),
               ),

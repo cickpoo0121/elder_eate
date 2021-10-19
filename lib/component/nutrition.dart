@@ -64,8 +64,8 @@ class _NutritionState extends State<Nutrition> {
                       // textAlign: TextAlign.left,
                       style: TextStyle(
                           color: pDetailTxtColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize:  15),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 15),
                     ),
                   ),
                   trailing: index == 0
@@ -73,7 +73,7 @@ class _NutritionState extends State<Nutrition> {
                           "${_calories} กิโลแคลอรี",
                           style: TextStyle(
                               color: pDetailTxtColor,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w700,
                               fontSize: 15),
                         )
                       : index == 1
@@ -81,14 +81,14 @@ class _NutritionState extends State<Nutrition> {
                               "${_sugar} กรัม",
                               style: TextStyle(
                                   color: pDetailTxtColor,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w700,
                                   fontSize: 15),
                             )
                           : Text(
                               "${_sodium} กรัม",
                               style: TextStyle(
                                   color: pDetailTxtColor,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w700,
                                   fontSize: 15),
                             ),
                 ),

@@ -68,7 +68,7 @@ class _AddMealState extends State<AddMeal> {
             content: Text(
               'ปริมาณ${overNutri}ในอาหารเกินกว่ากำหนดของวันนี้ ท่านต้องการยืนยันทานอาหารชนิดนี้หรือดูรายการอาหารเพิ่มเติม',
               style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
             ),
             actions: [
               ElevatedButton(
@@ -112,7 +112,7 @@ class _AddMealState extends State<AddMeal> {
         centerTitle: true,
         title: Text(
           'เพิ่มมื้ออาหาร',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.w700),
         ),
         elevation: 0.0,
       ),
@@ -141,7 +141,7 @@ class _AddMealState extends State<AddMeal> {
                     Text(
                       foodMenu,
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 30),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -153,7 +153,7 @@ class _AddMealState extends State<AddMeal> {
                               "เช้า",
                               style: TextStyle(
                                   color: sButtonTxtColor,
-                                  fontWeight: FontWeight.bold),
+                                  fontWeight: FontWeight.w700),
                             ),
                             style: TextButton.styleFrom(
                               backgroundColor: sButtonColor,
@@ -168,7 +168,7 @@ class _AddMealState extends State<AddMeal> {
                               child: Text("กลางวัน",
                                   style: TextStyle(
                                       color: pButtonTxtColor,
-                                      fontWeight: FontWeight.bold)),
+                                      fontWeight: FontWeight.w700)),
                             ),
                             style: TextButton.styleFrom(
                               backgroundColor: pButtonColor,
@@ -180,7 +180,7 @@ class _AddMealState extends State<AddMeal> {
                             child: Text("เย็น",
                                 style: TextStyle(
                                     color: sButtonTxtColor,
-                                    fontWeight: FontWeight.bold)),
+                                    fontWeight: FontWeight.w700)),
                             style: TextButton.styleFrom(
                               backgroundColor: sButtonColor,
                             ),
@@ -218,7 +218,7 @@ class _AddMealState extends State<AddMeal> {
                               "x1",
                               style: TextStyle(
                                 color: pDetailTxtColor,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ),

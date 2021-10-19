@@ -74,7 +74,7 @@ class _DailyEateBodyState extends State<DailyEateBody> {
                       // textAlign: TextAlign.left,
                       style: TextStyle(
                           color: pDetailTxtColor,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w700,
                           fontSize: 18.sp),
                     ),
                   ),
@@ -85,7 +85,7 @@ class _DailyEateBodyState extends State<DailyEateBody> {
                     // textAlign: TextAlign.left,
                     style: TextStyle(
                         color: pDetailTxtColor,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w700,
                         fontSize: 18.sp),
                   ),
                 ),
