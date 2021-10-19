@@ -1,5 +1,6 @@
 import 'package:elder_eate/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Camera extends StatefulWidget {
   const Camera({Key? key}) : super(key: key);
@@ -28,16 +29,20 @@ class _CameraState extends State<Camera> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              CircleAvatar(
-                radius: size.width * 0.10,
-                backgroundColor: sBackgroundColor,
-                child: IconButton(
-                  icon: const Icon(Icons.camera_alt),
-                  color: pHeaderTabColor,
-                  iconSize: 60,
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/FoodDetail', arguments: 0);
-                  },
+              Container(
+                width: Adaptive.w(20),
+                height: 20.5.h,
+                child: CircleAvatar(
+                  radius: size.width * 0.35,
+                  backgroundColor: sBackgroundColor,
+                  child: IconButton(
+                    icon: const Icon(Icons.camera_alt),
+                    color: pHeaderTabColor,
+                    iconSize: 50,
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/FoodDetail', arguments: 0);
+                    },
+                  ),
                 ),
               ),
             ],

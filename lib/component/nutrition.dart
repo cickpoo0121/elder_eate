@@ -1,6 +1,7 @@
 import 'package:elder_eate/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/progress_bar/gf_progress_bar.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Nutrition extends StatefulWidget {
   const Nutrition({

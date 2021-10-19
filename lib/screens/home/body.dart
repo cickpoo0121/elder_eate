@@ -3,7 +3,7 @@ import 'package:elder_eate/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:getwidget/components/progress_bar/gf_progress_bar.dart';
-
+import 'package:responsive_sizer/responsive_sizer.dart';
 class HomeBody extends StatefulWidget {
   const HomeBody({Key? key}) : super(key: key);
 
@@ -33,7 +33,10 @@ class _HomeBodyState extends State<HomeBody> {
         status = 'add';
 
         mainIcon = Positioned(
-          child: SvgPicture.asset("assets/icons/cook.svg"),
+          child: Container(
+            width: Adaptive.w(20),   
+            height: 35.5.h,
+              child: SvgPicture.asset("assets/icons/cook.svg")),
           top: -50,
           right: 0,
           left: 0,
@@ -43,9 +46,13 @@ class _HomeBodyState extends State<HomeBody> {
         status = 'over';
 
         mainIcon = Positioned(
-          child: SvgPicture.asset(
-            "assets/icons/overCase.svg",
-            height: 200,
+          child: Container(
+              width: Adaptive.w(20),   
+            height: 35.5.h,
+            child: SvgPicture.asset(
+              "assets/icons/overCase.svg",
+              height: 200,
+            ),
           ),
           // top: -2,
           right: 0,
@@ -55,7 +62,10 @@ class _HomeBodyState extends State<HomeBody> {
         titleName = "สารอาหารอยู่ตามเกณฑ์";
         status = 'incase';
         mainIcon = Positioned(
-          child: SvgPicture.asset("assets/icons/inCase.svg"),
+          child: Container(
+              width: Adaptive.w(20),    // This will take 20% of the screen's width
+            height: 35.5.h,
+            child: SvgPicture.asset("assets/icons/inCase.svg")),
           // top: -10,
           right: 0,
           left: 0,
@@ -71,6 +81,7 @@ class _HomeBodyState extends State<HomeBody> {
   }
 
   @override
+  
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
@@ -84,7 +95,7 @@ class _HomeBodyState extends State<HomeBody> {
         title: Text(
           titleName,
           style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22),
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22.sp),
         ),
         actions: [
           Padding(
@@ -153,7 +164,7 @@ class _HomeBodyState extends State<HomeBody> {
                           Text(
                             "29/28/2564",
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                                fontSize: 18.sp, fontWeight: FontWeight.bold),
                           ),
                           Spacer(),
                           Icon(Icons.arrow_forward_ios),
