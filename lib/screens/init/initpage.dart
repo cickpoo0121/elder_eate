@@ -29,9 +29,7 @@ class _InitState extends State<Init> {
               //     style: TextStyle(fontSize: 30, color: Colors.white),
               //   ),
               // ),
-              Positioned(
-                child: Image.asset(pic, width: size.width * 1),
-              ),
+              Image.asset(pic, width: size.width * 1),
               SizedBox(
                 height: size.height * 0.03,
               ),

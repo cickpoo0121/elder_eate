@@ -1,8 +1,10 @@
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/component/nutrition.dart';
-import 'package:elder_eate/screens/home/home.dart';
+import 'package:elder_eate/controller/foodManu_controller.dart';
+import 'package:elder_eate/screens/main/home/home.dart';
+import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:get/get.dart';
 
 class AddMeal extends StatefulWidget {
   const AddMeal({Key? key}) : super(key: key);
@@ -12,25 +14,30 @@ class AddMeal extends StatefulWidget {
 }
 
 class _AddMealState extends State<AddMeal> {
-  String foodMenu = "ข้าวต้มหมู";
+  FoodManuController _foodManuController = Get.find();
+  Map? foodMenu;
+  int meal = 0;
+  int quantity = 1;
+
+  // String foodMenu = "ข้าวต้มหมู";
   // List<double> nutritionBalance = [800, 500, 70]; //case calories over
   // List<double> nutritionBalance = [1000, 400, 70]; //case sugar over
   List<double> nutritionBalance = [1000, 500, 30]; //case sodium over
-  List<double> foodNutrition = [1000, 500, 70];
+  // List<double> foodNutrition = [1000, 500, 70];
   late String overNutri;
 
-  checkDayNutri() {
-    overNutri = '';
-    for (int i = 0; i < nutritionBalance.length; i++) {
-      if (nutritionBalance[i] < foodNutrition[i]) {
-        overNutri += i == 0
-            ? 'แคลอรี'
-            : i == 1
-                ? 'น้ำตาล'
-                : 'โซเดียม';
-      }
-    }
-  }
+  // checkDayNutri() {
+  //   overNutri = '';
+  //   for (int i = 0; i < nutritionBalance.length; i++) {
+  //     if (nutritionBalance[i] < foodNutrition[i]) {
+  //       overNutri += i == 0
+  //           ? 'แคลอรี'
+  //           : i == 1
+  //               ? 'น้ำตาล'
+  //               : 'โซเดียม';
+  //     }
+  //   }
+  // }
 
 // jump to daily eate page
   goDailyEat() {
@@ -102,6 +109,13 @@ class _AddMealState extends State<AddMeal> {
   }
 
   @override
+  void initState() {
+    foodMenu = _foodManuController.foodManu;
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
@@ -139,7 +153,7 @@ class _AddMealState extends State<AddMeal> {
                       height: size.height * 0.02,
                     ),
                     Text(
-                      foodMenu,
+                      foodMenu!['Food_Name'],
                       style:
                           TextStyle(fontWeight: FontWeight.w700, fontSize: 30),
                     ),
@@ -148,99 +162,132 @@ class _AddMealState extends State<AddMeal> {
                       child: Row(
                         children: [
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                meal = 0;
+                              });
+                            },
                             child: Text(
                               "เช้า",
                               style: TextStyle(
-                                  color: sButtonTxtColor,
+                                  color: meal == 0
+                                      ? pButtonTxtColor
+                                      : sButtonTxtColor,
                                   fontWeight: FontWeight.w700),
                             ),
                             style: TextButton.styleFrom(
-                              backgroundColor: sButtonColor,
+                              backgroundColor:
+                                  meal == 0 ? pButtonColor : sButtonColor,
                             ),
                           ),
                           Spacer(),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                meal = 1;
+                              });
+                            },
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
-                              child: Text("กลางวัน",
-                                  style: TextStyle(
-                                      color: pButtonTxtColor,
-                                      fontWeight: FontWeight.w700)),
+                              child: Text(
+                                "กลางวัน",
+                                style: TextStyle(
+                                    color: meal == 1
+                                        ? pButtonTxtColor
+                                        : sButtonTxtColor,
+                                    fontWeight: FontWeight.w700),
+                              ),
                             ),
                             style: TextButton.styleFrom(
-                              backgroundColor: pButtonColor,
+                              backgroundColor:
+                                  meal == 1 ? pButtonColor : sButtonColor,
                             ),
                           ),
                           Spacer(),
                           TextButton(
-                            onPressed: () {},
-                            child: Text("เย็น",
-                                style: TextStyle(
-                                    color: sButtonTxtColor,
-                                    fontWeight: FontWeight.w700)),
-                            style: TextButton.styleFrom(
-                              backgroundColor: sButtonColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: size.height * 0.02,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: Icon(
-                              Icons.remove,
-                              color: sButtonTxtColor,
-                            ),
-                            style: TextButton.styleFrom(
-                              backgroundColor: sButtonColor,
-                              shape: CircleBorder(),
-                            ),
-                          ),
-                          Spacer(),
-                          Container(
-                            alignment: Alignment.center,
-                            width: size.width * 0.49,
-                            height: size.height * 0.05,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20)),
+                            onPressed: () {
+                              setState(() {
+                                meal = 2;
+                              });
+                            },
                             child: Text(
-                              "x1",
+                              "เย็น",
                               style: TextStyle(
-                                color: pDetailTxtColor,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                          Spacer(),
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: Icon(
-                              Icons.add,
-                              color: sButtonTxtColor,
+                                  color: meal == 2
+                                      ? pButtonTxtColor
+                                      : sButtonTxtColor,
+                                  fontWeight: FontWeight.w700),
                             ),
                             style: TextButton.styleFrom(
-                              backgroundColor: sButtonColor,
-                              shape: CircleBorder(),
+                              backgroundColor:
+                                  meal == 2 ? pButtonColor : sButtonColor,
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
                     SizedBox(
                       height: size.height * 0.02,
                     ),
-                    Nutrition(calories: 500, sugar: 20, sodium: 70),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              quantity == 1 ? quantity = 1 : quantity--;
+                            });
+                          },
+                          child: Icon(
+                            Icons.remove,
+                            color: sButtonTxtColor,
+                          ),
+                          style: TextButton.styleFrom(
+                            backgroundColor: sButtonColor,
+                            shape: CircleBorder(),
+                          ),
+                        ),
+                        // Spacer(),
+                        Container(
+                          alignment: Alignment.center,
+                          width: size.width * 0.49,
+                          height: size.height * 0.05,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Text(
+                            "x$quantity",
+                            style: TextStyle(
+                              color: pDetailTxtColor,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        // Spacer(),
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              quantity++;
+                            });
+                          },
+                          child: Icon(
+                            Icons.add,
+                            color: sButtonTxtColor,
+                          ),
+                          style: TextButton.styleFrom(
+                            backgroundColor: sButtonColor,
+                            shape: CircleBorder(),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: size.height * 0.02,
+                    ),
+                    Nutrition(
+                        calories: foodMenu!['Food_Calories'].toDouble(),
+                        sugar: foodMenu!['Food_Sugar'].toDouble(),
+                        sodium: foodMenu!['Food_Sodium'].toDouble()),
                     SizedBox(
                       height: size.height * 0.02,
                     ),
@@ -248,10 +295,22 @@ class _AddMealState extends State<AddMeal> {
                       width: size.width * 0.45,
                       child: TextButton(
                         onPressed: () {
+                          SqlService.instance.dailyAdd({
+                            "Daily_Food_Image": '',//TODO: เก็บรูป
+                            "Daily_Food_Datetime": DateTime.now().toString(),
+                            "Daily_Meal": meal,
+                            "Food_Menu": foodMenu!['Food_Category_ID'],
+                            "Quantity": quantity,
+                            "User_ID": 0,
+                          });
+
+                          print(DateTime.now());
+
+                          SqlService.instance.dailyLoad();
                           // Navigator.pushNamed(context, '/Home');
 
-                          checkDayNutri();
-                          overNutri != null ? alert() : goDailyEat();
+                          // checkDayNutri();
+                          // overNutri != null ? alert() : goDailyEat();
                         },
                         child: Text("เพิ่มประวัติการกิน",
                             style: TextStyle(fontSize: 16)),

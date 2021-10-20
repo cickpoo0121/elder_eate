@@ -1,8 +1,6 @@
 import 'package:elder_eate/constant.dart';
-import 'package:elder_eate/screens/dailyEat/body.dart';
-import 'package:elder_eate/screens/dailyEat/dailyEat.dart';
-import 'package:elder_eate/screens/home/body.dart';
-import 'package:elder_eate/screens/main/camera.dart';
+import 'package:elder_eate/screens/main/dailyEat/dailyEat.dart';
+import 'package:elder_eate/screens/main/home/body.dart';
 import 'package:elder_eate/screens/main/searchFood.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:getwidget/components/progress_bar/gf_progress_bar.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
 class HomeBody extends StatefulWidget {
   const HomeBody({Key? key}) : super(key: key);
 
@@ -35,8 +36,8 @@ class _HomeBodyState extends State<HomeBody> {
 
         mainIcon = Positioned(
           child: Container(
-            width: Adaptive.w(20),   
-            height: 35.5.h,
+              width: Adaptive.w(20),
+              height: 35.5.h,
               child: SvgPicture.asset("assets/icons/cook.svg")),
           top: -50,
           right: 0,
@@ -48,7 +49,7 @@ class _HomeBodyState extends State<HomeBody> {
 
         mainIcon = Positioned(
           child: Container(
-              width: Adaptive.w(20),   
+            width: Adaptive.w(20),
             height: 35.5.h,
             child: SvgPicture.asset(
               "assets/icons/overCase.svg",
@@ -64,9 +65,9 @@ class _HomeBodyState extends State<HomeBody> {
         status = 'incase';
         mainIcon = Positioned(
           child: Container(
-              width: Adaptive.w(20),    // This will take 20% of the screen's width
-            height: 35.5.h,
-            child: SvgPicture.asset("assets/icons/inCase.svg")),
+              width: Adaptive.w(20), // This will take 20% of the screen's width
+              height: 35.5.h,
+              child: SvgPicture.asset("assets/icons/inCase.svg")),
           // top: -10,
           right: 0,
           left: 0,
@@ -78,9 +79,9 @@ class _HomeBodyState extends State<HomeBody> {
   Future refreshNotes() async {
     // setState(() => isLoading = true);
     var result;
-    result = await ElderEatDatabase.instance.loadUser();
+    // result = await ElderEatDatabase.instance.loadUser();
 
-    print(result);
+    // print(result);
 
     // setState(() => isLoading = false);
   }
@@ -89,7 +90,7 @@ class _HomeBodyState extends State<HomeBody> {
   void initState() {
     super.initState();
     resultOfday();
-    refreshNotes();
+    // refreshNotes();
   }
 
   @override
@@ -99,7 +100,6 @@ class _HomeBodyState extends State<HomeBody> {
   }
 
   @override
-  
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
@@ -113,7 +113,9 @@ class _HomeBodyState extends State<HomeBody> {
         title: Text(
           titleName,
           style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.w700, fontSize: 22.sp),
+              color: Colors.black,
+              fontWeight: FontWeight.w700,
+              fontSize: 22.sp),
         ),
         actions: [
           Padding(

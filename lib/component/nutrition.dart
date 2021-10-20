@@ -11,18 +11,18 @@ class Nutrition extends StatefulWidget {
     required this.sodium,
   }) : super(key: key);
 
-  final int calories;
-  final int sugar;
-  final int sodium;
+  final double calories;
+  final double sugar;
+  final double sodium;
 
   @override
   _NutritionState createState() => _NutritionState();
 }
 
 class _NutritionState extends State<Nutrition> {
-  int _calories = 0;
-  int _sugar = 0;
-  int _sodium = 0;
+  double _calories = 0;
+  double _sugar = 0;
+  double _sodium = 0;
   List<String> _icon = [
     "assets/images/calories.png",
     "assets/images/sugar.png",

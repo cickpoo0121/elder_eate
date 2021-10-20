@@ -1,5 +1,10 @@
 import 'package:elder_eate/constant.dart';
+import 'package:elder_eate/controller/foodManu_controller.dart';
+import 'package:elder_eate/screens/food/foodDetail.dart';
+import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class SearchFood extends StatefulWidget {
@@ -10,6 +15,7 @@ class SearchFood extends StatefulWidget {
 }
 
 class _SearchFoodState extends State<SearchFood> {
+  FoodManuController _foodManuController = Get.put(FoodManuController());
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -44,33 +50,55 @@ class _SearchFoodState extends State<SearchFood> {
                 ),
                 Center(
                     child: Container(
-                  height: size.height * 0.08,
-                  width: size.width * 0.85,
-                  child: TextField(
-                    autocorrect: true,
-                    decoration: InputDecoration(
-                      hintText: 'ค้นหารายการอาหาร',
-                      prefixIcon: Icon(Icons.search_rounded),
-                      hintStyle: TextStyle(color: pRegisTxtColor),
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                        borderSide: BorderSide(color: Colors.white, width: 2),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                        borderSide: BorderSide(color: Colors.white, width: 2),
-                      ),
-                    ),
-                  ),
-                )),
+                        height: size.height * 0.08,
+                        width: size.width * 0.85,
+                        child: TypeAheadField<Map>(
+                            textFieldConfiguration: TextFieldConfiguration(
+                              decoration: InputDecoration(
+                                hintText: 'ค้นหารายการอาหาร',
+                                prefixIcon: Icon(Icons.search_rounded),
+                                hintStyle: TextStyle(color: pRegisTxtColor),
+                                filled: true,
+                                fillColor: Colors.white,
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15.0)),
+                                  borderSide:
+                                      BorderSide(color: Colors.white, width: 2),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15.0)),
+                                  borderSide:
+                                      BorderSide(color: Colors.white, width: 2),
+                                ),
+                              ),
+                            ),
+                            suggestionsCallback: (patten) async {
+                              return await SqlService.instance
+                                  .foodSearch(patten);
+                            },
+                            itemBuilder: (context, suggestion) {
+                              // final food = suggestion;
+                              // print(suggestion!.name);
+                              return ListTile(
+                                title: Text(suggestion['Food_Name']),
+                              );
+                            },
+                            onSuggestionSelected: (suggestion) {
+                              // Get.toNamed('/FoodDetail');
+                              _foodManuController.foodManu.value = suggestion;
+                              Get.to(() => FoodDetail(
+                                    eventCheck: 0,
+                                  ));
+                              // print(suggestion);
+                            }))),
                 SizedBox(
                   height: size.height * 0.25,
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/Camera');
+                    // Navigator.pushNamed(context, '/Camera');
                   },
                   child: Container(
                     width: Adaptive.w(20),

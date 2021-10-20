@@ -1,20 +1,21 @@
+import 'dart:developer';
+
 import 'package:elder_eate/constant.dart';
-import 'package:elder_eate/screens/dailyEat/dailyEat.dart';
 import 'package:elder_eate/screens/food/addMeal.dart';
 import 'package:elder_eate/screens/food/foodDetail.dart';
 import 'package:elder_eate/screens/foodRecommend/foodRecommend.dart';
-import 'package:elder_eate/screens/home/body.dart';
-import 'package:elder_eate/screens/home/home.dart';
 import 'package:elder_eate/screens/init/disease.dart';
 import 'package:elder_eate/screens/init/individual.dart';
 import 'package:elder_eate/screens/init/initpage.dart';
 import 'package:elder_eate/screens/init/progress.dart';
 import 'package:elder_eate/screens/init/username.dart';
 import 'package:elder_eate/screens/init/weighHeight.dart';
+import 'package:elder_eate/screens/main/dailyEat/dailyEat.dart';
+import 'package:elder_eate/screens/main/home/body.dart';
+import 'package:elder_eate/screens/main/home/home.dart';
 import 'package:elder_eate/screens/main/searchFood.dart';
-import 'package:elder_eate/screens/main/camera.dart';
 import 'package:elder_eate/screens/main/profile.dart';
-import 'package:elder_eate/service/service.dart';
+import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:get/get.dart';
@@ -25,21 +26,30 @@ void main() async {
   LineSDK.instance.setup('1655779489').then((_) {
     print('LineSDK Prepared');
   });
+  // SqlService _sqlService = SqlService();
+
+  // openDB();
+
+  // Future openDB() async {
+  // await _sqlService.openDB();
+  // }
 
   final result, home;
-  result = await ElderEatDatabase.instance.loadUser();
-  print(result);
-  // if (result.length == 0) {
-  //   home = '/Init';
-  // } else {
-  //   home = '/Home';
-  // }
+
+  result = await SqlService.instance.userLoad();
+  print(result.length);
+  if (result.length == 0) {
+    home = '/Init';
+  } else {
+    home = '/Home';
+  }
+  inspect(result);
 
   runApp(
     ResponsiveSizer(
       builder: (context, orientation, screenType) {
         return GetMaterialApp(
-          initialRoute: '/Init',
+          initialRoute: home,
           getPages: [
             GetPage(name: '/Init', page: () => Init()),
             GetPage(name: '/Username', page: () => Username()),
@@ -53,11 +63,11 @@ void main() async {
                       currentPage: 0,
                     )),
             GetPage(name: '/HomeBody', page: () => HomeBody()),
-            GetPage(name: '/FoodDetail', page: () => FoodDetail()),
+            // GetPage(name: '/FoodDetail', page: () => FoodDetail()),
             GetPage(name: '/AddMeal', page: () => AddMeal()),
             GetPage(name: '/DailyEat', page: () => DailyEat()),
             GetPage(name: '/Profile', page: () => Profile()),
-            GetPage(name: '/Camera', page: () => Camera()),
+            // GetPage(name: '/Camera', page: () => Camera()),
             GetPage(name: '/SearchFood', page: () => SearchFood()),
             GetPage(name: '/FoodRecommend', page: () => FoodRecommend()),
           ],

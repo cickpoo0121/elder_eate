@@ -2,10 +2,11 @@ import 'dart:developer';
 
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/controller/user_controller.dart';
+import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:get_storage/get_storage.dart';
 
 class Disease extends StatefulWidget {
   const Disease({Key? key}) : super(key: key);
@@ -16,6 +17,8 @@ class Disease extends StatefulWidget {
 
 class _DiseaseState extends State<Disease> {
   UserController _userController = Get.find();
+  // SqlService _sqlService = SqlService();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String? dropdownValue;
 
@@ -58,6 +61,7 @@ class _DiseaseState extends State<Disease> {
                 height: size.height * 0.05,
               ),
               Form(
+                key: _formKey,
                 child: Card(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20)),
@@ -97,6 +101,13 @@ class _DiseaseState extends State<Disease> {
                               "โรคประจำตัว",
                               style: Theme.of(context).textTheme.headline4,
                             ),
+                            validator: (value) {
+                              print(value);
+                              if (value == null) {
+                                return 'กรุณากรอกข้อมูล';
+                              }
+                              return null;
+                            },
                           ),
                         ),
                         SizedBox(
@@ -114,12 +125,22 @@ class _DiseaseState extends State<Disease> {
                 width: size.width * 0.45,
                 decoration: BoxDecoration(),
                 child: TextButton(
-                  onPressed: () {
-                    if (dropdownValue == null) {}
-                    print(dropdownValue);
-                    _userController.user.last.disease = dropdownValue;
-                    inspect(_userController.user);
-                    Navigator.pushNamed(context, '/Progress');
+                  onPressed: () async {
+                    if (dropdownValue != null) {
+                      print(dropdownValue);
+                      _userController.user.last.disease = dropdownValue;
+                      // inspect(_userController.user);
+                      GetStorage()
+                          .write('user', _userController.user.last.toJson());
+                      final result = await SqlService.instance.userRegister();
+                      // if (result == true) {
+                      print('register successed');
+                      // }
+                      // print(result);
+                      inspect(result);
+                      Get.toNamed('/Progress');
+                      // Navigator.pushNamed(context, '/Progress');
+                    }
                   },
                   child: Text(
                     "วิเคราะห์ข้อมูล",

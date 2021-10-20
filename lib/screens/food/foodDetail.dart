@@ -1,31 +1,47 @@
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/component/nutrition.dart';
+import 'package:elder_eate/controller/foodManu_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:get/get.dart';
 
 class FoodDetail extends StatefulWidget {
-  const FoodDetail({
-    Key? key,
-  }) : super(key: key);
+  final eventCheck;
+  // final foodMenu;
+  final foodImage;
+  const FoodDetail(
+      {Key? key,
+      required this.eventCheck,
+      // required this.foodMenu,
+      this.foodImage = 'no'})
+      : super(key: key);
 
   @override
   _FoodDetailState createState() => _FoodDetailState();
 }
 
 class _FoodDetailState extends State<FoodDetail> {
-  int _event = 0; // 1 คือ รายละเอียดอาหาร , 0 รายการอาหาร
-  String foodMenu = "ข้าวต้มหมู";
-  
+  FoodManuController _foodManuController = Get.find();
+  // int? _event; // 1 คือ รายละเอียดอาหาร , 0 รายการอาหาร
+  Map? foodMenu;
+
+  // food category :{ 0 = อาหารจารหลัก, 1 = เครื่องดื่ม, 2 = ของหวาน, 3 = ผลไม้ }
+  List<String> _foodCategory = [
+    "assets/images/food.png",
+    "assets/images/drink.png",
+    "assets/images/dessert.png",
+    "assets/images/fruit.png"
+  ];
 
   @override
   void initState() {
+    foodMenu = _foodManuController.foodManu;
     super.initState();
+    print(widget.foodImage);
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    _event = ModalRoute.of(context)!.settings.arguments as int;
 
     return Scaffold(
       backgroundColor: pHeaderTabColor,
@@ -33,7 +49,7 @@ class _FoodDetailState extends State<FoodDetail> {
         backgroundColor: pHeaderTabColor,
         centerTitle: true,
         title: Text(
-          _event == 0 ? 'รายการอาหาร' : 'รายละเอียดอาหาร',
+          widget.eventCheck == 0 ? 'รายการอาหาร' : 'รายละเอียดอาหาร',
           style: TextStyle(fontWeight: FontWeight.w700),
         ),
         elevation: 0.0,
@@ -63,29 +79,41 @@ class _FoodDetailState extends State<FoodDetail> {
                     height: size.height * 0.02,
                   ),
                   Image.asset(
-                    "assets/images/foodOne.jpg",
+                    widget.foodImage != 'no'
+                        ? "assets/images/foodOne.jpg"
+                        : foodMenu!['Food_Category_ID'] == 0
+                            ? _foodCategory[0]
+                            : foodMenu!['Food_Category_ID'] == 1
+                                ? _foodCategory[1]
+                                : foodMenu!['Food_Category_ID'] == 2
+                                    ? _foodCategory[2]
+                                    : _foodCategory[3],
                     height: size.height * 0.25,
                   ),
                   SizedBox(
                     height: size.height * 0.02,
                   ),
                   Text(
-                    foodMenu,
+                    foodMenu!['Food_Name'],
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30),
                   ),
                   Padding(
                     padding: pPadding,
-                    child: Nutrition(calories: 500, sugar: 20, sodium: 70),
+                    child: Nutrition(
+                        calories: foodMenu!['Food_Calories'].toDouble(),
+                        sugar: foodMenu!['Food_Sugar'].toDouble(),
+                        sodium: foodMenu!['Food_Sodium'].toDouble()),
                   ),
                   SizedBox(
                     height: size.height * 0.02,
                   ),
-                  _event == 0
+                  widget.eventCheck == 0
                       ? Container(
                           width: size.width * 0.45,
                           child: TextButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/AddMeal');
+                              // Navigator.pushNamed(context, '/AddMeal');
+                              Get.toNamed('/AddMeal');
                             },
                             child: Text("เพิ่มประวัติการกิน",
                                 style: TextStyle(fontSize: 16)),

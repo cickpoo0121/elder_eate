@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:elder_eate/constant.dart';
+import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
@@ -12,17 +15,33 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   UserProfile? _userProfile;
   String? _userEmail;
   StoredAccessToken? _accessToken;
+  TextEditingController _userNameText = TextEditingController();
+  TextEditingController _weightText = TextEditingController();
+  TextEditingController _heightText = TextEditingController();
+  TextEditingController _ageText = TextEditingController();
+  String? _dropdownValue;
+  bool _readOnly = true;
+  bool _loadData = true;
+  var _userData;
 
   @override
   bool get wantKeepAlive => true;
 
-  @override
-  void initState() {
-    super.initState();
-    initPlatformState();
+  Future loadUser() async {
+    _userData = await SqlService.instance.userLoad();
+    _userNameText.text = _userData[0]['Username'];
+    _weightText.text = _userData[0]['Weight'].toString();
+    _heightText.text = _userData[0]['Height'].toString();
+    _ageText.text = _userData[0]['Age'].toString();
+    _dropdownValue = _userData[0]['Disease'];
+
+    setState(() {
+      _loadData = false;
+    });
   }
 
   void alert() {
@@ -157,6 +176,13 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
   }
 
   @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+    loadUser();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
@@ -177,263 +203,279 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
         elevation: 0.0,
       ),
       body: SingleChildScrollView(
-        child: (ConstrainedBox(
-          constraints:
-              BoxConstraints(minHeight: size.height, minWidth: size.width),
-          child: Container(
-            decoration: BoxDecoration(
-              color: pBackgroundColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(50),
-                topRight: Radius.circular(50),
+        child: _loadData
+            ? Center(child: CircularProgressIndicator())
+            : ConstrainedBox(
+                constraints: BoxConstraints(
+                    minHeight: size.height, minWidth: size.width),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: pBackgroundColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(50),
+                      topRight: Radius.circular(50),
+                    ),
+                  ),
+                  child: Center(
+                    child: Column(
+                      children: [
+                        CircleAvatar(
+                          radius: size.width * 0.23,
+                          backgroundColor: pButtonColor,
+                          child: Text(
+                            _userData[0]['Username'],
+                            style: TextStyle(fontSize: 30, color: Colors.white),
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.05,
+                        ),
+                        Form(
+                          key: _formkey,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
+                              children: [
+                                Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(2),
+                                      child: TextFormField(
+                                        readOnly: _readOnly,
+                                        controller: _userNameText,
+                                        decoration: InputDecoration(
+                                          hintText: _userNameText.text,
+                                          prefixIcon: Icon(Icons.account_box),
+                                          hintStyle:
+                                              TextStyle(color: pRegisTxtColor),
+                                          border: InputBorder.none,
+                                        ),
+                                        validator: (value) {
+                                          if (value == null ||
+                                              value.trim().length == 0) {
+                                            return 'กรุณากรอกข้อมูล';
+                                          }
+                                          return null;
+                                        },
+                                      )),
+                                ),
+                                Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(2),
+                                      child: TextFormField(
+                                        readOnly: _readOnly,
+                                        keyboardType: TextInputType.number,
+                                        controller: _weightText,
+                                        decoration: InputDecoration(
+                                          hintText: _weightText.text,
+                                          prefixIcon:
+                                              Icon(Icons.line_weight_rounded),
+                                          hintStyle:
+                                              TextStyle(color: pRegisTxtColor),
+                                          border: InputBorder.none,
+                                        ),
+                                        validator: (value) {
+                                          if (value == null ||
+                                              value.trim().length == 0) {
+                                            return 'กรุณากรอกข้อมูล';
+                                          }
+                                          return null;
+                                        },
+                                      )),
+                                ),
+                                Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(2),
+                                      child: TextFormField(
+                                        readOnly: _readOnly,
+                                        keyboardType: TextInputType.number,
+                                        controller: _heightText,
+                                        decoration: InputDecoration(
+                                            hintText: _heightText.text,
+                                            prefixIcon: Icon(Icons
+                                                .accessibility_new_rounded),
+                                            hintStyle: TextStyle(
+                                                color: pRegisTxtColor),
+                                            border: InputBorder.none),
+                                        validator: (value) {
+                                          if (value == null ||
+                                              value.trim().length == 0) {
+                                            return 'กรุณากรอกข้อมูล';
+                                          }
+                                          return null;
+                                        },
+                                      )),
+                                ),
+                                Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(2),
+                                      child: TextFormField(
+                                        readOnly: _readOnly,
+                                        keyboardType: TextInputType.number,
+                                        controller: _ageText,
+                                        decoration: InputDecoration(
+                                            hintText: _ageText.text,
+                                            prefixIcon:
+                                                Icon(Icons.date_range_rounded),
+                                            hintStyle: TextStyle(
+                                                color: pRegisTxtColor),
+                                            border: InputBorder.none),
+                                        validator: (value) {
+                                          if (value == null ||
+                                              value.trim().length == 0) {
+                                            return 'กรุณากรอกข้อมูล';
+                                          }
+                                          return null;
+                                        },
+                                      )),
+                                ),
+                                Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 2),
+                                    child: DropdownButtonFormField<String>(
+                                      decoration: InputDecoration(
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
+                                        ),
+                                      ),
+                                      value: _dropdownValue,
+                                      style:
+                                          Theme.of(context).textTheme.headline4,
+                                      onChanged: _readOnly
+                                          ? null
+                                          : (String? newValue) {
+                                              setState(() {
+                                                _dropdownValue = newValue;
+                                              });
+                                            },
+                                      items: [
+                                        'โรคเบาหวาน',
+                                        'โรคความดันโลหิตสูง',
+                                        'ไม่มีโรคประจำตัว',
+                                      ].map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                      hint: Text(
+                                        _dropdownValue.toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
+                                      ),
+                                      validator: (value) {
+                                        if (value == null) {
+                                          return 'กรุณากรอกข้อมูล';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(
+                          height: size.height * 0.040,
+                        ),
+                        Container(
+                          width: size.width * 0.85,
+                          decoration: BoxDecoration(),
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                                backgroundColor: Colors.green),
+                            onPressed: () {
+                              _accessToken == null ? _loginLine() : _signOut();
+                            },
+                            child: Text(
+                              _accessToken == null
+                                  ? "เชื่อมต่อไลน์เพื่อรับการแจ้งเตือน"
+                                  : "ยกเลิกการเชื่อมต่อ",
+                              style: Theme.of(context).textTheme.headline6,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.03,
+                        ),
+                        // Container(
+                        //   width: size.width * 0.85,
+                        //   decoration: BoxDecoration(),
+                        //   child: TextButton(
+                        //     style:
+                        //         TextButton.styleFrom(backgroundColor: Colors.green),
+                        //     onPressed: () {
+                        //       _signOut();
+                        //     },
+                        //     child: Text(
+                        //       'ยกเลิก',
+                        //       style: Theme.of(context).textTheme.headline5,
+                        //     ),
+                        //   ),
+                        // ),
+                        // SizedBox(
+                        //   height: size.height * 0.03,
+                        // ),
+                        Container(
+                          width: size.width * 0.85,
+                          decoration: BoxDecoration(),
+                          child: TextButton(
+                            onPressed: () {
+                              if (!_readOnly) {
+                                final isValid =
+                                    _formkey.currentState!.validate();
+                                if (isValid) {
+                                  //TODO: update to database
+                                  final resp = SqlService.instance.userUpdate(
+                                    _userData[0]['User_ID'],
+                                    _userNameText.text,
+                                    double.parse(_weightText.text),
+                                    double.parse(_heightText.text),
+                                    int.parse(_ageText.text),
+                                    _dropdownValue.toString(),
+                                  );
+
+                                  print('update successed');
+                                  setState(() {
+                                    _readOnly = true;
+                                    loadUser();
+                                  });
+                                }
+                              } else {
+                                setState(() {
+                                  _readOnly = false;
+                                });
+                              }
+                            },
+                            child: Text(
+                              _readOnly ? "แก้ไขข้อมูล" : "ยืนยัน",
+                              style: Theme.of(context).textTheme.headline5,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.05,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
               ),
-            ),
-            child: Center(
-              child: Column(
-                children: [
-                  CircleAvatar(
-                    radius: size.width * 0.23,
-                    backgroundColor: pButtonColor,
-                    child: Text(
-                      "Profile",
-                      style: TextStyle(fontSize: 30, color: Colors.white),
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.height * 0.05,
-                  ),
-                  Container(
-                      decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 0.5,
-                              blurRadius: 5,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(40.0),
-                          color: sBackgroundColor),
-                      height: size.height * 0.08,
-                      width: size.width * 0.85,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.account_box,
-                              color: Colors.black,
-                              size: 28,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 10.0),
-                              child: Text("ธิดาพร ชาวคูเวียง",
-                                  style: Theme.of(context).textTheme.headline4),
-                            ),
-                          ],
-                        ),
-                      )),
-                  SizedBox(
-                    height: size.height * 0.025,
-                  ),
-                  Container(
-                      decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 0.5,
-                              blurRadius: 5,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(40.0),
-                          color: sBackgroundColor),
-                      height: size.height * 0.08,
-                      width: size.width * 0.85,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 20.0),
-                        child: Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.line_weight_rounded,
-                              color: Colors.black,
-                              size: 28,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 10.0),
-                              child: Text("65",
-                                  style: Theme.of(context).textTheme.headline4),
-                            ),
-                          ],
-                        ),
-                      )),
-                  SizedBox(
-                    height: size.height * 0.025,
-                  ),
-                  Container(
-                      decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 0.5,
-                              blurRadius: 5,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(40.0),
-                          color: sBackgroundColor),
-                      height: size.height * 0.08,
-                      width: size.width * 0.85,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 20.0),
-                        child: Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.accessibility_new_rounded,
-                              color: Colors.black,
-                              size: 28,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 10.0),
-                              child: Text("180",
-                                  style: Theme.of(context).textTheme.headline4),
-                            ),
-                          ],
-                        ),
-                      )),
-                  SizedBox(
-                    height: size.height * 0.025,
-                  ),
-                  Container(
-                      decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 0.5,
-                              blurRadius: 5,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(40.0),
-                          color: sBackgroundColor),
-                      height: size.height * 0.08,
-                      width: size.width * 0.85,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 20.0),
-                        child: Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.date_range_rounded,
-                              color: Colors.black,
-                              size: 28,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 10.0),
-                              child: Text("15/05/2542",
-                                  style: Theme.of(context).textTheme.headline4),
-                            ),
-                          ],
-                        ),
-                      )),
-                  SizedBox(
-                    height: size.height * 0.025,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 0.5,
-                            blurRadius: 5,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(40.0),
-                        color: sBackgroundColor),
-                    height: size.height * 0.08,
-                    width: size.width * 0.85,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 20.0),
-                      child: Row(
-                        children: <Widget>[
-                          Icon(
-                            Icons.elderly_rounded,
-                            color: Colors.black,
-                            size: 25,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10.0),
-                            child: Text("โรคเบาหวาน",
-                                style: Theme.of(context).textTheme.headline4),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.height * 0.040,
-                  ),
-                  Container(
-                    width: size.width * 0.85,
-                    decoration: BoxDecoration(),
-                    child: TextButton(
-                      style:
-                          TextButton.styleFrom(backgroundColor: Colors.green),
-                      onPressed: () {
-                        _accessToken == null ? _loginLine() : _signOut();
-                      },
-                      child: Text(
-                        _accessToken == null
-                            ? "เชื่อมต่อไลน์เพื่อรับการแจ้งเตือน"
-                            : "ยกเลิกการเชื่อมต่อ",
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.height * 0.03,
-                  ),
-                  // Container(
-                  //   width: size.width * 0.85,
-                  //   decoration: BoxDecoration(),
-                  //   child: TextButton(
-                  //     style:
-                  //         TextButton.styleFrom(backgroundColor: Colors.green),
-                  //     onPressed: () {
-                  //       _signOut();
-                  //     },
-                  //     child: Text(
-                  //       'ยกเลิก',
-                  //       style: Theme.of(context).textTheme.headline5,
-                  //     ),
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   height: size.height * 0.03,
-                  // ),
-                  Container(
-                    width: size.width * 0.85,
-                    decoration: BoxDecoration(),
-                    child: TextButton(
-                      onPressed: () {
-                        // _signOut();
-                        alert();
-                      },
-                      child: Text(
-                        "เช็กข้อมูลผู้ใช้",
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        )),
       ),
     );
   }
