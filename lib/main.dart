@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/screens/food/addMeal.dart';
-import 'package:elder_eate/screens/food/foodDetail.dart';
 import 'package:elder_eate/screens/foodRecommend/foodRecommend.dart';
 import 'package:elder_eate/screens/init/disease.dart';
 import 'package:elder_eate/screens/init/individual.dart';
@@ -37,13 +34,13 @@ void main() async {
   final result, home;
 
   result = await SqlService.instance.userLoad();
-  print(result.length);
+  // print(result[0]);
   if (result.length == 0) {
     home = '/Init';
   } else {
     home = '/Home';
   }
-  inspect(result);
+  // inspect(result);
 
   runApp(
     ResponsiveSizer(

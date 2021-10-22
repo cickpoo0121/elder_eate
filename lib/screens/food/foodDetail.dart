@@ -1,6 +1,6 @@
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/component/nutrition.dart';
-import 'package:elder_eate/controller/foodManu_controller.dart';
+import 'package:elder_eate/controller/foodMenu_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,9 +20,10 @@ class FoodDetail extends StatefulWidget {
 }
 
 class _FoodDetailState extends State<FoodDetail> {
-  FoodManuController _foodManuController = Get.find();
+  FoodMenuController _foodMenuController = Get.find();
   // int? _event; // 1 คือ รายละเอียดอาหาร , 0 รายการอาหาร
   Map? foodMenu;
+  String? displayImage;
 
   // food category :{ 0 = อาหารจารหลัก, 1 = เครื่องดื่ม, 2 = ของหวาน, 3 = ผลไม้ }
   List<String> _foodCategory = [
@@ -32,11 +33,33 @@ class _FoodDetailState extends State<FoodDetail> {
     "assets/images/fruit.png"
   ];
 
+  Future addImagetoMap(Map foodMenu, String displayImage) async {
+    Map<String, dynamic> newfoodMenu = Map<String, dynamic>.from(foodMenu);
+    newfoodMenu['Daily_Food_Image'] = displayImage;
+
+    _foodMenuController.foodManu.value = newfoodMenu;
+  }
+
+  Future setFoodImage() async {
+    setState(() {
+      displayImage = widget.foodImage == 'no' || widget.foodImage == null
+          ? foodMenu!['Food_Category_ID'] == 0
+              ? _foodCategory[0]
+              : foodMenu!['Food_Category_ID'] == 1
+                  ? _foodCategory[1]
+                  : foodMenu!['Food_Category_ID'] == 2
+                      ? _foodCategory[2]
+                      : _foodCategory[3]
+          : _foodMenuController.foodManu['Daily_Food_Image'];
+    });
+  }
+
   @override
   void initState() {
-    foodMenu = _foodManuController.foodManu;
+    foodMenu = _foodMenuController.foodManu;
+    setFoodImage();
     super.initState();
-    print(widget.foodImage);
+    print(foodMenu!['Daily_Food_Image']);
   }
 
   @override
@@ -79,15 +102,7 @@ class _FoodDetailState extends State<FoodDetail> {
                     height: size.height * 0.02,
                   ),
                   Image.asset(
-                    widget.foodImage != 'no'
-                        ? "assets/images/foodOne.jpg"
-                        : foodMenu!['Food_Category_ID'] == 0
-                            ? _foodCategory[0]
-                            : foodMenu!['Food_Category_ID'] == 1
-                                ? _foodCategory[1]
-                                : foodMenu!['Food_Category_ID'] == 2
-                                    ? _foodCategory[2]
-                                    : _foodCategory[3],
+                    displayImage!,
                     height: size.height * 0.25,
                   ),
                   SizedBox(
@@ -113,6 +128,10 @@ class _FoodDetailState extends State<FoodDetail> {
                           child: TextButton(
                             onPressed: () {
                               // Navigator.pushNamed(context, '/AddMeal');
+                              // foodMenu!.putIfAbsent(
+                              //     'Daily_Food_Image', () => displayImage);
+                              // foodMenu!['Daily_Food_Image'] = displayImage;
+                              addImagetoMap(foodMenu!, displayImage!);
                               Get.toNamed('/AddMeal');
                             },
                             child: Text("เพิ่มประวัติการกิน",

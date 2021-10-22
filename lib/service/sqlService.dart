@@ -126,13 +126,35 @@ class SqlService {
     return result;
   }
 
+  Future foodLoadId(id) async {
+    final db = await instance.database;
+    final result =
+        await db.query('foodmenu', where: 'Food_Menu_ID=?', whereArgs: [id]);
+    if (result.length > 0) {
+      return result;
+    } else {
+      print('Not found');
+    }
+  }
+
   // =========== Daily eat ============
 
-  Future dailyLoad() async {
+  dailyLoad() async {
     final db = await instance.database;
-    final result = await db.query('dailyeate');
-    
-    print(result);
+    // final result = await db.query(
+    //   'dailyeate',
+    //   orderBy: 'Daily_Eat_ID DESC',
+    // );
+    final result = await db.rawQuery(
+        'SELECT *,foodmenu.Food_Category_ID FROM dailyeate  INNER JOIN foodmenu  on dailyeate.Food_Menu=foodmenu.Food_Menu_ID ORDER by dailyeate.Daily_Eat_ID DESC');
+
+    // print(result);
+    if (result.length > 0) {
+      // print(result);
+    } else {
+      print('Not found');
+    }
+
     return result;
   }
 

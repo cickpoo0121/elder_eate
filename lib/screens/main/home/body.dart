@@ -95,7 +95,7 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   void dispose() {
-    ElderEatDatabase.instance.close();
+    // ElderEatDatabase.instance.close();
     super.dispose();
   }
 

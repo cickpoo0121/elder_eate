@@ -5,7 +5,6 @@ import 'package:elder_eate/screens/main/searchFood.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-
 class Home extends StatefulWidget {
   final int currentPage;
   const Home({Key? key, required this.currentPage}) : super(key: key);
@@ -39,11 +38,14 @@ class _HomeState extends State<Home> {
       initialIndex: widget.currentPage,
       child: Scaffold(
         bottomNavigationBar: menu(),
-        body: TabBarView(children: [
-          HomeBody(),
-          SearchFood(),
-          DailyEat(),
-        ]),
+        body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
+          children: [
+            HomeBody(),
+            SearchFood(),
+            DailyEat(),
+          ],
+        ),
       ),
     );
   }

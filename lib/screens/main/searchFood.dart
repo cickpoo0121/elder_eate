@@ -1,11 +1,16 @@
+import 'dart:io';
+
 import 'package:elder_eate/constant.dart';
-import 'package:elder_eate/controller/foodManu_controller.dart';
+import 'package:elder_eate/controller/foodMenu_controller.dart';
 import 'package:elder_eate/screens/food/foodDetail.dart';
 import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:tflite/tflite.dart';
 
 class SearchFood extends StatefulWidget {
   const SearchFood({Key? key}) : super(key: key);
@@ -15,7 +20,42 @@ class SearchFood extends StatefulWidget {
 }
 
 class _SearchFoodState extends State<SearchFood> {
-  FoodManuController _foodManuController = Get.put(FoodManuController());
+  FoodMenuController _foodMenuController = Get.put(FoodMenuController());
+  File? _image;
+  List? _output;
+  final _picker = ImagePicker();
+
+  Future detectImage(File image) async {
+    final output = await Tflite.runModelOnImage(
+        path: image.path,
+        numResults: 2,
+        threshold: 0.6,
+        imageMean: 124.5,
+        imageStd: 127.5);
+
+    setState(() {
+      _output = output;
+    });
+  }
+
+  Future loadModel() async {
+    await Tflite.loadModel(model: 'model', labels: '');
+  }
+
+  Future pickImage(ImageSource source) async {
+    try {
+      final image = await _picker.pickImage(source: source);
+      if (image == null) return null;
+
+      setState(() {
+        _image = File(image.path);
+      });
+      print(image.path);
+    } on PlatformException catch (e) {
+      print('Fail to pick image $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -87,7 +127,7 @@ class _SearchFoodState extends State<SearchFood> {
                             },
                             onSuggestionSelected: (suggestion) {
                               // Get.toNamed('/FoodDetail');
-                              _foodManuController.foodManu.value = suggestion;
+                              _foodMenuController.foodManu.value = suggestion;
                               Get.to(() => FoodDetail(
                                     eventCheck: 0,
                                   ));
@@ -98,6 +138,7 @@ class _SearchFoodState extends State<SearchFood> {
                 ),
                 GestureDetector(
                   onTap: () {
+                    pickImage(ImageSource.camera);
                     // Navigator.pushNamed(context, '/Camera');
                   },
                   child: Container(

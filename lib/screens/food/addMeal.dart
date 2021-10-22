@@ -1,6 +1,6 @@
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/component/nutrition.dart';
-import 'package:elder_eate/controller/foodManu_controller.dart';
+import 'package:elder_eate/controller/foodMenu_controller.dart';
 import 'package:elder_eate/screens/main/home/home.dart';
 import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class AddMeal extends StatefulWidget {
 }
 
 class _AddMealState extends State<AddMeal> {
-  FoodManuController _foodManuController = Get.find();
+  FoodMenuController _foodMenuController = Get.find();
   Map? foodMenu;
   int meal = 0;
   int quantity = 1;
@@ -110,7 +110,8 @@ class _AddMealState extends State<AddMeal> {
 
   @override
   void initState() {
-    foodMenu = _foodManuController.foodManu;
+    foodMenu = _foodMenuController.foodManu;
+    print('new food $foodMenu');
 
     super.initState();
   }
@@ -296,10 +297,10 @@ class _AddMealState extends State<AddMeal> {
                       child: TextButton(
                         onPressed: () {
                           SqlService.instance.dailyAdd({
-                            "Daily_Food_Image": '',//TODO: เก็บรูป
+                            "Daily_Food_Image": foodMenu!['Daily_Food_Image'],
                             "Daily_Food_Datetime": DateTime.now().toString(),
                             "Daily_Meal": meal,
-                            "Food_Menu": foodMenu!['Food_Category_ID'],
+                            "Food_Menu": foodMenu!['Food_Menu_ID'],
                             "Quantity": quantity,
                             "User_ID": 0,
                           });
@@ -308,6 +309,8 @@ class _AddMealState extends State<AddMeal> {
 
                           SqlService.instance.dailyLoad();
                           // Navigator.pushNamed(context, '/Home');
+
+                          Get.offAll(() => Home(currentPage: 2));
 
                           // checkDayNutri();
                           // overNutri != null ? alert() : goDailyEat();
