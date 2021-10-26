@@ -2,11 +2,9 @@ import 'dart:developer';
 
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/controller/user_controller.dart';
-import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class Disease extends StatefulWidget {
   const Disease({Key? key}) : super(key: key);
@@ -30,10 +28,10 @@ class _DiseaseState extends State<Disease> {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: pBackgroundColor,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
+          // leading: IconButton(
+          //   icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+          //   onPressed: () => Navigator.of(context).pop(),
+          // ),
           elevation: 0.0),
       backgroundColor: pBackgroundColor,
       body: Padding(
@@ -130,14 +128,14 @@ class _DiseaseState extends State<Disease> {
                       print(dropdownValue);
                       _userController.user.last.disease = dropdownValue;
                       // inspect(_userController.user);
-                      GetStorage()
-                          .write('user', _userController.user.last.toJson());
-                      final result = await SqlService.instance.userRegister();
+                      // GetStorage()
+                      //     .write('user', _userController.user.last.toJson());
+                      // final result = await SqlService.instance.userRegister();
                       // if (result == true) {
-                      print('register successed');
+                      // print('register successed');
                       // }
                       // print(result);
-                      inspect(result);
+                      // inspect(result);
                       Get.toNamed('/Progress');
                       // Navigator.pushNamed(context, '/Progress');
                     }
@@ -147,7 +145,7 @@ class _DiseaseState extends State<Disease> {
                     style: Theme.of(context).textTheme.headline5,
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

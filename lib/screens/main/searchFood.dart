@@ -21,6 +21,7 @@ class SearchFood extends StatefulWidget {
 
 class _SearchFoodState extends State<SearchFood> {
   FoodMenuController _foodMenuController = Get.put(FoodMenuController());
+  bool _loading = true;
   File? _image;
   List? _output;
   final _picker = ImagePicker();
@@ -35,11 +36,17 @@ class _SearchFoodState extends State<SearchFood> {
 
     setState(() {
       _output = output;
+      _loading = false;
     });
+
+    print('output=======$_output');
   }
 
   Future loadModel() async {
-    await Tflite.loadModel(model: 'model', labels: '');
+    await Tflite.loadModel(
+        model: 'assets/model/food.tflite', labels: 'assets/model/labels.txt');
+
+    print('load model');
   }
 
   Future pickImage(ImageSource source) async {
@@ -50,10 +57,24 @@ class _SearchFoodState extends State<SearchFood> {
       setState(() {
         _image = File(image.path);
       });
+
+      detectImage(_image!);
       print(image.path);
     } on PlatformException catch (e) {
       print('Fail to pick image $e');
     }
+  }
+
+  @override
+  void initState() {
+    loadModel();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
@@ -68,7 +89,7 @@ class _SearchFoodState extends State<SearchFood> {
             centerTitle: true,
             title: Text(
               'เพิ่มมื้ออาหาร',
-              style: Theme.of(context).textTheme.headline1,
+              // style: Theme.of(context).textTheme.headline1,
             ),
             elevation: 0.0),
         body: SingleChildScrollView(

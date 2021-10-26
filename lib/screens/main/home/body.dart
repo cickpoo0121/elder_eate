@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:elder_eate/component/nutritionPerDay.dart';
 import 'package:elder_eate/constant.dart';
-import 'package:elder_eate/service/service.dart';
+import 'package:elder_eate/controller/balance_controller.dart';
+import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:getwidget/components/progress_bar/gf_progress_bar.dart';
+import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeBody extends StatefulWidget {
   const HomeBody({Key? key}) : super(key: key);
@@ -14,65 +18,95 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
-  // double calories = 2500;
-  // double sugar = 1000;
-  // double sodium = 302;
+  NutritionBalanceController _balanceController =
+      Get.put(NutritionBalanceController());
+  List<double>? nutritionPerday = [123, 12, 500];
+  List<double>? maxNutrition = [];
 
-  // List<double> nutritionValue = [750, 70, 30];
-  // List<double> nutritionValue = [0, 0, 0];
-  List<double> nutritionValue = testnutritionValue;
-  List<double> maxNutrition = testmaxNutrition;
+  SharedPreferences? _pref;
+  String _titleName = 'เพิ่มมื้ออาหารของคุณ';
+  String _status = '';
+  Widget? _mainIcon;
+  Map? _balance;
 
-  String titleName = 'เพิ่มมื้ออาหารของคุณ';
-  String mainIconName = 'assets/icons/cook.svg';
-  String status = '';
-  late Widget mainIcon;
+  Future maxNutritionload() async {
+    _pref = await SharedPreferences.getInstance();
+    final data = _pref!.getString('balance');
+    setState(() {
+      _balance = jsonDecode(data!);
+      maxNutrition!.add(_balance!['calroies']);
+      maxNutrition!.add(_balance!['sugar']);
+      maxNutrition!.add(_balance!['sodium']);
+      print('_balance ================ $_balance');
+    });
+  }
 
-  resultOfday() {
-    for (int i = 0; i < nutritionValue.length; i++) {
-      if (nutritionValue[i] == 0) {
-        titleName = "เพิ่มมื้ออาหารของคุณ";
-        status = 'add';
+  Future dailyLoad() async {
+    final dailyEat = await SqlService.instance.dailyLoad();
+    print(dailyEat);
+    return dailyEat;
+  }
 
-        mainIcon = Positioned(
+  resultOfday() async {
+    for (int i = 0; i < nutritionPerday!.length; i++) {
+      if (nutritionPerday![i] == 0) {
+        _titleName = "เพิ่มมื้ออาหารของคุณ";
+        _status = 'add';
+
+        // _mainIcon = Positioned(
+        //   child: Container(
+        //       width: Adaptive.w(20),
+        //       height: 35.5.h,
+        //       child: SvgPicture.asset("assets/icons/cook.svg")),
+        //   top: -50,
+        //   right: 0,
+        //   left: 0,
+        // );
+      } else if (nutritionPerday![i] >= maxNutrition![i]) {
+        _titleName = "อาหารเกินเกณฑ์";
+        _status = 'over';
+
+        // _mainIcon = Positioned(
+        //   child: Container(
+        //     width: Adaptive.w(20),
+        //     height: 35.5.h,
+        //     child: SvgPicture.asset(
+        //       "assets/icons/overCase.svg",
+        //       height: 200,
+        //     ),
+        //   ),
+        //   // top: -2,
+        //   right: 0,
+        //   left: 0,
+        // );
+      } else {
+        _titleName = "สารอาหารอยู่ตามเกณฑ์";
+        _status = 'incase';
+        // _mainIcon = Positioned(
+        //   child: Container(
+        //       width: Adaptive.w(20), // This will take 20% of the screen's width
+        //       height: 35.5.h,
+        //       child: SvgPicture.asset("assets/icons/inCase.svg")),
+        //   // top: -10,
+        //   right: 0,
+        //   left: 0,
+        // );
+      }
+      setState(() {
+        _mainIcon = Positioned(
           child: Container(
               width: Adaptive.w(20),
               height: 35.5.h,
-              child: SvgPicture.asset("assets/icons/cook.svg")),
-          top: -50,
+              child: SvgPicture.asset(_status == 'add'
+                  ? "assets/icons/cook.svg"
+                  : _status == 'over'
+                      ? 'assets/icons/overCase.svg'
+                      : 'assets/icons/inCase.svg')),
+          top: _status == 'add' ? -50 : 0,
           right: 0,
           left: 0,
         );
-      } else if (nutritionValue[i] >= maxNutrition[i]) {
-        titleName = "อาหารเกินเกณฑ์";
-        status = 'over';
-
-        mainIcon = Positioned(
-          child: Container(
-            width: Adaptive.w(20),
-            height: 35.5.h,
-            child: SvgPicture.asset(
-              "assets/icons/overCase.svg",
-              height: 200,
-            ),
-          ),
-          // top: -2,
-          right: 0,
-          left: 0,
-        );
-      } else {
-        titleName = "สารอาหารอยู่ตามเกณฑ์";
-        status = 'incase';
-        mainIcon = Positioned(
-          child: Container(
-              width: Adaptive.w(20), // This will take 20% of the screen's width
-              height: 35.5.h,
-              child: SvgPicture.asset("assets/icons/inCase.svg")),
-          // top: -10,
-          right: 0,
-          left: 0,
-        );
-      }
+      });
     }
   }
 
@@ -88,9 +122,9 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   void initState() {
-    super.initState();
+    maxNutritionload();
     resultOfday();
-    // refreshNotes();
+    super.initState();
   }
 
   @override
@@ -111,7 +145,7 @@ class _HomeBodyState extends State<HomeBody> {
         bottomOpacity: 0.0,
         elevation: 0.0,
         title: Text(
-          titleName,
+          _titleName,
           style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.w700,
@@ -148,8 +182,8 @@ class _HomeBodyState extends State<HomeBody> {
                     width: size.width * 1,
                     // color: Colors.red,
                   ),
-                  mainIcon,
-                  status == 'over'
+                  _mainIcon != null ? _mainIcon! : Container(),
+                  _status == 'over'
                       ? Positioned(
                           child: Center(
                               child: Text(
@@ -194,10 +228,18 @@ class _HomeBodyState extends State<HomeBody> {
                       ),
                     ),
                   ),
-                  NutritionPerDay(
-                    nutritionValue: nutritionValue,
-                    maxNutrition: maxNutrition,
-                  )
+                  _balance == null
+                      ? CircularProgressIndicator()
+                      : NutritionPerDay(
+                          nutritionValue: nutritionPerday!,
+                          maxNutrition: maxNutrition!
+                          // [
+                          //   _balance!['calroies'],
+                          //   _balance!['sugar'],
+                          //   _balance!['sodium'],
+                          // ]
+                          ,
+                        )
                 ],
               )
             ],

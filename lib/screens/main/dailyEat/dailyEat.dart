@@ -1,8 +1,6 @@
 import 'package:elder_eate/constant.dart';
-import 'package:elder_eate/component/nutrition.dart';
 import 'package:elder_eate/controller/foodMenu_controller.dart';
 import 'package:elder_eate/screens/food/foodDetail.dart';
-import 'package:elder_eate/screens/main/dailyEat/body.dart';
 import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

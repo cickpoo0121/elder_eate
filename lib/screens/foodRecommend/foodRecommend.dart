@@ -19,10 +19,10 @@ class _FoodRecommendState extends State<FoodRecommend> {
       backgroundColor: pHeaderTabColor,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+        //   onPressed: () => Navigator.of(context).pop(),
+        // ),
         backgroundColor: pHeaderTabColor,
         centerTitle: true,
         title: Text(

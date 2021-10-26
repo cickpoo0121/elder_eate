@@ -38,7 +38,6 @@ dependencies:
   shared_preferences: ^2.0.8
   sqflite: ^2.0.0+4
   path: ^1.8.0
-  get_storage: ^2.0.3
   image_picker: ^0.8.4+3
   flutter_typeahead: ^3.2.1
   tflite: ^1.1.2
@@ -64,6 +63,9 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/db/elderEat.db
+    - assets/model/set3.tflite
+    - assets/model/food.tflite
+    - assets/model/labels.txt
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

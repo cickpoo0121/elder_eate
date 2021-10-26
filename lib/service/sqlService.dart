@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/services.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -67,19 +66,19 @@ class SqlService {
     return result;
   }
 
-  Future userRegister() async {
+  Future userRegister(data) async {
     final db = await instance.database;
-    final user = GetStorage().read('user');
+    // final user = GetStorage().read('user');
 
-    final data = {
-      'Username': user['username'],
-      'Age': user['age'],
-      'Sex': user['sex'],
-      'Weight': user['weight'],
-      'Height': user['height'],
-      'Disease': user['disease'],
-      'Line_ID': user['line'],
-    };
+    // final data = {
+    //   'Username': user['username'],
+    //   'Age': user['age'],
+    //   'Sex': user['sex'],
+    //   'Weight': user['weight'],
+    //   'Height': user['height'],
+    //   'Disease': user['disease'],
+    //   'Line_ID': user['line'],
+    // };
 
     // print(user['age']);
 

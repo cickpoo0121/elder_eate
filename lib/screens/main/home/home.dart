@@ -3,7 +3,6 @@ import 'package:elder_eate/screens/main/dailyEat/dailyEat.dart';
 import 'package:elder_eate/screens/main/home/body.dart';
 import 'package:elder_eate/screens/main/searchFood.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Home extends StatefulWidget {
   final int currentPage;
@@ -32,7 +31,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    // Size size = MediaQuery.of(context).size;
     return DefaultTabController(
       length: tabs.length,
       initialIndex: widget.currentPage,

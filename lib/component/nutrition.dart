@@ -1,7 +1,5 @@
 import 'package:elder_eate/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:getwidget/components/progress_bar/gf_progress_bar.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Nutrition extends StatefulWidget {
   const Nutrition({
@@ -23,7 +21,7 @@ class _NutritionState extends State<Nutrition> {
   double _calories = 0;
   double _sugar = 0;
   double _sodium = 0;
-  List<String> _icon = [
+  List<String> _foodCategory = [
     "assets/images/calories.png",
     "assets/images/sugar.png",
     "assets/images/sodium.png"
@@ -44,7 +42,7 @@ class _NutritionState extends State<Nutrition> {
     Size size = MediaQuery.of(context).size;
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: _icon.length,
+        itemCount: _foodCategory.length,
         itemBuilder: (context, index) {
           return Column(
             children: [
@@ -55,7 +53,7 @@ class _NutritionState extends State<Nutrition> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
                 child: ListTile(
-                  leading: Image.asset(_icon[index]),
+                  leading: Image.asset(_foodCategory[index]),
                   title: Padding(
                     padding: const EdgeInsets.only(left: 0),
                     child: Text(
@@ -70,7 +68,7 @@ class _NutritionState extends State<Nutrition> {
                   ),
                   trailing: index == 0
                       ? Text(
-                          "${_calories} กิโลแคลอรี",
+                          "${_calories.toStringAsFixed(0)} กิโลแคลอรี",
                           style: TextStyle(
                               color: pDetailTxtColor,
                               fontWeight: FontWeight.w700,
@@ -78,14 +76,14 @@ class _NutritionState extends State<Nutrition> {
                         )
                       : index == 1
                           ? Text(
-                              "${_sugar} กรัม",
+                              "${_sugar.toStringAsFixed(0)}กรัม",
                               style: TextStyle(
                                   color: pDetailTxtColor,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 15),
                             )
                           : Text(
-                              "${_sodium} กรัม",
+                              "${_sodium.toStringAsFixed(0)} กรัม",
                               style: TextStyle(
                                   color: pDetailTxtColor,
                                   fontWeight: FontWeight.w700,

@@ -20,7 +20,7 @@ class NutritionPerDay extends StatefulWidget {
 class _NutritionPerDayState extends State<NutritionPerDay> {
   List<double> _nutritionValue = [];
   List<double> _maxNutrition = [];
-  List<String> _icon = [
+  List<String> _foodCategory = [
     "assets/images/calories.png",
     "assets/images/sugar.png",
     "assets/images/sodium.png"
@@ -52,7 +52,7 @@ class _NutritionPerDayState extends State<NutritionPerDay> {
 
     return ListView.builder(
         shrinkWrap: true,
-        itemCount: _icon.length,
+        itemCount: _foodCategory.length,
         itemBuilder: (context, index) {
           return Column(
             children: [
@@ -63,33 +63,56 @@ class _NutritionPerDayState extends State<NutritionPerDay> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
                 child: ListTile(
-                  leading: Image.asset(_icon[index]),
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        _nutritionName[index],
-                        style: TextStyle(
-                            color: pDetailTxtColor,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      SizedBox(
-                        // height: 20,
-                        height: size.height * 0.002,
-                      ),
-                      Container(
-                        width: size.width * 0.45,
-                        child: GFProgressBar(
-                          lineHeight: 10,
-                          percentage: calNutrition(index),
-                          progressBarColor: _color[index],
+                    leading: Image.asset(
+                      _foodCategory[index],
+                      width: size.width * 0.1,
+                    ),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _nutritionName[index],
+                          style: TextStyle(
+                              color: pDetailTxtColor,
+                              fontWeight: FontWeight.w700),
                         ),
-                      )
-                    ],
-                  ),
-                  trailing: Text(
-                      "${_nutritionValue[index].toStringAsFixed(0)}/${_maxNutrition[index].toStringAsFixed(0)}"),
-                ),
+                        SizedBox(
+                          // height: 20,
+                          height: size.height * 0.002,
+                        ),
+                        Container(
+                          width: size.width * 0.4,
+                          child: GFProgressBar(
+                            lineHeight: 10,
+                            percentage: calNutrition(index),
+                            progressBarColor: _color[index],
+                          ),
+                        )
+                      ],
+                    ),
+                    trailing:
+                        // index == 0
+                        //     ?
+                        Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          "${_nutritionValue[index].toStringAsFixed(0)}/${_maxNutrition[index].toStringAsFixed(0)}",
+                          style: TextStyle(
+                              color: pDetailTxtColor,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15),
+                        ),
+                        Text(
+                          index == 0 ? 'กิโลแคลอรี' : 'กรัม',
+                          style: TextStyle(
+                              color: pDetailTxtColor,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15),
+                        ),
+                      ],
+                    )),
               ),
             ],
           );

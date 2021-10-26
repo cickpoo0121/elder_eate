@@ -31,10 +31,10 @@ class _UsernameState extends State<Username> {
       child: Scaffold(
         appBar: AppBar(
             backgroundColor: pBackgroundColor,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
+            // leading: IconButton(
+            //   icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+            //   onPressed: () => Navigator.of(context).pop(),
+            // ),
             elevation: 0.0),
         backgroundColor: pBackgroundColor,
         body: SingleChildScrollView(
