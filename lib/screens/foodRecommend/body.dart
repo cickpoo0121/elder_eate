@@ -23,7 +23,7 @@ class _FoodRecommendBodyState extends State<FoodRecommendBody> {
   // int _calories = 0;
   // int _sugar = 0;
   // int _sodium = 0;
-  int event = 0; // 1 คือ รายละเอียดอาหาร , 0 รายการอาหาร
+  int event = 0; // 1 คือ รายละเอียดอาหาร , 0 รายการอาหาร(เพิ่มอาหาร)
   List<String> _icon = [
     "assets/images/food.png",
     "assets/images/drink.png",

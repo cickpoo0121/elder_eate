@@ -6,14 +6,16 @@ import 'package:get/get.dart';
 
 class FoodDetail extends StatefulWidget {
   final eventCheck;
-  // final foodMenu;
+  final fileimage;
   final foodImage;
-  const FoodDetail(
-      {Key? key,
-      required this.eventCheck,
-      // required this.foodMenu,
-      this.foodImage = 'no'})
-      : super(key: key);
+  const FoodDetail({
+    Key? key,
+    required this.eventCheck,
+    // this.inforFrom = 'db',
+    // required this.foodMenu,
+    this.foodImage = 'no',
+    this.fileimage,
+  }) : super(key: key);
 
   @override
   _FoodDetailState createState() => _FoodDetailState();
@@ -21,7 +23,7 @@ class FoodDetail extends StatefulWidget {
 
 class _FoodDetailState extends State<FoodDetail> {
   FoodMenuController _foodMenuController = Get.find();
-  // int? _event; // 1 คือ รายละเอียดอาหาร , 0 รายการอาหาร
+  // int? _event; // 1 คือ รายละเอียดอาหาร , 0 รายการอาหาร(เพื่ม)
   Map? foodMenu;
   String? displayImage;
 
@@ -50,7 +52,9 @@ class _FoodDetailState extends State<FoodDetail> {
                   : foodMenu!['Food_Category_ID'] == 2
                       ? _foodCategory[2]
                       : _foodCategory[3]
-          : _foodMenuController.foodManu['Daily_Food_Image'];
+          : widget.eventCheck == 1
+              ? _foodMenuController.foodManu['Daily_Food_Image']
+              : widget.foodImage;
     });
   }
 
@@ -101,9 +105,20 @@ class _FoodDetailState extends State<FoodDetail> {
                   SizedBox(
                     height: size.height * 0.02,
                   ),
-                  Image.asset(
-                    displayImage!,
+                  // TODO: ดึงรูปจริงมาโชวร์ ของ DB
+
+                  Container(
                     height: size.height * 0.25,
+                    width: size.width * 0.6,
+                    child: widget.foodImage[0] != 'a'
+                        ? Image.file(
+                            widget.fileimage,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            displayImage!,
+                            height: size.height * 0.25,
+                          ),
                   ),
                   SizedBox(
                     height: size.height * 0.02,

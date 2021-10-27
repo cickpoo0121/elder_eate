@@ -70,14 +70,15 @@ class _DailyEatState extends State<DailyEat> {
                     height: size.height * 0.02,
                   ),
                   FutureBuilder(
-                      future: dailyLoad(),
-                      builder: (context, snapshot) => snapshot.hasData
-                          ? Expanded(
-                              child: showDailyEate(snapshot.data, foodCategory,
-                                  size, _foodMenuController))
-                          : Center(
-                              child: CircularProgressIndicator(),
-                            ))
+                    future: dailyLoad(),
+                    builder: (context, snapshot) => snapshot.hasData
+                        ? Expanded(
+                            child: showDailyEate(snapshot.data, foodCategory,
+                                size, _foodMenuController))
+                        : Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                  ),
                 ],
               ),
             ),
@@ -107,52 +108,70 @@ Widget showDailyEate(dailyEat, foodCategory, size, _foodMenuController) {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
+                // TODO: ดึงรูปจริงมาโชวร์ ของ DB
                 GestureDetector(
                   onTap: () {
                     _foodMenuController.foodManu.value = dailyEat[index];
                     Get.to(() => FoodDetail(
                           eventCheck: 1,
-                          foodImage: 'yes',
+                          // foodImage: 'yes',
+                          foodImage: dailyEat[index]['Daily_Food_Image'],
                         ));
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                     child: ListTile(
-                      leading: Image.asset(
-                        dailyEat[index]['Food_Category_ID'] == 0
-                            ? foodCategory[0]
-                            : dailyEat[index]['Food_Category_ID'] == 1
-                                ? foodCategory[1]
-                                : dailyEat[index]['Food_Category_ID'] == 2
-                                    ? foodCategory[2]
-                                    : foodCategory[3],
-                        height: size.height * 0.07,
-                      ),
-                      title: Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Text(
-                          // "text",
-                          dailyEat[index]['Food_Name'],
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: pDetailTxtColor,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 18.sp),
+                        leading: Image.asset(
+                          dailyEat[index]['Food_Category_ID'] == 0
+                              ? foodCategory[0]
+                              : dailyEat[index]['Food_Category_ID'] == 1
+                                  ? foodCategory[1]
+                                  : dailyEat[index]['Food_Category_ID'] == 2
+                                      ? foodCategory[2]
+                                      : foodCategory[3],
+                          height: size.height * 0.07,
                         ),
-                      ),
-                      trailing: Text(
-                        // 'text',
-                        dailyEat[index]['Daily_Food_Datetime']
-                            .toString()
-                            .substring(0, 10),
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            color: pDetailTxtColor,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18.sp),
-                      ),
-                    ),
+                        title: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text(
+                            // "text",
+                            dailyEat[index]['Food_Name'],
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: pDetailTxtColor,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18.sp),
+                          ),
+                        ),
+                        trailing: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              // 'text',
+                              dailyEat[index]['Daily_Food_Datetime']
+                                  .toString()
+                                  .substring(0, 10),
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  color: pDetailTxtColor,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 18.sp),
+                            ),
+                            Text(
+                              // 'text',
+                              dailyEat[index]['Daily_Food_Datetime']
+                                  .toString()
+                                  .substring(11, 16),
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  color: pDetailTxtColor,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16.sp),
+                            ),
+                          ],
+                        )),
                   ),
                 ),
               ],

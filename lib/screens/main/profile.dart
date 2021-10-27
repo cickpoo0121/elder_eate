@@ -1,11 +1,17 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:elder_eate/constant.dart';
+import 'package:elder_eate/controller/user_controller.dart';
+import 'package:elder_eate/model/user_model.dart';
+import 'package:elder_eate/screens/main/home/home.dart';
 import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
+import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -18,6 +24,7 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   UserProfile? _userProfile;
   String? _userEmail;
+  SharedPreferences? _pref;
   StoredAccessToken? _accessToken;
   TextEditingController _userNameText = TextEditingController();
   TextEditingController _weightText = TextEditingController();
@@ -27,6 +34,7 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
   bool _readOnly = true;
   bool _loadData = true;
   var _userData;
+  double? _bmr, _cal, _sug, _sodm;
 
   @override
   bool get wantKeepAlive => true;
@@ -42,6 +50,61 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
     setState(() {
       _loadData = false;
     });
+  }
+
+  fineBalnce() {
+    // final user = User.fromJson(_userData[0]);
+    // final sex = 0; // sex: 0 is male, 1 is female
+
+    if (_userData[0]['Sex'] == 0) {
+      _bmr = 66 +
+          (13.7 * _userData[0]['Weight']) +
+          (5 * _userData[0]['Height']) -
+          (6.8 * _userData[0]['Age']);
+    } else {
+      _bmr = 665 +
+          (9.6 * _userData[0]['Weight']) +
+          (1.8 * _userData[0]['Height']) -
+          (4.7 * _userData[0]['Age']);
+    }
+
+    _cal = _bmr! * 1.2;
+    print(_cal);
+
+    if (_userData[0]['Disease'] == 'ไม่มีโรคประจำตัว') {
+      setState(() {
+        _cal = _cal;
+        _sug = 24;
+        _sodm = 2000;
+      });
+    } else {
+      if ((_cal! >= 0) && (_cal! <= 1400)) {
+        setState(() {
+          _cal = _cal;
+          _sug = 6;
+          _sodm = 1410;
+        });
+        return print('case 1');
+      }
+      if ((_cal! > 1400) && (_cal! <= 1600)) {
+        setState(() {
+          _cal = _cal;
+          _sug = 12;
+          _sodm = 1490;
+        });
+        return print('case 2');
+      }
+      if ((_cal! > 1600) && (_cal! <= 2000)) {
+        setState(() {
+          _cal = _cal;
+          _sug = 24;
+          _sodm = 1610;
+        });
+        return print('case 3');
+      }
+    }
+
+    // print('$_cal, $_sug, $_sodm}');
   }
 
   void alert() {
@@ -190,15 +253,17 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
       backgroundColor: pHeaderTabColor,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        // leading: IconButton(
-        //   icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-        //   onPressed: () => Navigator.of(context).pop(),
-        // ),
+        leading: GestureDetector(
+          onTap: () {
+            Get.offAll(Home(currentPage: 0));
+          },
+          child: Icon(Icons.arrow_back),
+        ),
         backgroundColor: pHeaderTabColor,
         centerTitle: true,
         title: Text(
           'โปรไฟล์',
-          style: Theme.of(context).textTheme.headline1,
+          style: TextStyle(fontWeight: FontWeight.w700),
         ),
         elevation: 0.0,
       ),
@@ -219,12 +284,16 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
                   child: Center(
                     child: Column(
                       children: [
-                        CircleAvatar(
-                          radius: size.width * 0.23,
-                          backgroundColor: pButtonColor,
-                          child: Text(
-                            _userData[0]['Username'],
-                            style: TextStyle(fontSize: 30, color: Colors.white),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: CircleAvatar(
+                            radius: size.width * 0.23,
+                            backgroundColor: pButtonColor,
+                            child: Text(
+                              _userData[0]['Username'],
+                              style:
+                                  TextStyle(fontSize: 30, color: Colors.white),
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -435,13 +504,14 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
                           width: size.width * 0.85,
                           decoration: BoxDecoration(),
                           child: TextButton(
-                            onPressed: () {
+                            onPressed: () async {
+                              _pref = await SharedPreferences.getInstance();
                               if (!_readOnly) {
                                 final isValid =
                                     _formkey.currentState!.validate();
                                 if (isValid) {
-                                  //TODO: update to database
-                                  final resp = SqlService.instance.userUpdate(
+                                  final resp =
+                                      await SqlService.instance.userUpdate(
                                     _userData[0]['User_ID'],
                                     _userNameText.text,
                                     double.parse(_weightText.text),
@@ -449,12 +519,21 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
                                     int.parse(_ageText.text),
                                     _dropdownValue.toString(),
                                   );
-
-                                  print('update successed');
-                                  setState(() {
-                                    _readOnly = true;
-                                    loadUser();
-                                  });
+                                  if (resp) {
+                                    fineBalnce();
+                                    Map blance = {
+                                      'calroies': _cal,
+                                      'sugar': _sug,
+                                      'sodium': _sodm
+                                    };
+                                    _pref!.remove('balance');
+                                    _pref!.setString(
+                                        'balance', jsonEncode(blance));
+                                    setState(() {
+                                      _readOnly = true;
+                                      loadUser();
+                                    });
+                                  }
                                 }
                               } else {
                                 setState(() {

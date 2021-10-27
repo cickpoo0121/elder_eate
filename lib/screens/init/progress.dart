@@ -42,9 +42,11 @@ class _ProgressPageState extends State<ProgressPage> {
     print(_cal);
 
     if (user.disease == 'ไม่มีโรคประจำตัว') {
-      _cal = _cal;
-      _sug = 24;
-      _sodm = 2000;
+      setState(() {
+        _cal = _cal;
+        _sug = 24;
+        _sodm = 2000;
+      });
     } else {
       if ((_cal! >= 0) && (_cal! <= 1400)) {
         setState(() {
@@ -179,10 +181,8 @@ class _ProgressPageState extends State<ProgressPage> {
                               'sugar': _sug,
                               'sodium': _sodm
                             };
-                            // TODO:
-                            // GetStorage().write(
-                            //     'user', _userController.user.last.toJson());
-                            _pref!.setString('balance',jsonEncode(blance));
+                          
+                            _pref!.setString('balance', jsonEncode(blance));
 
                             // GetStorage().write('blance', blance);
                             Navigator.pushNamedAndRemoveUntil(

@@ -94,7 +94,7 @@ class SqlService {
     return true;
   }
 
-  // ========= user service ===========
+  // ========= food service ===========
   Future foodSearch(keyWord) async {
     final db = await instance.database;
     final result = await db.rawQuery(
@@ -121,7 +121,20 @@ class SqlService {
     }
   }
 
-  // =========== Daily eat ============
+  Future foodRecommend(cal, sugar, sodm) async {
+    final db = await instance.database;
+    final result = await db.rawQuery(
+        'SELECT * FROM foodmenu WHERE Food_Category_ID=3 AND Food_Calories < ? AND Food_Sugar < ? AND Food_Sodium < ?',
+        [cal, sugar, sodm]);
+    if (result.length > 0) {
+      // print(result);
+      return result;
+    } else {
+      print('Not found');
+    }
+  }
+
+  // =========== Daily eat service ============
 
   allDailyLoad() async {
     final db = await instance.database;

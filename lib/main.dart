@@ -66,7 +66,7 @@ void main() async {
             GetPage(name: '/Profile', page: () => Profile()),
             // GetPage(name: '/Camera', page: () => Camera()),
             GetPage(name: '/SearchFood', page: () => SearchFood()),
-            GetPage(name: '/FoodRecommend', page: () => FoodRecommend()),
+            // GetPage(name: '/FoodRecommend', page: () => FoodRecommend()),
           ],
           // routes: {
           //   '/Init': (context) => Init(),

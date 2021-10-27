@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:elder_eate/constant.dart';
-import 'package:elder_eate/component/nutrition.dart';
+import 'package:elder_eate/controller/balance_controller.dart';
 import 'package:elder_eate/controller/foodMenu_controller.dart';
+import 'package:elder_eate/screens/foodRecommend/foodRecommend.dart';
 import 'package:elder_eate/screens/main/home/home.dart';
 import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
@@ -15,49 +18,58 @@ class AddMeal extends StatefulWidget {
 
 class _AddMealState extends State<AddMeal> {
   FoodMenuController _foodMenuController = Get.find();
+  NutritionBalanceController _balanceController = Get.find();
   Map? foodMenu;
   int meal = 0;
   int quantity = 1;
+  String overNutri = '';
+  List<String> _nutritionName = ["แคลอรี่", "น้ำตาล", "โซเดียม"];
+  List<Color> _color = [pCaloriesColor, pSugarColor, pSodiumColor];
+  List<String> _foodCategory = [
+    "assets/images/calories.png",
+    "assets/images/sugar.png",
+    "assets/images/sodium.png"
+  ];
 
-  // String foodMenu = "ข้าวต้มหมู";
-  // List<double> nutritionBalance = [800, 500, 70]; //case calories over
-  // List<double> nutritionBalance = [1000, 400, 70]; //case sugar over
-  List<double> nutritionBalance = [1000, 500, 30]; //case sodium over
-  // List<double> foodNutrition = [1000, 500, 70];
-  late String overNutri;
+  checkDayNutri() {
+    final balance = _balanceController.balance;
+    final nutritionDay = _balanceController.nutritionDay;
+    final foodNutrition = [
+      foodMenu!['Food_Calories'],
+      foodMenu!['Food_Sugar'],
+      foodMenu!['Food_Sodium'],
+    ];
 
-  // checkDayNutri() {
-  //   overNutri = '';
-  //   for (int i = 0; i < nutritionBalance.length; i++) {
-  //     if (nutritionBalance[i] < foodNutrition[i]) {
-  //       overNutri += i == 0
-  //           ? 'แคลอรี'
-  //           : i == 1
-  //               ? 'น้ำตาล'
-  //               : 'โซเดียม';
-  //     }
-  //   }
-  // }
+    overNutri = '';
+    for (int i = 0; i < balance.length; i++) {
+      if ((balance[i] - nutritionDay[i]) < foodNutrition[i] * quantity) {
+        if (i == 0) {
+          overNutri = overNutri + ' แคลอรี ';
+          continue;
+        } else if (i == 1) {
+          overNutri = overNutri + ' น้ำตาล ';
+          continue;
+        } else {
+          overNutri = overNutri + ' โซเดียม ';
+          continue;
+        }
+      }
+    }
+  }
 
 // jump to daily eate page
   goDailyEat() {
-    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-      builder: (BuildContext context) {
-        return Home(
-          currentPage: 2,
-        );
-      },
-    ), (route) => false);
+    SqlService.instance.dailyAdd({
+      "Daily_Food_Image": foodMenu!['Daily_Food_Image'],
+      "Daily_Food_Datetime": DateTime.now().toString(),
+      "Daily_Meal": meal,
+      "Food_Menu": foodMenu!['Food_Menu_ID'],
+      "Quantity": quantity,
+      "User_ID": 0,
+    });
 
-    // .push(
-    //   MaterialPageRoute(
-    //     builder: (BuildContext context) {
-    //       return Home(
-    //         currentPage: 2,
-    //       );
-    //     },
-    //   ),
-    // );
+    SqlService.instance.allDailyLoad();
+    Get.offAll(() => Home(currentPage: 2));
   }
 
   alert() {
@@ -72,10 +84,29 @@ class _AddMealState extends State<AddMeal> {
                     TextStyle(color: Colors.black, fontWeight: FontWeight.w900),
               ),
             ),
-            content: Text(
-              'ปริมาณ${overNutri}ในอาหารเกินกว่ากำหนดของวันนี้ ท่านต้องการยืนยันทานอาหารชนิดนี้หรือดูรายการอาหารเพิ่มเติม',
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
+            content: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'ปริมาณ',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                  TextSpan(
+                    text: '$overNutri',
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w700),
+                  ),
+                  TextSpan(
+                    text:
+                        'ในอาหารเกินกว่ากำหนดของวันนี้ ท่านต้องการยืนยันทานอาหารชนิดนี้หรือดูรายการอาหารเพิ่มเติม',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
             ),
             actions: [
               ElevatedButton(
@@ -92,7 +123,11 @@ class _AddMealState extends State<AddMeal> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/FoodRecommend');
+                  Get.off(() => FoodRecommend(
+                        foodCatId: foodMenu!['Food_Category_ID'],
+                      ));
+                  // Get.offAndToNamed('/FoodRecommend',
+                  //     arguments: foodMenu!['Food_Category_ID']);
                 },
                 child: Text(
                   'อาหารทดแทน',
@@ -111,6 +146,8 @@ class _AddMealState extends State<AddMeal> {
   @override
   void initState() {
     foodMenu = _foodMenuController.foodManu;
+    inspect('bbbb${_balanceController.balance}');
+    inspect('nnnnn${_balanceController.nutritionDay}');
     print('new food $foodMenu');
 
     super.initState();
@@ -285,10 +322,12 @@ class _AddMealState extends State<AddMeal> {
                     SizedBox(
                       height: size.height * 0.02,
                     ),
-                    Nutrition(
-                        calories: foodMenu!['Food_Calories'].toDouble(),
-                        sugar: foodMenu!['Food_Sugar'].toDouble(),
-                        sodium: foodMenu!['Food_Sodium'].toDouble()),
+                    nutrition(
+                      size,
+                      foodMenu!['Food_Calories'].toDouble() * quantity,
+                      foodMenu!['Food_Sugar'].toDouble() * quantity,
+                      foodMenu!['Food_Sodium'].toDouble() * quantity,
+                    ),
                     SizedBox(
                       height: size.height * 0.02,
                     ),
@@ -296,24 +335,8 @@ class _AddMealState extends State<AddMeal> {
                       width: size.width * 0.45,
                       child: TextButton(
                         onPressed: () {
-                          SqlService.instance.dailyAdd({
-                            "Daily_Food_Image": foodMenu!['Daily_Food_Image'],
-                            "Daily_Food_Datetime": DateTime.now().toString(),
-                            "Daily_Meal": meal,
-                            "Food_Menu": foodMenu!['Food_Menu_ID'],
-                            "Quantity": quantity,
-                            "User_ID": 0,
-                          });
-
-                          print(DateTime.now());
-
-                          SqlService.instance.allDailyLoad();
-                          // Navigator.pushNamed(context, '/Home');
-
-                          Get.offAll(() => Home(currentPage: 2));
-
-                          // checkDayNutri();
-                          // overNutri != null ? alert() : goDailyEat();
+                          checkDayNutri();
+                          overNutri != '' ? alert() : goDailyEat();
                         },
                         child: Text("เพิ่มประวัติการกิน",
                             style: TextStyle(fontSize: 16)),
@@ -328,5 +351,62 @@ class _AddMealState extends State<AddMeal> {
       ),
       // Positioned(child: child)
     );
+  }
+
+  Widget nutrition(size, _calories, _sugar, _sodium) {
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: _foodCategory.length,
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                child: ListTile(
+                  leading: Image.asset(_foodCategory[index]),
+                  title: Padding(
+                    padding: const EdgeInsets.only(left: 0),
+                    child: Text(
+                      _nutritionName[index],
+
+                      // textAlign: TextAlign.left,
+                      style: TextStyle(
+                          color: pDetailTxtColor,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 15),
+                    ),
+                  ),
+                  trailing: index == 0
+                      ? Text(
+                          "${_calories.toStringAsFixed(0)} กิโลแคลอรี",
+                          style: TextStyle(
+                              color: pDetailTxtColor,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15),
+                        )
+                      : index == 1
+                          ? Text(
+                              "${_sugar.toStringAsFixed(0)}กรัม",
+                              style: TextStyle(
+                                  color: pDetailTxtColor,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 15),
+                            )
+                          : Text(
+                              "${_sodium.toStringAsFixed(0)} กรัม",
+                              style: TextStyle(
+                                  color: pDetailTxtColor,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 15),
+                            ),
+                ),
+              ),
+            ],
+          );
+        });
   }
 }

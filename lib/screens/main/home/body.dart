@@ -4,10 +4,12 @@ import 'dart:developer';
 import 'package:elder_eate/component/nutritionPerDay.dart';
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/controller/balance_controller.dart';
+import 'package:elder_eate/screens/main/home/home.dart';
 import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:getwidget/components/progress_bar/gf_progress_bar.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,15 +23,31 @@ class HomeBody extends StatefulWidget {
 class _HomeBodyState extends State<HomeBody> {
   NutritionBalanceController _balanceController =
       Get.put(NutritionBalanceController());
+  SharedPreferences? _pref;
   List<double>? _nutritionPerday = [];
   List<double>? _maxNutrition = [];
-
-  SharedPreferences? _pref;
   String _titleName = 'เพิ่มมื้ออาหารของคุณ';
   String _status = '';
-  // Widget? _mainIcon;
   String? _pic;
   DateTime _nowDate = DateTime.now();
+  List<String> _nutritionName = ["แคลอรี", "น้ำตาล", "โซเดียม"];
+  List<Color> _color = [pCaloriesColor, pSugarColor, pSodiumColor];
+  List<String> _foodCategory = [
+    "assets/images/calories.png",
+    "assets/images/sugar.png",
+    "assets/images/sodium.png"
+  ];
+
+  double nutritionAlert(index) {
+    // print(_nutritionValue[index] / _maxNutrition[index]);
+    double result = _nutritionPerday![index] / _maxNutrition![index];
+    if (result >= 1) {
+      _color[index] = Colors.red;
+      return 1;
+    }
+    return _nutritionPerday![index] / _maxNutrition![index];
+    // return 0.2;
+  }
 
   Future valuePerdayload(nowDate) async {
     _pref = await SharedPreferences.getInstance();
@@ -44,11 +62,15 @@ class _HomeBodyState extends State<HomeBody> {
     //   dataNutritionDay = [];
     // }
 
+    // TODO: คูณค่า quantity
     for (int i = 0; i < dataNutritionDay.length; i++) {
-      cal = cal + dataNutritionDay[i]['Food_Calories'];
-      sugar = sugar + dataNutritionDay[i]['Food_Sugar'];
-      sodm = sodm + dataNutritionDay[i]['Food_Sodium'];
-      print('hi');
+      cal = cal +
+          dataNutritionDay[i]['Food_Calories'] *
+              dataNutritionDay[i]['Quantity'];
+      sugar = sugar +
+          dataNutritionDay[i]['Food_Sugar'] * dataNutritionDay[i]['Quantity'];
+      sodm = sodm +
+          dataNutritionDay[i]['Food_Sodium'] * dataNutritionDay[i]['Quantity'];
     }
     setState(() {
       _nutritionPerday = [];
@@ -66,6 +88,8 @@ class _HomeBodyState extends State<HomeBody> {
 
       resultOfday();
     });
+    _balanceController.balance.value = _maxNutrition!;
+    _balanceController.nutritionDay.value = _nutritionPerday!;
     print(_nutritionPerday.toString());
     print(_maxNutrition.toString());
   }
@@ -144,10 +168,7 @@ class _HomeBodyState extends State<HomeBody> {
             padding: const EdgeInsets.only(right: 15),
             child: GestureDetector(
               onTap: () {
-                // print('object');
-                // _sqlHelper.testdb();
-
-                Navigator.pushNamed(context, '/Profile');
+                Get.toNamed('/Profile');
               },
               child: Icon(
                 Icons.account_circle,
@@ -231,7 +252,7 @@ class _HomeBodyState extends State<HomeBody> {
                                 ),
                                 Spacer(),
                                 Text(
-                                  '${_nowDate.day}/${_nowDate.month}/${_nowDate.year + 543}',
+                                  '${_nowDate.year}-${_nowDate.month}-${_nowDate.day}',
                                   style: TextStyle(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w700),
@@ -247,16 +268,7 @@ class _HomeBodyState extends State<HomeBody> {
                             ),
                           ),
                         ),
-                        NutritionPerDay(
-                          nutritionValue: _nutritionPerday!,
-                          maxNutrition: _maxNutrition!
-                          // [
-                          //   _balance!['calroies'],
-                          //   _balance!['sugar'],
-                          //   _balance!['sodium'],
-                          // ]
-                          ,
-                        )
+                        nutritionDay(size)
                       ],
                     )
                   ],
@@ -264,5 +276,86 @@ class _HomeBodyState extends State<HomeBody> {
               ),
             ),
     );
+  }
+
+  Widget nutritionDay(size) {
+    // print('mkmkmkmkmmkmkmkm');
+    // return NutritionPerDay(
+    //   nutritionValue: _nutritionPerday!,
+    //   maxNutrition: _maxNutrition!
+    //   // [
+    //   //   _balance!['calroies'],
+    //   //   _balance!['sugar'],
+    //   //   _balance!['sodium'],
+    //   // ]
+    //   ,
+    // );
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: _foodCategory.length,
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                child: ListTile(
+                    leading: Image.asset(
+                      _foodCategory[index],
+                      width: size.width * 0.1,
+                    ),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _nutritionName[index],
+                          style: TextStyle(
+                              color: pDetailTxtColor,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        SizedBox(
+                          // height: 20,
+                          height: size.height * 0.002,
+                        ),
+                        Container(
+                          width: size.width * 0.4,
+                          child: GFProgressBar(
+                            lineHeight: 10,
+                            percentage: nutritionAlert(index),
+                            progressBarColor: _color[index],
+                          ),
+                        )
+                      ],
+                    ),
+                    trailing:
+                        // index == 0
+                        //     ?
+                        Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          "${_nutritionPerday![index].toStringAsFixed(0)}/${_maxNutrition![index].toStringAsFixed(0)}",
+                          style: TextStyle(
+                              color: pDetailTxtColor,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15),
+                        ),
+                        Text(
+                          index == 0 ? 'กิโลแคลอรี' : 'กรัม',
+                          style: TextStyle(
+                              color: pDetailTxtColor,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15),
+                        ),
+                      ],
+                    )),
+              ),
+            ],
+          );
+        });
   }
 }
