@@ -47,7 +47,8 @@ class _SearchFoodState extends State<SearchFood> {
     final output = await Tflite.runModelOnImage(
       path: image.path,
       numResults: 5,
-      threshold: 0.001,
+      threshold: 0.05,
+      // threshold: 0.001,
       // imageMean: 124.5,
       // imageStd: 127.5,
     );
@@ -71,6 +72,8 @@ class _SearchFoodState extends State<SearchFood> {
       // print(resp[0]);
       // print(resp.toString());
       // inspect(resp);
+    } else {
+      showAlert();
     }
 
     print('output=======$_output');
@@ -81,6 +84,17 @@ class _SearchFoodState extends State<SearchFood> {
         model: 'assets/model/food.tflite', labels: 'assets/model/labels.txt');
 
     print('load model');
+  }
+
+  showAlert() {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              content: Text(
+                'ไม่พบข้อมูล',
+                textAlign: TextAlign.center,
+              ),
+            ));
   }
 
   @override

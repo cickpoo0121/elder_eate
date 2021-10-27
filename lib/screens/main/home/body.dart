@@ -1,10 +1,7 @@
 import 'dart:convert';
-import 'dart:developer';
 
-import 'package:elder_eate/component/nutritionPerDay.dart';
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/controller/balance_controller.dart';
-import 'package:elder_eate/screens/main/home/home.dart';
 import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -85,35 +82,42 @@ class _HomeBodyState extends State<HomeBody> {
       _maxNutrition!.add(_balance!['sodium']);
 
       // print('_balance ================ $_balance');
-
-      resultOfday();
     });
+    resultOfday();
     _balanceController.balance.value = _maxNutrition!;
     _balanceController.nutritionDay.value = _nutritionPerday!;
-    print(_nutritionPerday.toString());
-    print(_maxNutrition.toString());
+    // print(_nutritionPerday.toString());
+    // print(_maxNutrition.toString());
   }
 
   resultOfday() async {
+    print(_nutritionPerday.toString());
+    print(_maxNutrition.toString());
     for (int i = 0; i < _nutritionPerday!.length; i++) {
+      print(_nutritionPerday![i]);
       if (_nutritionPerday![i] == 0) {
         _titleName = "เพิ่มมื้ออาหารของคุณ";
         _status = 'add';
         _pic = 'assets/icons/cook.svg';
+        print('cook');
+        continue;
       } else if (_nutritionPerday![i] >= _maxNutrition![i]) {
         _titleName = "อาหารเกินเกณฑ์";
         _status = 'over';
         _pic = 'assets/icons/overCase.svg';
+        print('over');
+        break;
       } else {
         _titleName = "สารอาหารอยู่ตามเกณฑ์";
         _status = 'incase';
         _pic = 'assets/icons/inCase.svg';
-        ;
+        print('incase');
+        continue;
       }
-      setState(() {
-        _pic = _pic;
-      });
     }
+    setState(() {
+      _pic = _pic;
+    });
   }
 
   changeDate(int action) {
