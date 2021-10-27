@@ -307,7 +307,7 @@ class _AddMealState extends State<AddMeal> {
 
                           print(DateTime.now());
 
-                          SqlService.instance.dailyLoad();
+                          SqlService.instance.allDailyLoad();
                           // Navigator.pushNamed(context, '/Home');
 
                           Get.offAll(() => Home(currentPage: 2));

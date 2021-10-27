@@ -24,7 +24,7 @@ class _DailyEatState extends State<DailyEat> {
     "assets/images/fruit.png"
   ];
   Future dailyLoad() async {
-    dailyEat = await SqlService.instance.dailyLoad();
+    dailyEat = await SqlService.instance.allDailyLoad();
     print(dailyEat);
     return dailyEat;
   }

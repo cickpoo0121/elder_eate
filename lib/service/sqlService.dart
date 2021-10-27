@@ -68,21 +68,6 @@ class SqlService {
 
   Future userRegister(data) async {
     final db = await instance.database;
-    // final user = GetStorage().read('user');
-
-    // final data = {
-    //   'Username': user['username'],
-    //   'Age': user['age'],
-    //   'Sex': user['sex'],
-    //   'Weight': user['weight'],
-    //   'Height': user['height'],
-    //   'Disease': user['disease'],
-    //   'Line_ID': user['line'],
-    // };
-
-    // print(user['age']);
-
-    // inspect(todosSave);
     final result = await db.insert('users', data,
         conflictAlgorithm: ConflictAlgorithm.replace);
 
@@ -138,12 +123,8 @@ class SqlService {
 
   // =========== Daily eat ============
 
-  dailyLoad() async {
+  allDailyLoad() async {
     final db = await instance.database;
-    // final result = await db.query(
-    //   'dailyeate',
-    //   orderBy: 'Daily_Eat_ID DESC',
-    // );
     final result = await db.rawQuery(
         'SELECT *,foodmenu.Food_Category_ID FROM dailyeate  INNER JOIN foodmenu  on dailyeate.Food_Menu=foodmenu.Food_Menu_ID ORDER by dailyeate.Daily_Eat_ID DESC');
 
@@ -154,6 +135,22 @@ class SqlService {
       print('Not found');
     }
 
+    return result;
+  }
+
+  dailyDayLoad(date) async {
+    final db = await instance.database;
+
+    final result = await db.rawQuery(
+        'SELECT *,foodmenu.Food_Category_ID FROM dailyeate  INNER JOIN foodmenu  on dailyeate.Food_Menu=foodmenu.Food_Menu_ID WHERE dailyeate.Daily_Food_Datetime like ?  ORDER by dailyeate.Daily_Eat_ID DESC',
+        ['$date%']);
+
+    // print(result);
+    if (result.length > 0) {
+      print('dailyDay $result');
+    } else {
+      print('Not found');
+    }
     return result;
   }
 

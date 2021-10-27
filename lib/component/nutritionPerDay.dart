@@ -41,9 +41,12 @@ class _NutritionPerDayState extends State<NutritionPerDay> {
 
   @override
   void initState() {
-    super.initState();
     _nutritionValue = widget.nutritionValue;
     _maxNutrition = widget.maxNutrition;
+    print('perdayyyyyyyyyyyy');
+    // print(widget.maxNutrition.toString());
+    // print(widget.nutritionValue.toString());
+    super.initState();
   }
 
   @override
