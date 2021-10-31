@@ -76,7 +76,7 @@ class _NutritionState extends State<Nutrition> {
                         )
                       : index == 1
                           ? Text(
-                              "${_sugar.toStringAsFixed(0)}กรัม",
+                              "${_sugar.toStringAsFixed(0)} กรัม",
                               style: TextStyle(
                                   color: pDetailTxtColor,
                                   fontWeight: FontWeight.w700,

@@ -66,6 +66,7 @@ class _SearchFoodState extends State<SearchFood> {
         Get.to(() => FoodDetail(
               eventCheck: 0,
               fileimage: _image,
+              foodImage: 'yes',
             ));
       }
 
@@ -90,8 +91,12 @@ class _SearchFoodState extends State<SearchFood> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              content: Text(
+              title: Text(
                 'ไม่พบข้อมูล',
+                style: TextStyle(color: Colors.black),
+              ),
+              content: Text(
+                'กรุณาลองใหม่อีกครั้งหรือพิพม์เพื่อค้นหา',
                 textAlign: TextAlign.center,
               ),
             ));
@@ -185,6 +190,7 @@ class _SearchFoodState extends State<SearchFood> {
                               _foodMenuController.foodManu.value = suggestion;
                               Get.to(() => FoodDetail(
                                     eventCheck: 0,
+                                    // foodImage: 'a',
                                   ));
                               // print(suggestion);
                             }))),

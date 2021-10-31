@@ -114,8 +114,8 @@ Widget showDailyEate(dailyEat, foodCategory, size, _foodMenuController) {
                     _foodMenuController.foodManu.value = dailyEat[index];
                     Get.to(() => FoodDetail(
                           eventCheck: 1,
-                          // foodImage: 'yes',
-                          foodImage: dailyEat[index]['Daily_Food_Image'],
+                          foodImage: 'no',
+                          // foodImage: dailyEat[index]['Daily_Food_Image'],
                         ));
                   },
                   child: Card(

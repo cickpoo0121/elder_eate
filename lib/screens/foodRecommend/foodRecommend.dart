@@ -145,7 +145,8 @@ class _FoodRecommendState extends State<FoodRecommend> {
                 title: Padding(
                   padding: const EdgeInsets.only(left: 20),
                   child: Text(
-                    'test',
+                    // 'test',
+                    _dailyEat[index]['Food_Name'],
                     // _nutritionData[index]['menu'],
                     // textAlign: TextAlign.left,
                     style: TextStyle(
@@ -205,7 +206,7 @@ class _FoodRecommendState extends State<FoodRecommend> {
           height: size.height * 0.05,
         ),
         Text(
-          'เนื่องจากปริมาณ แคลอรี่, น้ำตาล, และโซเดียมของคุณใกล้ครบหรือเกินปริมาณที่แนะนำต่อวัน',
+          'เนื่องจากปริมาณ แคลอรี่, น้ำตาล, หรือโซเดียม ของคุณใกล้ครบหรือเกินปริมาณที่แนะนำต่อวัน',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
         ),
         NutritionPerDay(nutritionValue: [

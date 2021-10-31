@@ -110,7 +110,7 @@ class _FoodDetailState extends State<FoodDetail> {
                   Container(
                     height: size.height * 0.25,
                     width: size.width * 0.6,
-                    child: widget.foodImage[0] != 'a'
+                    child: widget.foodImage[0] != 'n'
                         ? Image.file(
                             widget.fileimage,
                             fit: BoxFit.cover,
