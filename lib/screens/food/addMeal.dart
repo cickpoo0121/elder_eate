@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:elder_eate/constant.dart';
@@ -8,6 +9,8 @@ import 'package:elder_eate/screens/main/home/home.dart';
 import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class AddMeal extends StatefulWidget {
   const AddMeal({Key? key}) : super(key: key);
@@ -19,6 +22,7 @@ class AddMeal extends StatefulWidget {
 class _AddMealState extends State<AddMeal> {
   FoodMenuController _foodMenuController = Get.find();
   NutritionBalanceController _balanceController = Get.find();
+  String _url = 'https://eldereate.herokuapp.com/sendMessage';
   Map? foodMenu;
   int meal = 0;
   int quantity = 1;
@@ -30,6 +34,12 @@ class _AddMealState extends State<AddMeal> {
     "assets/images/sugar.png",
     "assets/images/sodium.png"
   ];
+
+  // Future checkUserLine() async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   final user = pref.getString('lineId');
+  //   print(user);
+  // }
 
   checkDayNutri() {
     final balance = _balanceController.balance;
@@ -58,7 +68,23 @@ class _AddMealState extends State<AddMeal> {
   }
 
 // jump to daily eate page
-  goDailyEat() {
+  Future goDailyEat() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final user = pref.getString('lineId');
+
+    if (user != null) {
+      http.Response resp = await http.post(
+        Uri.parse(_url),
+        body: {'userId': user, 'event': overNutri == '' ? '0' : '1'},
+      );
+
+      if (resp.statusCode == 200) {
+        print('success');
+      } else {
+        print('Server error');
+      }
+    }
+
     SqlService.instance.dailyAdd({
       "Daily_Food_Image": foodMenu!['Daily_Food_Image'],
       "Daily_Food_Datetime": DateTime.now().toString(),
@@ -149,6 +175,7 @@ class _AddMealState extends State<AddMeal> {
     inspect('bbbb${_balanceController.balance}');
     inspect('nnnnn${_balanceController.nutritionDay}');
     print('new food $foodMenu');
+    // checkUserLine();
 
     super.initState();
   }

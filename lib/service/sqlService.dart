@@ -153,6 +153,7 @@ class SqlService {
 
   dailyDayLoad(date) async {
     final db = await instance.database;
+    print('printdate $date');
 
     final result = await db.rawQuery(
         'SELECT *,foodmenu.Food_Category_ID FROM dailyeate  INNER JOIN foodmenu  on dailyeate.Food_Menu=foodmenu.Food_Menu_ID WHERE dailyeate.Daily_Food_Datetime like ?  ORDER by dailyeate.Daily_Eat_ID DESC',

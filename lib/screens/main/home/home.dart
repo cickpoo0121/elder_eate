@@ -1,8 +1,10 @@
 import 'package:elder_eate/constant.dart';
+import 'package:elder_eate/controller/balance_controller.dart';
 import 'package:elder_eate/screens/main/dailyEat/dailyEat.dart';
 import 'package:elder_eate/screens/main/home/body.dart';
 import 'package:elder_eate/screens/main/searchFood.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Home extends StatefulWidget {
   final int currentPage;
@@ -13,6 +15,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  NutritionBalanceController _balanceController =
+      Get.put(NutritionBalanceController());
   int currentPage = 0;
   List<Tab> tabs = [
     Tab(

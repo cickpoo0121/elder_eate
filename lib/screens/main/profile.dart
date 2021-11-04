@@ -23,6 +23,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   UserProfile? _userProfile;
+  SharedPreferences? pref;
   String? _userEmail;
   SharedPreferences? _pref;
   StoredAccessToken? _accessToken;
@@ -205,9 +206,11 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
       // print("StatusMessage> " + statusmessage.toString());
       // print("ProfileURL> " + imgUrl.toString());
       print("userId> " + userId.toString());
+      pref = await SharedPreferences.getInstance();
+      pref!.setString('lineId', userId.toString());
 
       setState(() {
-        _userProfile = result.userProfile;
+        // _userProfile = result.userProfile;
         // _userEmail = userEmail;
         _accessToken = accessToken;
       });
@@ -218,8 +221,10 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
   }
 
   void _signOut() async {
+    pref = await SharedPreferences.getInstance();
     try {
       await LineSDK.instance.logout();
+      pref!.remove('lineId');
       setState(() {
         _userProfile = null;
         _accessToken = null;
