@@ -66,10 +66,8 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/db/elderEat.db
-    - assets/model/set3.tflite
     - assets/model/food.tflite
     - assets/model/labels.txt
-    - assets/model/labelsSet3.txt
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
