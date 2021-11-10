@@ -20,8 +20,7 @@ class HomeBody extends StatefulWidget {
 class _HomeBodyState extends State<HomeBody> {
   // NutritionBalanceController _balanceController =
   //     Get.put(NutritionBalanceController());
-  NutritionBalanceController _balanceController =
-      Get.find();
+  NutritionBalanceController _balanceController = Get.find();
   SharedPreferences? _pref;
   List<double>? _nutritionPerday = [];
   List<double>? _maxNutrition = [];
@@ -54,8 +53,10 @@ class _HomeBodyState extends State<HomeBody> {
     double cal = 0, sugar = 0, sodm = 0;
     Map? _balance;
 
-    final dataNutritionDay = await SqlService.instance
-        .dailyDayLoad('${nowDate.year}-${nowDate.month}-0${nowDate.day}');
+    final dataNutritionDay = await SqlService.instance.dailyDayLoad(
+        '${nowDate.year}-${nowDate.month}-${nowDate.day.toString().length == 1 ? {
+            '0' + nowDate.day
+          } : nowDate.day}');
 
     // if (dataNutritionDay.length == 0) {
     //   dataNutritionDay = [];

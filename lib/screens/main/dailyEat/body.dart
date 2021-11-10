@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:elder_eate/constant.dart';
+import 'package:elder_eate/controller/balance_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class DailyEateBody extends StatefulWidget {
@@ -16,6 +18,8 @@ class DailyEateBody extends StatefulWidget {
 }
 
 class _DailyEateBodyState extends State<DailyEateBody> {
+  NutritionBalanceController _balanceController =
+      Get.put(NutritionBalanceController());
   String? displayImage;
   int event = 1; // 1 คือ รายละเอียดอาหาร , 0 รายการอาหาร
   List<String> _foodCategory = [

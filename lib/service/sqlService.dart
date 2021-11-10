@@ -121,11 +121,11 @@ class SqlService {
     }
   }
 
-  Future foodRecommend(cal, sugar, sodm) async {
+  Future foodRecommend(foodCat, cal, sugar, sodm) async {
     final db = await instance.database;
     final result = await db.rawQuery(
-        'SELECT * FROM foodmenu WHERE Food_Category_ID=3 AND Food_Calories < ? AND Food_Sugar < ? AND Food_Sodium < ?',
-        [cal, sugar, sodm]);
+        'SELECT * FROM foodmenu WHERE Food_Category_ID=? AND Food_Calories < ? AND Food_Sugar < ? AND Food_Sodium < ?',
+        [foodCat, cal, sugar, sodm]);
     if (result.length > 0) {
       // print(result);
       return result;

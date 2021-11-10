@@ -73,6 +73,8 @@ class _AddMealState extends State<AddMeal> {
     final user = pref.getString('lineId');
 
     if (user != null) {
+      await loading();
+
       http.Response resp = await http.post(
         Uri.parse(_url),
         body: {'userId': user, 'event': overNutri == '' ? '0' : '1'},
@@ -169,12 +171,33 @@ class _AddMealState extends State<AddMeal> {
         });
   }
 
+  Future loading() async {
+    showDialog(
+      context: Get.overlayContext!,
+      barrierDismissible: false,
+      builder: (_) => WillPopScope(
+        onWillPop: () async => false,
+        child: Center(
+          child: SizedBox(
+            width: 60,
+            height: 60,
+            child: CircularProgressIndicator(
+              strokeWidth: 5,
+              color: Colors.orange,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   void initState() {
     foodMenu = _foodMenuController.foodManu;
-    inspect('bbbb${_balanceController.balance}');
-    inspect('nnnnn${_balanceController.nutritionDay}');
-    print('new food $foodMenu');
+    inspect(foodMenu);
+    // inspect('bbbb${_balanceController.balance}');
+    // inspect('nnnnn${_balanceController.nutritionDay}');
+    // print('new food $foodMenu');
     // checkUserLine();
 
     super.initState();
@@ -361,9 +384,13 @@ class _AddMealState extends State<AddMeal> {
                     Container(
                       width: size.width * 0.45,
                       child: TextButton(
-                        onPressed: () {
+                        onPressed: () async {
                           checkDayNutri();
-                          overNutri != '' ? alert() : goDailyEat();
+                          if (overNutri != '') {
+                            return alert();
+                          } else {
+                            goDailyEat();
+                          }
                         },
                         child: Text("เพิ่มประวัติการกิน",
                             style: TextStyle(fontSize: 16)),

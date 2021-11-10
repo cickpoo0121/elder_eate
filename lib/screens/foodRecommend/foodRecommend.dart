@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:elder_eate/component/nutritionPerDay.dart';
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/controller/balance_controller.dart';
+import 'package:elder_eate/controller/foodMenu_controller.dart';
+import 'package:elder_eate/screens/food/foodDetail.dart';
 import 'package:elder_eate/screens/main/home/home.dart';
 import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
@@ -19,21 +23,28 @@ class FoodRecommend extends StatefulWidget {
 
 class _FoodRecommendState extends State<FoodRecommend> {
   NutritionBalanceController _balanceController = Get.find();
+  FoodMenuController _foodMenuController = Get.find();
+
   var _balance, _nutritionDay;
   double? _cal, _sugar, _sodm;
   var _dailyEat;
   List<String> _foodCategory = [
-    "assets/images/calories.png",
-    "assets/images/sugar.png",
-    "assets/images/sodium.png"
+    "assets/images/food.png",
+    "assets/images/drink.png",
+    "assets/images/dessert.png",
+    "assets/images/fruit.png"
   ];
 
   Future foodRecommend() async {
     _cal = _balanceController.balance[0] - _balanceController.nutritionDay[0];
     _sugar = _balanceController.balance[1] - _balanceController.nutritionDay[1];
     _sodm = _balanceController.balance[2] - _balanceController.nutritionDay[2];
+    print('cal $_cal');
+    print('sugar $_sugar');
+    print('sodm $_sodm');
 
     _dailyEat = await SqlService.instance.foodRecommend(
+      _foodMenuController.foodManu['Food_Category_ID'],
       _cal,
       _sugar,
       _sodm,
@@ -51,6 +62,7 @@ class _FoodRecommendState extends State<FoodRecommend> {
     _balance = _balanceController.balance;
     _nutritionDay = _balanceController.nutritionDay;
     foodRecommend();
+    inspect(_balanceController);
     super.initState();
   }
 
@@ -59,21 +71,20 @@ class _FoodRecommendState extends State<FoodRecommend> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: pHeaderTabColor,
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
         backgroundColor: pHeaderTabColor,
-        centerTitle: true,
-        title: Text(
-          'อาหารแนะนำ',
-          style: TextStyle(fontWeight: FontWeight.w700),
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          backgroundColor: pHeaderTabColor,
+          centerTitle: true,
+          title: Text(
+            'อาหารแนะนำ',
+            style: TextStyle(fontWeight: FontWeight.w700),
 
-          // style: Theme.of(context).textTheme.headline1,
+            // style: Theme.of(context).textTheme.headline1,
+          ),
+          elevation: 0.0,
         ),
-        elevation: 0.0,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
+        body: Padding(
           padding: const EdgeInsets.only(top: 15),
           child: ConstrainedBox(
             constraints:
@@ -94,38 +105,51 @@ class _FoodRecommendState extends State<FoodRecommend> {
                     SizedBox(
                       height: size.height * 0.02,
                     ),
-                    FutureBuilder(
-                        future: foodRecommend(),
-                        builder: (context, snapshot) => snapshot.hasData
-                            ? haveRecommend(size, snapshot.data)
-                            : noRecommend(size)),
+                    Expanded(
+                      child: FutureBuilder(
+                          future: foodRecommend(),
+                          builder: (context, snapshot) => snapshot.hasData
+                              ? haveRecommend(size, snapshot.data)
+                              : noRecommend(size)),
+                    ),
+                    Container(
+                      width: size.width * 0.45,
+                      child: TextButton(
+                        onPressed: () {
+                          Get.offAll(Home(currentPage: 0));
+                        },
+                        child: Text(
+                          'กลับหน้าหลัก',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
           ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Container(
-        width: size.width * 0.45,
-        child: TextButton(
-          onPressed: () {
-            Get.offAll(Home(currentPage: 0));
-          },
-          child: Text(
-            'กลับหน้าหลัก',
-            style: TextStyle(fontSize: 16),
-          ),
-        ),
-      ),
-    );
+        )
+        //   floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        //   floatingActionButton: Container(
+        //     width: size.width * 0.45,
+        //     child: TextButton(
+        //       onPressed: () {
+        //         Get.offAll(Home(currentPage: 0));
+        //       },
+        //       child: Text(
+        //         'กลับหน้าหลัก',
+        //         style: TextStyle(fontSize: 16),
+        //       ),
+        //     ),
+        //   ),
+        );
   }
 
   Widget haveRecommend(size, foodMenu) {
     return ListView.builder(
-      shrinkWrap: true,
-      itemCount: _foodCategory.length,
+      // shrinkWrap: true,
+      itemCount: _dailyEat.length,
       itemBuilder: (context, index) {
         return Column(
           children: [
@@ -136,10 +160,20 @@ class _FoodRecommendState extends State<FoodRecommend> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               child: ListTile(
-                onTap: () => Get.toNamed('/FoodDetail', arguments: 0),
+                onTap: () {
+                  _foodMenuController.foodManu.value = _dailyEat[index];
+                  Get.to(FoodDetail(eventCheck: 0));
+                },
+                // onTap: () => Get.toNamed('/FoodDetail', arguments: 0),
                 // Navigator.pushNamed(context, '/FoodDetail', arguments: 0),
                 leading: Image.asset(
-                  _foodCategory[0],
+                  _dailyEat[index]['Food_Category_ID'] == 0
+                      ? _foodCategory[0]
+                      : _dailyEat[index]['Food_Category_ID'] == 1
+                          ? _foodCategory[1]
+                          : _dailyEat[index]['Food_Category_ID'] == 2
+                              ? _foodCategory[2]
+                              : _foodCategory[3],
                   height: size.height * 0.07,
                 ),
                 title: Padding(

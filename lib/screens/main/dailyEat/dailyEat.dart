@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:elder_eate/constant.dart';
+import 'package:elder_eate/controller/balance_controller.dart';
 import 'package:elder_eate/controller/foodMenu_controller.dart';
 import 'package:elder_eate/screens/food/foodDetail.dart';
 import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DailyEat extends StatefulWidget {
   const DailyEat({Key? key}) : super(key: key);
@@ -14,7 +18,13 @@ class DailyEat extends StatefulWidget {
 }
 
 class _DailyEatState extends State<DailyEat> {
+  NutritionBalanceController _balanceController =
+      Get.put(NutritionBalanceController());
   FoodMenuController _foodMenuController = Get.put(FoodMenuController());
+  SharedPreferences? _pref;
+
+  List<double>? _nutritionPerday = [];
+  List<double>? _maxNutrition = [];
 
   var dailyEat;
   List<String> foodCategory = [
@@ -23,6 +33,53 @@ class _DailyEatState extends State<DailyEat> {
     "assets/images/dessert.png",
     "assets/images/fruit.png"
   ];
+
+  Future valuePerdayload(nowDate) async {
+    _pref = await SharedPreferences.getInstance();
+    final dataBalance = _pref!.getString('balance');
+    double cal = 0, sugar = 0, sodm = 0;
+    Map? _balance;
+
+    final dataNutritionDay = await SqlService.instance.dailyDayLoad(
+        '${nowDate.year}-${nowDate.month}-${nowDate.day.toString().length == 1 ? {
+            '0' + nowDate.day
+          } : nowDate.day}');
+
+    // if (dataNutritionDay.length == 0) {
+    //   dataNutritionDay = [];
+    // }
+
+    // TODO: คูณค่า quantity
+    for (int i = 0; i < dataNutritionDay.length; i++) {
+      cal = cal +
+          dataNutritionDay[i]['Food_Calories'] *
+              dataNutritionDay[i]['Quantity'];
+      sugar = sugar +
+          dataNutritionDay[i]['Food_Sugar'] * dataNutritionDay[i]['Quantity'];
+      sodm = sodm +
+          dataNutritionDay[i]['Food_Sodium'] * dataNutritionDay[i]['Quantity'];
+    }
+    setState(() {
+      _nutritionPerday = [];
+      _nutritionPerday!.add(cal);
+      _nutritionPerday!.add(sugar);
+      _nutritionPerday!.add(sodm);
+
+      _balance = jsonDecode(dataBalance!);
+      _maxNutrition = [];
+      _maxNutrition!.add(_balance!['calroies']);
+      _maxNutrition!.add(_balance!['sugar']);
+      _maxNutrition!.add(_balance!['sodium']);
+
+      // print('_balance ================ $_balance');
+    });
+    // resultOfday();
+    _balanceController.balance.value = _maxNutrition!;
+    _balanceController.nutritionDay.value = _nutritionPerday!;
+    // print(_nutritionPerday.toString());
+    // print(_maxNutrition.toString());
+  }
+
   Future dailyLoad() async {
     dailyEat = await SqlService.instance.allDailyLoad();
     print(dailyEat);
@@ -31,6 +88,7 @@ class _DailyEatState extends State<DailyEat> {
 
   @override
   void initState() {
+    valuePerdayload(DateTime.now());
     super.initState();
   }
 
