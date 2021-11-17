@@ -63,7 +63,6 @@ class _FoodDetailState extends State<FoodDetail> {
     foodMenu = _foodMenuController.foodManu;
     setFoodImage();
     super.initState();
-    print(foodMenu!['Daily_Food_Image']);
   }
 
   @override

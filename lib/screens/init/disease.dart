@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/controller/user_controller.dart';
@@ -100,7 +99,6 @@ class _DiseaseState extends State<Disease> {
                               style: Theme.of(context).textTheme.headline4,
                             ),
                             validator: (value) {
-                              print(value);
                               if (value == null) {
                                 return 'กรุณากรอกข้อมูล';
                               }
@@ -125,19 +123,9 @@ class _DiseaseState extends State<Disease> {
                 child: TextButton(
                   onPressed: () async {
                     if (dropdownValue != null) {
-                      print(dropdownValue);
                       _userController.user.last.disease = dropdownValue;
-                      // inspect(_userController.user);
-                      // GetStorage()
-                      //     .write('user', _userController.user.last.toJson());
-                      // final result = await SqlService.instance.userRegister();
-                      // if (result == true) {
-                      // print('register successed');
-                      // }
-                      // print(result);
-                      // inspect(result);
+
                       Get.toNamed('/Progress');
-                      // Navigator.pushNamed(context, '/Progress');
                     }
                   },
                   child: Text(

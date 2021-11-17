@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/controller/user_controller.dart';
@@ -157,7 +156,6 @@ class _WeighHeightState extends State<WeighHeight> {
                           double.parse(heightTxt.text);
                       Get.toNamed('/Disease');
                     }
-                    inspect(_userController.user);
                   },
                   child: Text(
                     "ถัดไป",

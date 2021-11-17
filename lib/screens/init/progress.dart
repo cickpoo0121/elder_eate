@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:math';
 
 import 'package:elder_eate/constant.dart';
@@ -39,7 +38,6 @@ class _ProgressPageState extends State<ProgressPage> {
     }
 
     _cal = _bmr! * 1.2;
-    print(_cal);
 
     if (user.disease == 'ไม่มีโรคประจำตัว') {
       setState(() {
@@ -74,14 +72,12 @@ class _ProgressPageState extends State<ProgressPage> {
       }
     }
 
-    // print('$_cal, $_sug, $_sodm}');
   }
 
   process() {
     _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
       setState(() {
         _processes += 1 + Random().nextInt(4);
-        // print(_processes);
         if (_processes > 99) {
           _processes = 100;
           _timer!.cancel();
@@ -160,7 +156,6 @@ class _ProgressPageState extends State<ProgressPage> {
                       child: TextButton(
                         onPressed: () async {
                           cancel();
-                          // inspect(_userController.user);
                           fineBalnce();
                           _pref = await SharedPreferences.getInstance();
                           final user = _userController.user.last;
@@ -181,7 +176,7 @@ class _ProgressPageState extends State<ProgressPage> {
                               'sugar': _sug,
                               'sodium': _sodm
                             };
-                          
+
                             _pref!.setString('balance', jsonEncode(blance));
 
                             // GetStorage().write('blance', blance);
@@ -190,11 +185,6 @@ class _ProgressPageState extends State<ProgressPage> {
 
                             print('register successed');
                           }
-
-                          // print(result);
-                          // inspect(result);
-                          // Get.toNamed('/Progress');
-                          // Navigator.pushNamed(context, '/Progress');
                         },
                         child: Text(
                           "ถัดไป",

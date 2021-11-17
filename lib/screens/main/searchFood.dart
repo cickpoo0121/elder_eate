@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:elder_eate/constant.dart';
@@ -45,13 +44,12 @@ class _SearchFoodState extends State<SearchFood> {
 
   Future detectImage(File image) async {
     final output = await Tflite.runModelOnImage(
-      path: image.path,
-      numResults: 5,
-      threshold: 0.05,
-      // threshold: 0.001,
-      // imageMean: 124.5,
-      // imageStd: 127.5,
-    );
+        path: image.path, numResults: 10, threshold: 0.04
+        // threshold: 0.0025,
+        // threshold: 0.001,
+        // imageMean: 124.5,
+        // imageStd: 127.5,
+        );
 
     setState(() {
       _output = output;
@@ -82,7 +80,9 @@ class _SearchFoodState extends State<SearchFood> {
 
   Future loadModel() async {
     await Tflite.loadModel(
-        model: 'assets/model/food.tflite', labels: 'assets/model/labels.txt');
+        // model: 'assets/model/food.tflite', labels: 'assets/model/labels.txt');// all food
+        model: 'assets/model/food.tflite',
+        labels: 'assets/model/labels.txt'); // furit
 
     print('load model');
   }

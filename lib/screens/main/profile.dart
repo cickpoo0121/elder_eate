@@ -1,16 +1,12 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:elder_eate/constant.dart';
-import 'package:elder_eate/controller/user_controller.dart';
-import 'package:elder_eate/model/user_model.dart';
 import 'package:elder_eate/screens/main/home/home.dart';
 import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:get/get.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
@@ -70,7 +66,6 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
     }
 
     _cal = _bmr! * 1.2;
-    print(_cal);
 
     if (_userData[0]['Disease'] == 'ไม่มีโรคประจำตัว') {
       setState(() {
@@ -104,58 +99,6 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
         return print('case 3');
       }
     }
-
-    // print('$_cal, $_sug, $_sodm}');
-  }
-
-  void alert() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(
-              _accessToken != null ? 'Line User Profile' : 'No data',
-              style: TextStyle(color: Colors.black),
-            ),
-            content: _accessToken != null
-                ? Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      (_userProfile?.pictureUrl ?? "").isNotEmpty
-                          ? Image.network(
-                              _userProfile!.pictureUrl.toString(),
-                              width: 200,
-                              height: 200,
-                            )
-                          : Icon(
-                              Icons.person,
-                              size: 30,
-                            ),
-                      Text(
-                        _userProfile!.displayName,
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                      if (_userEmail != null) Text(_userEmail!),
-                      Text(_userProfile!.statusMessage.toString()),
-                      Text(
-                        'userId: ${_userProfile!.userId}',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      // Container(
-                      //     child: ElevatedButton(
-                      //         child: Text('Sign Out'),
-                      //         onPressed: () {
-                      //           widget.signout();
-                      //         },
-                      //         style: ElevatedButton.styleFrom(
-                      //             primary: Colors.green, onPrimary: Colors.white))),
-                    ],
-                  )
-                : Container(
-                    child: Text('No data'),
-                  ),
-          );
-        });
   }
 
   Future<void> initPlatformState() async {
@@ -166,7 +109,6 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
       accessToken = await LineSDK.instance.currentAccessToken;
       if (accessToken != null) {
         userProfile = await LineSDK.instance.getProfile();
-        // print();
       }
     } on PlatformException catch (e) {
       print(e.message);
@@ -182,36 +124,16 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
 
   void _loginLine() async {
     try {
-      final result = await LineSDK.instance.login(
-          //   scopes: [
-          //   'profile',
-          //   'openid',
-          //   'email',
-          //   'customScope',
-          // ]
-          );
+      final result = await LineSDK.instance
+          .login(option: LoginOption(false, 'aggressive'));
       final accessToken = await LineSDK.instance.currentAccessToken;
 
-      // final idToken = result.accessToken.idToken;
-      // final userEmail = (idToken != null) ? idToken['email'] : null;
-      // print(result.toString());
-      // var accesstoken = await getAccessToken();
-      var displayname = result.userProfile?.displayName;
-      // var statusmessage = result.userProfile?.statusMessage;
-      // var imgUrl = result.userProfile?.pictureUrl;
       var userId = result.userProfile?.userId;
 
-      // print("AccessToken> " + accesstoken);
-      print("DisplayName> " + displayname.toString());
-      // print("StatusMessage> " + statusmessage.toString());
-      // print("ProfileURL> " + imgUrl.toString());
-      print("userId> " + userId.toString());
       pref = await SharedPreferences.getInstance();
       pref!.setString('lineId', userId.toString());
 
       setState(() {
-        // _userProfile = result.userProfile;
-        // _userEmail = userEmail;
         _accessToken = accessToken;
       });
     } on PlatformException catch (e) {
@@ -260,7 +182,7 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            Get.offAll(Home(currentPage: 0));
+            Get.offAll(() => Home(currentPage: 0));
           },
           child: Icon(Icons.arrow_back),
         ),

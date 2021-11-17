@@ -24,9 +24,7 @@ class _IndividualState extends State<Individual> {
     final data = _pref!.getString('balance');
     setState(() {
       _balance = jsonDecode(data!);
-      // print(_balance!['calroies']);
     });
-    // print('balance ================ $data');
     return _balance;
   }
 

@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:elder_eate/component/nutritionPerDay.dart';
 import 'package:elder_eate/constant.dart';
@@ -39,9 +38,6 @@ class _FoodRecommendState extends State<FoodRecommend> {
     _cal = _balanceController.balance[0] - _balanceController.nutritionDay[0];
     _sugar = _balanceController.balance[1] - _balanceController.nutritionDay[1];
     _sodm = _balanceController.balance[2] - _balanceController.nutritionDay[2];
-    print('cal $_cal');
-    print('sugar $_sugar');
-    print('sodm $_sodm');
 
     _dailyEat = await SqlService.instance.foodRecommend(
       _foodMenuController.foodManu['Food_Category_ID'],
@@ -53,7 +49,7 @@ class _FoodRecommendState extends State<FoodRecommend> {
     // setState(() {
     //   _dailyEat = _dailyEat;
     // });
-    print(_dailyEat);
+
     return _dailyEat;
   }
 
@@ -62,7 +58,6 @@ class _FoodRecommendState extends State<FoodRecommend> {
     _balance = _balanceController.balance;
     _nutritionDay = _balanceController.nutritionDay;
     foodRecommend();
-    inspect(_balanceController);
     super.initState();
   }
 

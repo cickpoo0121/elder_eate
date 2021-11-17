@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/controller/user_controller.dart';
@@ -6,9 +5,7 @@ import 'package:elder_eate/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/parser.dart';
 import 'package:get/get.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 class Username extends StatefulWidget {
   const Username({Key? key}) : super(key: key);
@@ -114,20 +111,13 @@ class _UsernameState extends State<Username> {
                     onPressed: () {
                       final isValid = _formKey.currentState!.validate();
 
-                      print(isValid);
                       if (isValid) {
                         _userController.user.add(User(
                           username: usernameTxt.text,
                           age: int.parse(ageTxt.text),
                         ));
-                        // User(
-                        //   username: usernameTxt.text,
-                        //   age: int.parse(ageTxt.text),
-                        // );
+
                         Get.toNamed('/WeighHeight');
-                        print(_userController.user);
-                        inspect(_userController.user);
-                        // inspect(User());
                       }
                     },
                     child: Text(
