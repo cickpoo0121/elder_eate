@@ -1,12 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/controller/balance_controller.dart';
 import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/components/progress_bar/gf_progress_bar.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -130,6 +133,7 @@ class _HomeBodyState extends State<HomeBody> {
   @override
   void initState() {
     valuePerdayload(_nowDate);
+
     // resultOfday();
     super.initState();
   }
@@ -162,7 +166,7 @@ class _HomeBodyState extends State<HomeBody> {
           Padding(
             padding: const EdgeInsets.only(right: 15),
             child: GestureDetector(
-              onTap: () {
+              onTap: () async {
                 Get.toNamed('/Profile');
               },
               child: Icon(

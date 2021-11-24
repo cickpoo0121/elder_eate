@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/screens/main/home/home.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
@@ -165,6 +167,58 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
     }
   }
 
+  showAlert() async {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'ยืนยันการลบแคช',
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.black),
+        ),
+        content: Text(
+          'ปิดแอพเพื่อลบแคช',
+          textAlign: TextAlign.center,
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: Text(
+              'ปิด',
+            ),
+            style: TextButton.styleFrom(
+              backgroundColor: sButtonColor,
+              primary: Colors.red,
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              await clearCache();
+            },
+            child: Text(
+              'ตกลง',
+              // style: TextStyle(color: Colors.red),
+            ),
+            style: TextButton.styleFrom(
+              backgroundColor: sButtonColor,
+              primary: Color(0xFF0047FF),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Future clearCache() async {
+    final directory = await getTemporaryDirectory();
+    Directory(directory.path).delete(recursive: true);
+    Future.delayed(Duration(seconds: 3), () {
+      SystemNavigator.pop();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -192,6 +246,22 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
           'โปรไฟล์',
           style: TextStyle(fontWeight: FontWeight.w700),
         ),
+        actions: [
+          GestureDetector(
+            onTap: () async {
+              await showAlert();
+            },
+            child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(
+                    Icons.delete,
+                    color: pButtonColor,
+                  ),
+                )),
+          ),
+        ],
         elevation: 0.0,
       ),
       body: SingleChildScrollView(

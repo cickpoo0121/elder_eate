@@ -9,8 +9,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tflite/tflite.dart';
+import 'package:flutter/painting.dart' as painting;
 
 class SearchFood extends StatefulWidget {
   const SearchFood({Key? key}) : super(key: key);
@@ -25,6 +27,40 @@ class _SearchFoodState extends State<SearchFood> {
   File? _image;
   List? _output = [];
   final _picker = ImagePicker();
+
+  Future clearCache() async {
+    final cacheDir = await getTemporaryDirectory();
+
+    if (cacheDir.existsSync()) {
+      cacheDir.deleteSync(recursive: true);
+    }
+  }
+
+  Future<String> get _localPath async {
+    // final directory = await getApplicationDocumentsDirectory();
+    final directory = await getTemporaryDirectory();
+    directory.delete(recursive: true);
+    return directory.path;
+  }
+
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    print('path ${path}');
+    return File('$path');
+    // return File('$path/counter.txt');
+  }
+
+  Future<int> deleteFile() async {
+    // /data/user/0/com.example.elder_eate/cache/
+    try {
+      final file = await _localFile;
+      print(file);
+      // await file.delete();
+      return 1;
+    } catch (e) {
+      return 0;
+    }
+  }
 
   Future pickImage(ImageSource source) async {
     try {
@@ -80,9 +116,10 @@ class _SearchFoodState extends State<SearchFood> {
 
   Future loadModel() async {
     await Tflite.loadModel(
-        // model: 'assets/model/food.tflite', labels: 'assets/model/labels.txt');// all food
         model: 'assets/model/food.tflite',
-        labels: 'assets/model/labels.txt'); // furit
+        labels: 'assets/model/labels.txt'); // all food
+    // model: 'assets/model/food.tflite',
+    // labels: 'assets/model/labels.txt'); // furit
 
     print('load model');
   }
@@ -104,8 +141,12 @@ class _SearchFoodState extends State<SearchFood> {
 
   @override
   void initState() {
-    loadModel();
     super.initState();
+    loadModel();
+    // painting.imageCache!.clear();
+    // clearCache();
+    // deleteFile();
+    // imageCache!.clear();
   }
 
   @override
