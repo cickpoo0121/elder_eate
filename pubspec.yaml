@@ -50,6 +50,8 @@ flutter:
       - assets/model/labels.txt
       - assets/model/fruit.tflite
       - assets/model/fruitLabels.txt
+      - assets/model/TC_foods.tflite
+      - assets/model/TC_labels.txt
   fonts:
     - family: IBMPlexSansThai
       fonts:

@@ -80,44 +80,44 @@ class _SearchFoodState extends State<SearchFood> {
 
   Future detectImage(File image) async {
     final output = await Tflite.runModelOnImage(
-        path: image.path, numResults: 10, threshold: 0.04
-        // threshold: 0.0025,
-        // threshold: 0.001,
-        // imageMean: 124.5,
-        // imageStd: 127.5,
-        );
+      path: image.path, numResults: 10, threshold: 0.7,
+      // threshold: 0.0025,
+      // threshold: 0.001,
+      imageMean: 117,
+      imageStd: 1,
+    );
 
     setState(() {
       _output = output;
       _loading = false;
     });
 
-    if (_output!.length != 0) {
-      final resp =
-          await SqlService.instance.foodLoadId(_output![0]['index'] + 1);
-      if (resp.length != 0) {
-        _foodMenuController.foodManu.value = resp[0];
-        Get.to(() => FoodDetail(
-              eventCheck: 0,
-              fileimage: _image,
-              foodImage: 'yes',
-            ));
-      }
+    // if (_output!.length != 0) {
+    //   final resp =
+    //       await SqlService.instance.foodLoadId(_output![0]['index'] + 1);
+    //   if (resp.length != 0) {
+    //     _foodMenuController.foodManu.value = resp[0];
+    //     Get.to(() => FoodDetail(
+    //           eventCheck: 0,
+    //           fileimage: _image,
+    //           foodImage: 'yes',
+    //         ));
+    //   }
 
-      // print(resp[0]);
-      // print(resp.toString());
-      // inspect(resp);
-    } else {
-      showAlert();
-    }
+    //   // print(resp[0]);
+    //   // print(resp.toString());
+    //   // inspect(resp);
+    // } else {
+    //   showAlert();
+    // }
 
     print('output=======$_output');
   }
 
   Future loadModel() async {
     await Tflite.loadModel(
-        model: 'assets/model/food.tflite',
-        labels: 'assets/model/labels.txt'); // all food
+        model: 'assets/model/TC_foods.tflite',
+        labels: 'assets/model/TC_labels.txt'); // all food
     // model: 'assets/model/food.tflite',
     // labels: 'assets/model/labels.txt'); // furit
 
