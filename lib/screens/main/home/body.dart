@@ -1,12 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/controller/balance_controller.dart';
 import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/components/progress_bar/gf_progress_bar.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,7 +40,6 @@ class _HomeBodyState extends State<HomeBody> {
   ];
 
   double nutritionAlert(index) {
-    // print(_nutritionValue[index] / _maxNutrition[index]);
     double result = _nutritionPerday![index] / _maxNutrition![index];
     if (result >= 1) {
       _color[index] = Colors.red;
@@ -54,9 +56,8 @@ class _HomeBodyState extends State<HomeBody> {
     Map? _balance;
 
     final dataNutritionDay = await SqlService.instance.dailyDayLoad(
-        '${nowDate.year}-${nowDate.month}-${nowDate.day.toString().length == 1 ? {
-            '0' + nowDate.day
-          } : nowDate.day}');
+      '${nowDate.year}-${nowDate.month}-${nowDate.day.toString().length == 1 ? '0${nowDate.day}' : nowDate.day}',
+    );
 
     // if (dataNutritionDay.length == 0) {
     //   dataNutritionDay = [];
@@ -83,38 +84,28 @@ class _HomeBodyState extends State<HomeBody> {
       _maxNutrition!.add(_balance!['calroies']);
       _maxNutrition!.add(_balance!['sugar']);
       _maxNutrition!.add(_balance!['sodium']);
-
-      // print('_balance ================ $_balance');
     });
     resultOfday();
     _balanceController.balance.value = _maxNutrition!;
     _balanceController.nutritionDay.value = _nutritionPerday!;
-    // print(_nutritionPerday.toString());
-    // print(_maxNutrition.toString());
   }
 
   resultOfday() async {
-    print(_nutritionPerday.toString());
-    print(_maxNutrition.toString());
     for (int i = 0; i < _nutritionPerday!.length; i++) {
-      print(_nutritionPerday![i]);
       if (_nutritionPerday![i] == 0) {
         _titleName = "เพิ่มมื้ออาหารของคุณ";
         _status = 'add';
         _pic = 'assets/icons/cook.svg';
-        print('cook');
         continue;
       } else if (_nutritionPerday![i] >= _maxNutrition![i]) {
         _titleName = "อาหารเกินเกณฑ์";
         _status = 'over';
         _pic = 'assets/icons/overCase.svg';
-        print('over');
         break;
       } else {
         _titleName = "สารอาหารอยู่ตามเกณฑ์";
         _status = 'incase';
         _pic = 'assets/icons/inCase.svg';
-        print('incase');
         continue;
       }
     }
@@ -142,6 +133,7 @@ class _HomeBodyState extends State<HomeBody> {
   @override
   void initState() {
     valuePerdayload(_nowDate);
+
     // resultOfday();
     super.initState();
   }
@@ -174,7 +166,7 @@ class _HomeBodyState extends State<HomeBody> {
           Padding(
             padding: const EdgeInsets.only(right: 15),
             child: GestureDetector(
-              onTap: () {
+              onTap: () async {
                 Get.toNamed('/Profile');
               },
               child: Icon(
@@ -286,17 +278,6 @@ class _HomeBodyState extends State<HomeBody> {
   }
 
   Widget nutritionDay(size) {
-    // print('mkmkmkmkmmkmkmkm');
-    // return NutritionPerDay(
-    //   nutritionValue: _nutritionPerday!,
-    //   maxNutrition: _maxNutrition!
-    //   // [
-    //   //   _balance!['calroies'],
-    //   //   _balance!['sugar'],
-    //   //   _balance!['sodium'],
-    //   // ]
-    //   ,
-    // );
     return ListView.builder(
         shrinkWrap: true,
         itemCount: _foodCategory.length,

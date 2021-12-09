@@ -14,22 +14,18 @@ import 'package:elder_eate/screens/main/searchFood.dart';
 import 'package:elder_eate/screens/main/profile.dart';
 import 'package:elder_eate/service/sqlService.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 void main() async {
+  await dotenv.load(fileName: ".env");
+  final channelId = dotenv.env['LINE_CHANNEL_ID'].toString();
   WidgetsFlutterBinding.ensureInitialized();
-  LineSDK.instance.setup('1655779489').then((_) {
+  LineSDK.instance.setup(channelId).then((_) {
     print('LineSDK Prepared');
   });
-  // SqlService _sqlService = SqlService();
-
-  // openDB();
-
-  // Future openDB() async {
-  // await _sqlService.openDB();
-  // }
 
   final result, home;
 
@@ -68,25 +64,6 @@ void main() async {
             GetPage(name: '/SearchFood', page: () => SearchFood()),
             // GetPage(name: '/FoodRecommend', page: () => FoodRecommend()),
           ],
-          // routes: {
-          //   '/Init': (context) => Init(),
-          //   '/Username': (context) => Username(),
-          //   '/WeighHeight': (context) => WeighHeight(),
-          //   '/Disease': (context) => Disease(),
-          //   '/Progress': (context) => Progress(),
-          //   '/Individual': (context) => Individual(),
-          //   '/Home': (context) => Home(
-          //         currentPage: 0,
-          //       ),
-          //   '/HomeBody': (context) => HomeBody(),
-          //   '/FoodDetail': (context) => FoodDetail(),
-          //   '/AddMeal': (context) => AddMeal(),
-          //   '/DailyEat': (context) => DailyEat(),
-          //   '/Profile': (context) => Profile(),
-          //   '/Camera': (context) => Camera(),
-          //   '/SearchFood': (context) => SearchFood(),
-          //   '/FoodRecommend': (context) => FoodRecommend(),
-          // },
           theme: ThemeData(
             // primaryColor: Colors.red,
             scaffoldBackgroundColor: pBackgroundColor,
@@ -105,12 +82,6 @@ void main() async {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20))),
             ),
-            // elevatedButtonTheme: ElevatedButtonThemeData(
-            //   style: TextButton.styleFrom(
-            //       primary: pButtonTxtColor,
-            //       backgroundColor: pButtonColor,
-            //       shape: CircleBorder()),
-            // ),
             fontFamily: 'IBMPlexSansThai',
             textTheme: TextTheme(
               // Title page

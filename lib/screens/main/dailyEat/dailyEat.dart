@@ -41,9 +41,8 @@ class _DailyEatState extends State<DailyEat> {
     Map? _balance;
 
     final dataNutritionDay = await SqlService.instance.dailyDayLoad(
-        '${nowDate.year}-${nowDate.month}-${nowDate.day.toString().length == 1 ? {
-            '0' + nowDate.day
-          } : nowDate.day}');
+      '${nowDate.year}-${nowDate.month}-${nowDate.day.toString().length == 1 ? '0${nowDate.day}' : nowDate.day}',
+    );
 
     // if (dataNutritionDay.length == 0) {
     //   dataNutritionDay = [];
@@ -70,19 +69,14 @@ class _DailyEatState extends State<DailyEat> {
       _maxNutrition!.add(_balance!['calroies']);
       _maxNutrition!.add(_balance!['sugar']);
       _maxNutrition!.add(_balance!['sodium']);
-
-      // print('_balance ================ $_balance');
     });
     // resultOfday();
     _balanceController.balance.value = _maxNutrition!;
     _balanceController.nutritionDay.value = _nutritionPerday!;
-    // print(_nutritionPerday.toString());
-    // print(_maxNutrition.toString());
   }
 
   Future dailyLoad() async {
     dailyEat = await SqlService.instance.allDailyLoad();
-    print(dailyEat);
     return dailyEat;
   }
 
@@ -215,7 +209,7 @@ Widget showDailyEate(dailyEat, foodCategory, size, _foodMenuController) {
                               style: TextStyle(
                                   color: pDetailTxtColor,
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 18.sp),
+                                  fontSize: 16.sp),
                             ),
                             Text(
                               // 'text',

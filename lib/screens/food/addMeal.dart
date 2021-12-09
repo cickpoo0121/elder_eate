@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:elder_eate/constant.dart';
 import 'package:elder_eate/controller/balance_controller.dart';
 import 'package:elder_eate/controller/foodMenu_controller.dart';
@@ -34,12 +31,6 @@ class _AddMealState extends State<AddMeal> {
     "assets/images/sugar.png",
     "assets/images/sodium.png"
   ];
-
-  // Future checkUserLine() async {
-  //   SharedPreferences pref = await SharedPreferences.getInstance();
-  //   final user = pref.getString('lineId');
-  //   print(user);
-  // }
 
   checkDayNutri() {
     final balance = _balanceController.balance;
@@ -183,7 +174,7 @@ class _AddMealState extends State<AddMeal> {
             height: 60,
             child: CircularProgressIndicator(
               strokeWidth: 5,
-              color: Colors.orange,
+              color: Colors.purpleAccent,
             ),
           ),
         ),
@@ -194,11 +185,6 @@ class _AddMealState extends State<AddMeal> {
   @override
   void initState() {
     foodMenu = _foodMenuController.foodManu;
-    inspect(foodMenu);
-    // inspect('bbbb${_balanceController.balance}');
-    // inspect('nnnnn${_balanceController.nutritionDay}');
-    // print('new food $foodMenu');
-    // checkUserLine();
 
     super.initState();
   }

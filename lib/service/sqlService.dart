@@ -14,7 +14,7 @@ class SqlService {
   Future<Database> get database async {
     String dbPath = await getDatabasesPath();
     String fullPaht = join(dbPath, dbFile);
-    print(fullPaht);
+    // print(fullPaht);
 
     // DB existed?
     bool existed = await databaseExists(fullPaht);
@@ -58,7 +58,6 @@ class SqlService {
     final result = await db.query('users');
 
     if (result.length > 0) {
-      print(result);
     } else {
       print('Not found');
     }
@@ -77,10 +76,7 @@ class SqlService {
   Future userUpdate(int id, String username, double weight, double height,
       int age, String disease) async {
     final db = await instance.database;
-    // print(id);
-    // print(username);
-    // print(weight);
-    // print(height);
+
     final data = {
       'Username': username,
       'Age': age,
@@ -99,11 +95,8 @@ class SqlService {
     final db = await instance.database;
     final result = await db.rawQuery(
         'SELECT * FROM foodmenu WHERE Food_Name like ?', ['%$keyWord%']);
-    // final result = await db
-    //     .query('foodmenu', where: 'Food_Name like %?%', whereArgs: [keyWord]);
 
     if (result.length > 0) {
-      // print(result);
     } else {
       print('Not found');
     }
@@ -127,7 +120,6 @@ class SqlService {
         'SELECT * FROM foodmenu WHERE Food_Category_ID=? AND Food_Calories < ? AND Food_Sugar < ? AND Food_Sodium < ?',
         [foodCat, cal, sugar, sodm]);
     if (result.length > 0) {
-      // print(result);
       return result;
     } else {
       print('Not found');
@@ -141,9 +133,7 @@ class SqlService {
     final result = await db.rawQuery(
         'SELECT *,foodmenu.Food_Category_ID FROM dailyeate  INNER JOIN foodmenu  on dailyeate.Food_Menu=foodmenu.Food_Menu_ID ORDER by dailyeate.Daily_Eat_ID DESC');
 
-    // print(result);
     if (result.length > 0) {
-      // print(result);
     } else {
       print('Not found');
     }
@@ -153,7 +143,6 @@ class SqlService {
 
   dailyDayLoad(date) async {
     final db = await instance.database;
-    print('printdate $date');
 
     final result = await db.rawQuery(
         'SELECT *,foodmenu.Food_Category_ID FROM dailyeate  INNER JOIN foodmenu  on dailyeate.Food_Menu=foodmenu.Food_Menu_ID WHERE dailyeate.Daily_Food_Datetime like ?  ORDER by dailyeate.Daily_Eat_ID DESC',
@@ -161,10 +150,7 @@ class SqlService {
 
     // print(result);
     if (result.length > 0) {
-      print('dailyDay $result');
-    } else {
-      print('Not found');
-    }
+    } else {}
     return result;
   }
 
