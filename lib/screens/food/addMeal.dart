@@ -88,7 +88,46 @@ class _AddMealState extends State<AddMeal> {
     });
 
     SqlService.instance.allDailyLoad();
-    Get.offAll(() => Home(currentPage: 2));
+
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Center(
+              child: Text(
+                'แจ้งเตือน',
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.w900),
+              ),
+            ),
+            content: Text(
+              overNutri == ''
+                  ? 'สุดยอดไปเลย\nปริมาณสารอาหารอยู่ในเกณฑ์\nพยายามควบคุมอย่าให้เกินนะ'
+                  : 'ปริมาณสารอาหารเกินกำหนดแล้วนะ อย่าลืมออกกำลังกายด้วยนะ',
+              style: TextStyle(color: Colors.black),
+            ),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Get.offAll(() => Home(currentPage: 2));
+                    },
+                    child: Text(
+                      'ปิด',
+                    ),
+                    style: TextButton.styleFrom(
+                      backgroundColor: sButtonColor,
+                      primary: Colors.red,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          );
+        });
   }
 
   alert() {
@@ -131,6 +170,7 @@ class _AddMealState extends State<AddMeal> {
               ElevatedButton(
                 onPressed: () {
                   goDailyEat();
+                  Get.back();
                 },
                 child: Text(
                   'ยืนยัน',

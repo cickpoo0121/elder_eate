@@ -80,11 +80,11 @@ class _SearchFoodState extends State<SearchFood> {
 
   Future detectImage(File image) async {
     final output = await Tflite.runModelOnImage(
-      path: image.path, numResults: 10, threshold: 0.7,
-      // threshold: 0.0025,
-      // threshold: 0.001,
-      imageMean: 117,
-      imageStd: 1,
+      path: image.path,
+      numResults: 5,
+      threshold: 0.20,
+      imageMean: 127.5,
+      imageStd: 127.5,
     );
 
     setState(() {
@@ -92,34 +92,43 @@ class _SearchFoodState extends State<SearchFood> {
       _loading = false;
     });
 
-    // if (_output!.length != 0) {
-    //   final resp =
-    //       await SqlService.instance.foodLoadId(_output![0]['index'] + 1);
-    //   if (resp.length != 0) {
-    //     _foodMenuController.foodManu.value = resp[0];
-    //     Get.to(() => FoodDetail(
-    //           eventCheck: 0,
-    //           fileimage: _image,
-    //           foodImage: 'yes',
-    //         ));
-    //   }
-
-    //   // print(resp[0]);
-    //   // print(resp.toString());
-    //   // inspect(resp);
-    // } else {
-    //   showAlert();
-    // }
-
     print('output=======$_output');
+    print('output=======${_output![0]['label']}');
+
+    if (_output!.length != 0) {
+      // --------- for all menu
+      // final resp =
+      //     await SqlService.instance.foodLoadId(_output![0]['index'] + 1);
+
+      // --------- for chinese menu
+      final resp = await SqlService.instance.foodLoadName(_output![0]['label']);
+      if (resp.length != 0) {
+        _foodMenuController.foodManu.value = resp[0];
+        Get.to(() => FoodDetail(
+              eventCheck: 0,
+              fileimage: _image,
+              foodImage: 'yes',
+            ));
+      }
+
+      // print(resp[0]);
+      // print(resp.toString());
+      // inspect(resp);
+    } else {
+      showAlert();
+    }
   }
 
   Future loadModel() async {
     await Tflite.loadModel(
-        model: 'assets/model/TC_foods.tflite',
-        labels: 'assets/model/TC_labels.txt'); // all food
-    // model: 'assets/model/food.tflite',
-    // labels: 'assets/model/labels.txt'); // furit
+      // ------------- chinese foods from py
+      // model: 'assets/model/TC_foods.tflite',
+      // labels: 'assets/model/TC_labels.txt',
+
+      // ------------- chinese foods from teable machine
+      model: 'assets/model/TC_foods_web.tflite',
+      labels: 'assets/model/TC_foods_web_labels1.txt',
+    );
 
     print('load model');
   }

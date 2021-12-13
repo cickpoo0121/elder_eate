@@ -114,6 +114,17 @@ class SqlService {
     }
   }
 
+  Future foodLoadName(foodName) async {
+    final db = await instance.database;
+    final result =
+        await db.query('foodmenu', where: 'Food_Name=?', whereArgs: [foodName]);
+    if (result.length > 0) {
+      return result;
+    } else {
+      print('Not found');
+    }
+  }
+
   Future foodRecommend(foodCat, cal, sugar, sodm) async {
     final db = await instance.database;
     final result = await db.rawQuery(
