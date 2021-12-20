@@ -131,7 +131,7 @@ class _FoodDetailState extends State<FoodDetail> {
                     child: Nutrition(
                         calories: foodMenu!['Food_Calories'].toDouble(),
                         sugar: foodMenu!['Food_Sugar'].toDouble(),
-                        sodium: foodMenu!['Food_Sodium'].toDouble()),
+                        sodium: foodMenu!['Food_Sodium'] / 1000.toDouble()),
                   ),
                   SizedBox(
                     height: size.height * 0.02,

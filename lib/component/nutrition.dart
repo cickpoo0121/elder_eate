@@ -83,7 +83,7 @@ class _NutritionState extends State<Nutrition> {
                                   fontSize: 15),
                             )
                           : Text(
-                              "${_sodium.toStringAsFixed(0)} กรัม",
+                              "$_sodium กรัม",
                               style: TextStyle(
                                   color: pDetailTxtColor,
                                   fontWeight: FontWeight.w700,

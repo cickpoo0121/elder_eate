@@ -43,14 +43,14 @@ class _ProgressPageState extends State<ProgressPage> {
       setState(() {
         _cal = _cal;
         _sug = 24;
-        _sodm = 2000;
+        _sodm = 2000 / 1000;
       });
     } else {
       if ((_cal! >= 0) && (_cal! <= 1400)) {
         setState(() {
           _cal = _cal;
           _sug = 6;
-          _sodm = 1410;
+          _sodm = 1410 / 1000;
         });
         return print('case 1');
       }
@@ -58,7 +58,7 @@ class _ProgressPageState extends State<ProgressPage> {
         setState(() {
           _cal = _cal;
           _sug = 12;
-          _sodm = 1490;
+          _sodm = 1490 / 1000;
         });
         return print('case 2');
       }
@@ -66,12 +66,11 @@ class _ProgressPageState extends State<ProgressPage> {
         setState(() {
           _cal = _cal;
           _sug = 24;
-          _sodm = 1610;
+          _sodm = 1610 / 1000;
         });
         return print('case 3');
       }
     }
-
   }
 
   process() {

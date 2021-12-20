@@ -38,7 +38,7 @@ class _AddMealState extends State<AddMeal> {
     final foodNutrition = [
       foodMenu!['Food_Calories'],
       foodMenu!['Food_Sugar'],
-      foodMenu!['Food_Sodium'],
+      foodMenu!['Food_Sodium'] / 1000,
     ];
 
     overNutri = '';
@@ -402,7 +402,7 @@ class _AddMealState extends State<AddMeal> {
                       size,
                       foodMenu!['Food_Calories'].toDouble() * quantity,
                       foodMenu!['Food_Sugar'].toDouble() * quantity,
-                      foodMenu!['Food_Sodium'].toDouble() * quantity,
+                      foodMenu!['Food_Sodium'].toDouble() * quantity / 1000,
                     ),
                     SizedBox(
                       height: size.height * 0.02,
@@ -477,7 +477,7 @@ class _AddMealState extends State<AddMeal> {
                                   fontSize: 15),
                             )
                           : Text(
-                              "${_sodium.toStringAsFixed(0)} กรัม",
+                              "$_sodium กรัม",
                               style: TextStyle(
                                   color: pDetailTxtColor,
                                   fontWeight: FontWeight.w700,

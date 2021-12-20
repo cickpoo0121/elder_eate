@@ -71,7 +71,9 @@ class _HomeBodyState extends State<HomeBody> {
       sugar = sugar +
           dataNutritionDay[i]['Food_Sugar'] * dataNutritionDay[i]['Quantity'];
       sodm = sodm +
-          dataNutritionDay[i]['Food_Sodium'] * dataNutritionDay[i]['Quantity'];
+          dataNutritionDay[i]['Food_Sodium'] *
+              dataNutritionDay[i]['Quantity'] /
+              1000;
     }
     setState(() {
       _nutritionPerday = [];
@@ -326,7 +328,7 @@ class _HomeBodyState extends State<HomeBody> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          "${_nutritionPerday![index].toStringAsFixed(0)}/${_maxNutrition![index].toStringAsFixed(0)}",
+                          "${index == 2 ? _nutritionPerday![index].toString() : _nutritionPerday![index].toStringAsFixed(0)}/${index == 2 ? _maxNutrition![index].toString() : _maxNutrition![index].toStringAsFixed(0)}",
                           style: TextStyle(
                               color: pDetailTxtColor,
                               fontWeight: FontWeight.w700,
